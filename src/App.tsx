@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import Providers from './Providers';
 
 const App: FC = () => {
-  return <div>Hello World</div>;
+  return <Providers>Hello World</Providers>;
 };
 
 export default App;
