@@ -8,7 +8,6 @@ import {
   Button,
   Divider,
 } from '@mantine/core';
-import { Link } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 
@@ -26,13 +25,13 @@ const LoginPage: FC = () => {
             placeholder='Your Password'
             withAsterisk
           />
-          <TextLink type='router' to='/resetpassword' justify='end'>
+          {/* <TextLink type='router' to='/resetpassword' justify='end'>
             Forgot Password?
-          </TextLink>
+          </TextLink> */}
           <Button>Login</Button>
-          <Divider label='OR' labelPosition='center' />
+          {/* <Divider label='OR' labelPosition='center' />
           <GoogleButton>Login with Google</GoogleButton>
-          <FacebookButton>Login with Facebook</FacebookButton>
+          <FacebookButton>Login with Facebook</FacebookButton> */}
         </Stack>
         <Text fz='sm' sx={{ display: 'flex', marginInline: 'auto' }}>
           Don't have an account?
