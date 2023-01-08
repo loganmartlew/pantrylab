@@ -51,9 +51,30 @@ const LoginPage: FC = () => {
       return;
     }
 
+    const { error, data } = await supabase
+      .from('users')
+      .select()
+      .eq('email', values.email);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    if (data.length > 0) {
+      form.setFieldError('email', 'Email already linked to an account');
+      return;
+    }
+
     const auth = await supabase.auth.signUp({
       email: values.email,
       password: values.password,
+      options: {
+        data: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+        },
+      },
     });
 
     if (auth.error) {
@@ -65,17 +86,6 @@ const LoginPage: FC = () => {
 
     if (!user) {
       console.error('No user');
-      return;
-    }
-
-    const { error } = await supabase.from('profile').insert({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      userId: user.id,
-    });
-
-    if (error) {
-      console.error(error);
       return;
     }
 
