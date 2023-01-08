@@ -143,7 +143,7 @@ const LoginPage: FC = () => {
         </form>
         <Text fz='sm' sx={{ display: 'flex', marginInline: 'auto' }}>
           Already have an account?
-          <TextLink type='router' to='/signup' sx={{ marginLeft: '0.6ch' }}>
+          <TextLink type='router' to='/login' sx={{ marginLeft: '0.6ch' }}>
             Login
           </TextLink>
         </Text>
