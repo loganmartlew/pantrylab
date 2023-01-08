@@ -1,5 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 import { FC, ReactNode } from 'react';
+import theme from './theme';
 
 interface Props {
   children: ReactNode;
@@ -7,7 +8,7 @@ interface Props {
 
 const Providers: FC<Props> = ({ children }) => {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
       {children}
     </MantineProvider>
   );
