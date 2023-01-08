@@ -11,12 +11,14 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@mantine/core": "^5.10.0",
+    "@mantine/form": "^5.10.0",
     "@supabase/supabase-js": "^2.2.3",
     "@types/node": "^18.11.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.6.1"
+    "react-router-dom": "^6.6.1",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
