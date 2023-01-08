@@ -17,7 +17,17 @@ const LoginPage: FC = () => {
       <Stack>
         <Title order={1}>Grocer</Title>
         <Stack sx={{ width: 'min(90vw, 350px)' }}>
-          <Title order={2}>Login</Title>
+          <Title order={2}>Sign up</Title>
+          <TextInput
+            label='First Name'
+            placeholder='Your first name'
+            withAsterisk
+          />
+          <TextInput
+            label='Last Name'
+            placeholder='Your last name'
+            withAsterisk
+          />
           <TextInput
             label='Email'
             placeholder='Your email address'
@@ -29,18 +39,21 @@ const LoginPage: FC = () => {
             placeholder='Your password'
             withAsterisk
           />
-          {/* <TextLink type='router' to='/resetpassword' justify='end'>
-            Forgot Password?
-          </TextLink> */}
-          <Button>Login</Button>
+          <TextInput
+            type='password'
+            label='Confirm Password'
+            placeholder='Re-enter your password'
+            withAsterisk
+          />
+          <Button>Sign up</Button>
           {/* <Divider label='OR' labelPosition='center' />
           <GoogleButton>Login with Google</GoogleButton>
           <FacebookButton>Login with Facebook</FacebookButton> */}
         </Stack>
         <Text fz='sm' sx={{ display: 'flex', marginInline: 'auto' }}>
-          Don't have an account?
+          Already have an account?
           <TextLink type='router' to='/signup' sx={{ marginLeft: '0.6ch' }}>
-            Sign Up
+            Login
           </TextLink>
         </Text>
       </Stack>
