@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ConfirmEmailPage: FC = () => {
   return (
-    <Center sx={{ height: '100vh' }}>
+    <Center sx={{ padding: '1em', minHeight: '100vh' }}>
       <Stack>
         <Logo size='xl' />
         <Text size='lg'>

@@ -85,7 +85,7 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <Center sx={{ minHeight: '100vh' }}>
+    <Center sx={{ padding: '1em', minHeight: '100vh' }}>
       <Stack>
         <Logo size='lg' />
         <form onSubmit={form.onSubmit(submit)}>
