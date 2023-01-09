@@ -15,6 +15,7 @@ import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 import { supabase } from '~/lib/supabaseClient';
 import { useAuth } from '~/features/auth/useAuth';
+import Logo from '~/components/Logo';
 
 const signupSchema = z.object({
   firstName: z
@@ -86,7 +87,7 @@ const LoginPage: FC = () => {
   return (
     <Center sx={{ minHeight: '100vh' }}>
       <Stack>
-        <Title order={1}>Grocer</Title>
+        <Logo size='lg' />
         <form onSubmit={form.onSubmit(submit)}>
           <Stack sx={{ width: 'min(90vw, 350px)' }}>
             <Title order={2}>Sign up</Title>
