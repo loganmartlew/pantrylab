@@ -21,7 +21,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       console.log(event, session);
       switch (event) {
         case 'SIGNED_IN':
@@ -45,6 +45,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
           return;
       }
     });
+
+    return () => {
+      data.subscription.unsubscribe();
+    };
   });
 
   const value: AuthContext = {
