@@ -10,10 +10,11 @@ import {
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 import { supabase } from '~/lib/supabaseClient';
+import { useAuth } from '~/features/auth/useAuth';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -24,6 +25,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const { loginWithEmail } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -34,17 +38,10 @@ const LoginPage: FC = () => {
   });
 
   const submit = async (values: LoginFormValues) => {
-    const auth = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
+    await loginWithEmail(values.email, values.password);
 
-    if (auth.error) {
-      console.error(auth.error);
-      return;
-    }
-
-    navigate('/');
+    console.log('Navigate:', searchParams.get('redirectTo') || '/');
+    navigate(searchParams.get('redirectTo') || '/');
   };
 
   return (
@@ -78,7 +75,7 @@ const LoginPage: FC = () => {
         </form>
         <Text fz='sm' sx={{ display: 'flex', marginInline: 'auto' }}>
           Don't have an account?
-          <TextLink type='router' to='/signup' sx={{ marginLeft: '0.6ch' }}>
+          <TextLink type='router' to='/' sx={{ marginLeft: '0.6ch' }}>
             Sign Up
           </TextLink>
         </Text>

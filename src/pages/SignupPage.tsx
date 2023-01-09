@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 import { supabase } from '~/lib/supabaseClient';
+import { useAuth } from '~/features/auth/useAuth';
 
 const signupSchema = z.object({
   firstName: z
@@ -33,6 +34,8 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
+
+  const { signup } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -66,28 +69,12 @@ const LoginPage: FC = () => {
       return;
     }
 
-    const auth = await supabase.auth.signUp({
-      email: values.email,
-      password: values.password,
-      options: {
-        data: {
-          firstName: values.firstName,
-          lastName: values.lastName,
-        },
-      },
-    });
-
-    if (auth.error) {
-      console.error(auth.error);
-      return;
-    }
-
-    const { user, session } = auth.data;
-
-    if (!user) {
-      console.error('No user');
-      return;
-    }
+    const session = await signup(
+      values.email,
+      values.password,
+      values.firstName,
+      values.lastName
+    );
 
     if (session) {
       navigate('/');
