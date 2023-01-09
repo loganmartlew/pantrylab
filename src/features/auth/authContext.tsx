@@ -37,7 +37,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const isAuthenticated = session !== null;
+  const isAuthenticated = session !== null && !!session.user.confirmed_at;
 
   useEffect(() => {
     // Get session data if already active
@@ -52,6 +52,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       setIsLoading(true);
       setSession(session);
+      console.log(event, session);
 
       const result = await supabase
         .from('users')
@@ -110,6 +111,8 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         console.error(error);
         setIsLoading(false);
       }
+
+      await loginWithEmail(email, password);
 
       return data.session;
     },
