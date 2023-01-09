@@ -52,7 +52,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       setIsLoading(true);
       setSession(session);
-      console.log(event, session);
 
       const result = await supabase
         .from('users')
