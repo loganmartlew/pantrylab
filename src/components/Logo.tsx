@@ -1,11 +1,12 @@
-import { Title, useMantineTheme } from '@mantine/core';
+import { Sx, Title, useMantineTheme } from '@mantine/core';
 import { FC, useMemo } from 'react';
 
 interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  sx?: Sx;
 }
 
-const Logo: FC<Props> = ({ size }) => {
+const Logo: FC<Props> = ({ size, sx }) => {
   const theme = useMantineTheme();
 
   const sizes = useMemo(
@@ -20,7 +21,12 @@ const Logo: FC<Props> = ({ size }) => {
   );
 
   return (
-    <Title order={1} color={theme.primaryColor} fz={sizes[size || 'sm']}>
+    <Title
+      order={1}
+      color={theme.primaryColor}
+      fz={sizes[size || 'sm']}
+      sx={sx}
+    >
       Grocer
     </Title>
   );
