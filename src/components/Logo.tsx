@@ -1,12 +1,14 @@
-import { Sx, Title, useMantineTheme } from '@mantine/core';
+import { Box, Sx, Title, useMantineTheme } from '@mantine/core';
 import { FC, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   sx?: Sx;
+  homeLink?: boolean;
 }
 
-const Logo: FC<Props> = ({ size, sx }) => {
+const Logo: FC<Props> = ({ size, sx, homeLink }) => {
   const theme = useMantineTheme();
 
   const sizes = useMemo(
@@ -20,7 +22,7 @@ const Logo: FC<Props> = ({ size, sx }) => {
     []
   );
 
-  return (
+  const logo = (
     <Title
       order={1}
       color={theme.primaryColor}
@@ -29,6 +31,14 @@ const Logo: FC<Props> = ({ size, sx }) => {
     >
       Grocer
     </Title>
+  );
+
+  return homeLink ? (
+    <Box component={Link} to='/' sx={{ textDecoration: 'none' }}>
+      {logo}
+    </Box>
+  ) : (
+    logo
   );
 };
 
