@@ -27,12 +27,12 @@ import {
 import Logo from '~/components/Logo';
 import { useAuth } from '../auth/useAuth';
 import TextLink from '~/components/TextLink';
+import Header from './Header';
 
 interface Props {}
 
 const AppLayout: FC<Props> = () => {
-  const [opened, setOpened] = useState(false);
-  const title = opened ? 'Close menu' : 'Open menu';
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { user } = useAuth();
   const theme = useMantineTheme();
@@ -51,33 +51,17 @@ const AppLayout: FC<Props> = () => {
   );
 
   useEffect(() => {
-    setOpened(false);
+    setIsMenuOpen(false);
   }, [location]);
 
-  console.log(theme);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   return (
     <>
-      <Box
-        p='sm'
-        sx={{
-          borderBottom: 'thin solid hsl(0, 0%, 90%)',
-          boxShadow: '0px 0px 3px hsla(0, 0%, 90%, 1)',
-        }}
-      >
-        <Group align='center'>
-          <Burger
-            opened={opened}
-            onClick={() => setOpened(o => !o)}
-            title={title}
-            color='hsl(0, 0%, 40%)'
-          />
-          <Logo size='sm' sx={{ transform: 'translateY(-0.075em)' }} homeLink />
-        </Group>
-      </Box>
+      <Header menuIsOpen={isMenuOpen} openMenu={() => setIsMenuOpen(true)} />
       <Drawer
-        opened={opened}
-        onClose={() => setOpened(false)}
+        opened={isMenuOpen}
+        onClose={closeMenu}
         title='Menu'
         padding='lg'
         size='full'
