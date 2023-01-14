@@ -7,7 +7,7 @@ import { supabase } from '~/lib/supabaseClient';
 const HomePage: FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { households } = useHousehold();
+  const { currentHousehold } = useHousehold();
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -20,7 +20,7 @@ const HomePage: FC = () => {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1>{currentHousehold?.name || 'Home'}</h1>
       <p>Welcome {user?.first_name}</p>
       <button onClick={logout}>logout</button>
     </div>

@@ -8,7 +8,6 @@ import {
   Select,
   Stack,
   Title,
-  Text,
   useMantineTheme,
 } from '@mantine/core';
 import { FC, useCallback } from 'react';
@@ -21,9 +20,9 @@ import {
   MdOutlineShoppingCart,
   MdSettings,
 } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import TextLink from '~/components/TextLink';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '~/features/auth/useAuth';
+import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
 
 interface Props {
@@ -33,7 +32,9 @@ interface Props {
 
 const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const { households, currentHousehold, setCurrentHousehold } = useHousehold();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
@@ -46,6 +47,19 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     }),
     []
   );
+
+  const householdData = households.map(household => ({
+    label: household.name,
+    value: household.id,
+  }));
+
+  const handleHouseholdChange = (householdId: string) => {
+    if (householdId !== '-1') {
+      setCurrentHousehold(householdId);
+    }
+
+    navigate('/newhousehold');
+  };
 
   return (
     <Drawer
@@ -68,8 +82,11 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           <Title order={3}>{name}</Title>
         </Group>
         <Select
+          label='Household'
           placeholder='Select a Household'
-          data={['Adonis Place', 'Alexander Street']}
+          data={[{ value: '-1', label: 'New Household' }, ...householdData]}
+          value={currentHousehold?.id}
+          onChange={handleHouseholdChange}
         />
         <Divider />
         <ScrollArea sx={{ flexGrow: 1 }}>

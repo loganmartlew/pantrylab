@@ -56,7 +56,10 @@ export const HouseholdProvider: FC<{ children: ReactNode }> = ({
         });
 
         setHouseholds((householdUsers as Household[]) ?? []);
-        console.log(householdUsers);
+
+        if (householdUsers.length > 0) {
+          setCurrentHouseholdId(householdUsers[0].id);
+        }
       });
   }, [user]);
 
