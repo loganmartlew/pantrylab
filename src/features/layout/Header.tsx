@@ -3,12 +3,12 @@ import { FC } from 'react';
 import Logo from '~/components/Logo';
 
 interface Props {
-  menuIsOpen: boolean;
+  isMenuOpen: boolean;
   openMenu: () => void;
 }
 
-const Header: FC<Props> = ({ menuIsOpen, openMenu }) => {
-  const buttonTitle = menuIsOpen ? 'Close menu' : 'Open menu';
+const Header: FC<Props> = ({ isMenuOpen, openMenu }) => {
+  const buttonTitle = isMenuOpen ? 'Close menu' : 'Open menu';
 
   return (
     <Box
@@ -20,7 +20,7 @@ const Header: FC<Props> = ({ menuIsOpen, openMenu }) => {
     >
       <Group align='center'>
         <Burger
-          opened={menuIsOpen}
+          opened={isMenuOpen}
           onClick={openMenu}
           title={buttonTitle}
           color='hsl(0, 0%, 40%)'
