@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/features/auth/useAuth';
+import { useHousehold } from '~/features/household/useHousehold';
 import { supabase } from '~/lib/supabaseClient';
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { households } = useHousehold();
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
