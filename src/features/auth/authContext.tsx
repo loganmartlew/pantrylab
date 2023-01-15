@@ -9,13 +9,7 @@ import {
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '~/lib/supabaseClient';
 import LoadingScreen from '~/components/LoadingScreen';
-
-export interface User {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-}
+import { User } from '~/types';
 
 export interface AuthContext {
   user: User | null;

@@ -3,6 +3,7 @@ import {
   Divider,
   Drawer,
   Group,
+  Modal,
   NavLink,
   ScrollArea,
   Select,
@@ -21,9 +22,11 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDisclosure } from '@mantine/hooks';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
+import NewHouseholdForm from '~/features/household/NewHouseholdForm';
 
 interface Props {
   isMenuOpen: boolean;
@@ -31,6 +34,8 @@ interface Props {
 }
 
 const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
+  const [isHouseholdModalOpen, householdModalHandlers] = useDisclosure(false);
+
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -56,9 +61,10 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const handleHouseholdChange = (householdId: string) => {
     if (householdId !== '-1') {
       setCurrentHousehold(householdId);
+      return;
     }
 
-    navigate('/newhousehold');
+    householdModalHandlers.open();
   };
 
   return (
@@ -88,6 +94,13 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           value={currentHousehold?.id}
           onChange={handleHouseholdChange}
         />
+        <Modal
+          opened={isHouseholdModalOpen}
+          onClose={householdModalHandlers.close}
+          title='New Household'
+        >
+          <NewHouseholdForm onClose={householdModalHandlers.close} />
+        </Modal>
         <Divider />
         <ScrollArea sx={{ flexGrow: 1 }}>
           <Stack>
