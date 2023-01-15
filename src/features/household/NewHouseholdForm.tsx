@@ -43,6 +43,7 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
       .from('households')
       .insert({
         name: householdName,
+        owner_id: user?.id,
       })
       .select();
 

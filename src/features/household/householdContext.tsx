@@ -88,6 +88,7 @@ export const HouseholdProvider: FC<{ children: ReactNode }> = ({
     supabase
       .from('households')
       .select('*, household_users!inner(users(*))')
+      .eq('household_users.user_id', user.id)
       .then(({ data, error }) => {
         if (error) {
           console.error(error);
