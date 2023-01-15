@@ -1,5 +1,6 @@
-import { Box, Stack, Title } from '@mantine/core';
+import { Box, Button, Stack, Title } from '@mantine/core';
 import { FC } from 'react';
+import { MdPersonAdd } from 'react-icons/md';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import UserCard from '~/features/user/UserCard';
@@ -17,6 +18,9 @@ const UsersPage: FC<Props> = () => {
         {currentHousehold?.name}
       </Title>
       <Stack>
+        <Button variant='light' leftIcon={<MdPersonAdd />}>
+          Invite User
+        </Button>
         {currentHousehold?.users.map(householdUser => (
           <UserCard
             user={householdUser}
