@@ -105,6 +105,7 @@ export const HouseholdProvider: FC<{ children: ReactNode }> = ({
             id: household.id,
             name: household.name,
             created_at: household.created_at,
+            owner_id: household.owner_id,
             users: household.household_users.map((hu: any) => hu.users),
           };
         });
@@ -160,6 +161,7 @@ export const HouseholdProvider: FC<{ children: ReactNode }> = ({
                 id: household.id,
                 name: household.name,
                 created_at: household.created_at,
+                owner_id: household.owner_id,
                 users: household.household_users.map((hu: any) => hu.users),
               };
 
