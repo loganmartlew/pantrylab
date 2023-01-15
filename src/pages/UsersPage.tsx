@@ -37,6 +37,7 @@ const UsersPage: FC<Props> = () => {
   const { currentHousehold } = useHousehold();
 
   const users = sortUsers(currentHousehold);
+  const isHouseholdOwner = currentHousehold?.owner_id === user?.id;
 
   return (
     <Box p='md'>
@@ -45,15 +46,17 @@ const UsersPage: FC<Props> = () => {
         {currentHousehold?.name}
       </Title>
       <Stack>
-        <Button variant='light' leftIcon={<MdPersonAdd />}>
-          Invite User
-        </Button>
+        {isHouseholdOwner && (
+          <Button variant='light' leftIcon={<MdPersonAdd />}>
+            Invite User
+          </Button>
+        )}
         {users.map(householdUser => (
           <UserCard
             user={householdUser}
             isSelf={user?.id === householdUser.id}
             isOwner={currentHousehold?.owner_id === householdUser.id}
-            isDeleteable={currentHousehold?.owner_id === user?.id}
+            isDeleteable={isHouseholdOwner && user?.id !== householdUser.id}
           />
         ))}
       </Stack>
