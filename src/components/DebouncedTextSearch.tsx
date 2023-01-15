@@ -1,4 +1,4 @@
-import { Popover, Text, TextInput } from '@mantine/core';
+import { Popover, Stack, Text, TextInput } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { FC, useEffect, useState } from 'react';
 
@@ -42,11 +42,13 @@ function DebouncedTextSearch<T>({
         />
       </Popover.Target>
       <Popover.Dropdown>
-        {!results || results.length < 1 ? (
-          <Text>No results</Text>
-        ) : (
-          results.map(result => render(result, () => setSearchTerm('')))
-        )}
+        <Stack>
+          {!results || results.length < 1 ? (
+            <Text>No results</Text>
+          ) : (
+            results.map(result => render(result, () => setSearchTerm('')))
+          )}
+        </Stack>
       </Popover.Dropdown>
     </Popover>
   );
