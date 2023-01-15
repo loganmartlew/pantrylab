@@ -1,10 +1,12 @@
-import { Box, Button, Stack, Title } from '@mantine/core';
 import { FC } from 'react';
+import { Box, Button, Modal, Stack, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { MdPersonAdd } from 'react-icons/md';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import UserCard from '~/features/user/UserCard';
 import { Household, User } from '~/types';
+import InviteUserForm from '~/features/user/InviteUserForm';
 
 interface Props {}
 
@@ -33,6 +35,8 @@ const sortUsers = (household: Household | null): User[] => {
 };
 
 const UsersPage: FC<Props> = () => {
+  const [isInviteModelOpen, inviteModalHandlers] = useDisclosure(false);
+
   const { user } = useAuth();
   const { currentHousehold } = useHousehold();
 
@@ -47,8 +51,12 @@ const UsersPage: FC<Props> = () => {
       </Title>
       <Stack>
         {isHouseholdOwner && (
-          <Button variant='light' leftIcon={<MdPersonAdd />}>
-            Invite User
+          <Button
+            variant='light'
+            leftIcon={<MdPersonAdd />}
+            onClick={inviteModalHandlers.open}
+          >
+            Invite Users
           </Button>
         )}
         {users.map(householdUser => (
@@ -60,6 +68,13 @@ const UsersPage: FC<Props> = () => {
           />
         ))}
       </Stack>
+      <Modal
+        title='Invite Users'
+        opened={isInviteModelOpen}
+        onClose={inviteModalHandlers.close}
+      >
+        <InviteUserForm onClose={inviteModalHandlers.close} />
+      </Modal>
     </Box>
   );
 };
