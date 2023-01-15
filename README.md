@@ -1,6 +1,6 @@
 # Grocer
 
-###### An app to help you manage the food in your house
+##### An app to help you manage the food in your house
 
 ---
 
