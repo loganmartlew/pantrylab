@@ -15,10 +15,17 @@ import { User } from '~/types';
 
 interface Props {
   user: User;
+  onClick?: () => void;
   isDeleteable?: boolean;
+  onDelete?: (id: string) => void;
 }
 
-const UserInviteCard: FC<Props> = ({ user, isDeleteable }) => {
+const UserInviteCard: FC<Props> = ({
+  user,
+  onClick,
+  isDeleteable,
+  onDelete,
+}) => {
   const theme = useMantineTheme();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
@@ -28,6 +35,7 @@ const UserInviteCard: FC<Props> = ({ user, isDeleteable }) => {
     <Paper
       shadow='xs'
       p='sm'
+      onClick={onClick}
       sx={{ '&:hover': { backgroundColor: `hsl(0, 0%, 95%)` } }}
     >
       <Group align='center' spacing='md'>
@@ -38,9 +46,9 @@ const UserInviteCard: FC<Props> = ({ user, isDeleteable }) => {
           <Title order={4}>{name}</Title>
           <Text fz='sm'>{user.email}</Text>
         </Stack>
-        {isDeleteable && (
+        {isDeleteable && onDelete && (
           <Tooltip label='Remove User' position='left' withArrow>
-            <ActionIcon size='md'>
+            <ActionIcon size='md' onClick={() => onDelete(user.id)}>
               <MdRemoveCircleOutline size={theme.fontSizes.xl} />
             </ActionIcon>
           </Tooltip>

@@ -61,6 +61,7 @@ const UsersPage: FC<Props> = () => {
         )}
         {users.map(householdUser => (
           <UserCard
+            key={householdUser.id}
             user={householdUser}
             isSelf={user?.id === householdUser.id}
             isOwner={currentHousehold?.owner_id === householdUser.id}
