@@ -5,7 +5,7 @@ import { useAuth } from '../auth/useAuth';
 import { useHousehold } from './useHousehold';
 
 interface Props {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const NewHouseholdForm: FC<Props> = ({ onClose }) => {
@@ -70,7 +70,9 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
     setCurrentHousehold(householdData[0].id);
 
     setHouseholdName('');
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   };
 
   return (
@@ -80,6 +82,8 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
         placeholder='New Household'
         error={errorMessage}
         onChange={onNameChange}
+        autoFocus
+        mb='sm'
       />
       <Button type='submit'>Create Household</Button>
     </Box>

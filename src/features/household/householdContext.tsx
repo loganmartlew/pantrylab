@@ -127,7 +127,7 @@ export const HouseholdProvider: FC<{ children: ReactNode }> = ({
           event: '*',
           schema: 'public',
           table: 'household_users',
-          filter: `user_id=eq.${user?.id}`,
+          filter: `user_id=eq.${user.id}`,
         },
         payload => {
           if (payload.eventType === 'DELETE') {
