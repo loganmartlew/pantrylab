@@ -4,6 +4,7 @@ import DebouncedTextSearch from '~/components/DebouncedTextSearch';
 import { supabase } from '~/lib/supabaseClient';
 import { User } from '~/types';
 import { useAuth } from '../auth/useAuth';
+import { useHousehold } from '../household/useHousehold';
 import UserInviteCard from './UserInviteCard';
 
 interface Props {
@@ -14,6 +15,7 @@ const InviteUserForm: FC<Props> = ({ onClose }) => {
   const [users, setUsers] = useState<User[]>([]);
 
   const { user } = useAuth();
+  const { currentHousehold } = useHousehold();
 
   const searchUsers = async (searchTerm: string) => {
     const { data, error } = await supabase
@@ -40,10 +42,27 @@ const InviteUserForm: FC<Props> = ({ onClose }) => {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
+
+    const invites = users.map(user => ({
+      user_id: user.id,
+      household_id: currentHousehold?.id,
+    }));
+
+    const { error } = await supabase
+      .from('household_user_invites')
+      .insert(invites);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setUsers([]);
+    if (onClose) onClose();
   };
 
   return (
-    <Box component='form'>
+    <Box component='form' autoComplete='off' onSubmit={submit}>
       <Stack>
         <DebouncedTextSearch<User>
           label='Email Address'

@@ -38,6 +38,7 @@ function DebouncedTextSearch<T>({
           label={label}
           placeholder={placeholder}
           value={searchTerm}
+          name='search'
           onChange={e => setSearchTerm(e.target.value)}
         />
       </Popover.Target>

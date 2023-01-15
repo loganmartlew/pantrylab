@@ -20,15 +20,20 @@ interface Props {
   isDeleteable?: boolean;
   isSelf?: boolean;
   isOwner?: boolean;
+  isPending?: boolean;
 }
 
-const UserCard: FC<Props> = ({ user, isDeleteable, isSelf, isOwner }) => {
+const UserCard: FC<Props> = ({
+  user,
+  isDeleteable,
+  isSelf,
+  isOwner,
+  isPending,
+}) => {
   const theme = useMantineTheme();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
-
-  console.log(theme);
 
   return (
     <Paper shadow='xs' p='sm'>
@@ -40,6 +45,7 @@ const UserCard: FC<Props> = ({ user, isDeleteable, isSelf, isOwner }) => {
           <Group spacing='xs'>
             <Title order={4}>{name}</Title>
             {isSelf && <Text fz='xs'>{'(You)'}</Text>}
+            {isPending && <Text fz='xs'>{'(Pending)'}</Text>}
             {isOwner && (
               <Tooltip label='Owner' position='right' withArrow>
                 <Box>
