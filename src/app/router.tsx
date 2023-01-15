@@ -8,6 +8,7 @@ import HomePage from '~/pages/HomePage';
 import LoginPage from '~/pages/LoginPage';
 import SignupPage from '~/pages/SignupPage';
 import ConfirmEmailPage from '~/pages/ConfirmEmailPage';
+import UsersPage from '~/pages/UsersPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route element={<AuthRequired />}>
         <Route element={<AppLayout />}>
           <Route path='/' element={<HomePage />} />
+          <Route path='/users' element={<UsersPage />} />
         </Route>
       </Route>
       <Route path='/login' element={<LoginPage />} />

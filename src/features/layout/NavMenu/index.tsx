@@ -20,8 +20,9 @@ import {
   MdLogout,
   MdOutlineShoppingCart,
   MdSettings,
+  MdPeopleOutline,
 } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
@@ -37,7 +38,6 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const [isHouseholdModalOpen, householdModalHandlers] = useDisclosure(false);
 
   const theme = useMantineTheme();
-  const navigate = useNavigate();
   const { user } = useAuth();
   const { households, currentHousehold, setCurrentHousehold } = useHousehold();
 
@@ -128,6 +128,11 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
               label='Grocery Items'
               icon={<MdOutlineShoppingCart />}
               {...getNavLinkProps('/items')}
+            />
+            <NavLink
+              label='Users'
+              icon={<MdPeopleOutline />}
+              {...getNavLinkProps('/users')}
             />
           </Stack>
         </ScrollArea>
