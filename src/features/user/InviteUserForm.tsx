@@ -9,9 +9,15 @@ import UserInviteCard from './UserInviteCard';
 
 interface Props {
   onClose?: () => void;
+  currentUsers: User[];
+  currentPendingUsers: User[];
 }
 
-const InviteUserForm: FC<Props> = ({ onClose }) => {
+const InviteUserForm: FC<Props> = ({
+  onClose,
+  currentUsers,
+  currentPendingUsers,
+}) => {
   const [users, setUsers] = useState<User[]>([]);
 
   const { user } = useAuth();
@@ -29,7 +35,17 @@ const InviteUserForm: FC<Props> = ({ onClose }) => {
       return [];
     }
 
-    return data as User[];
+    if (!data) return [];
+
+    const users = data as User[];
+
+    const filteredUsers = users.filter(
+      user =>
+        !currentUsers.find(u => u.id === user.id) &&
+        !currentPendingUsers.find(u => u.id === user.id)
+    );
+
+    return filteredUsers;
   };
 
   const addUser = (user: User) => {

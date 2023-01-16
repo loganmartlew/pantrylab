@@ -10,10 +10,15 @@ import {
   Tooltip,
   useMantineTheme,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { FaCrown } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+import ConfirmationModal from '~/components/ConfirmationModal';
 import { User } from '~/types';
+
+const removeUserMessage = 'Are you sure you want to remove this user?';
+const removePendingUserMessage = 'Are you sure you want to cancel this invite?';
 
 interface Props {
   user: User;
@@ -21,6 +26,7 @@ interface Props {
   isSelf?: boolean;
   isOwner?: boolean;
   isPending?: boolean;
+  onDelete?: (id: string) => void;
 }
 
 const UserCard: FC<Props> = ({
@@ -29,7 +35,10 @@ const UserCard: FC<Props> = ({
   isSelf,
   isOwner,
   isPending,
+  onDelete,
 }) => {
+  const [isDeleteModalOpen, deleteModalHandlers] = useDisclosure(false);
+
   const theme = useMantineTheme();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
@@ -58,12 +67,24 @@ const UserCard: FC<Props> = ({
         </Stack>
         {isDeleteable && (
           <Tooltip label='Remove User' position='left' withArrow>
-            <ActionIcon size='md' color='red'>
+            <ActionIcon
+              size='md'
+              color='red'
+              onClick={deleteModalHandlers.open}
+            >
               <MdDelete size={theme.fontSizes.xl} />
             </ActionIcon>
           </Tooltip>
         )}
       </Group>
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={deleteModalHandlers.close}
+        message={isPending ? removePendingUserMessage : removeUserMessage}
+        onConfirm={() => {
+          if (onDelete) onDelete(user.id);
+        }}
+      />
     </Paper>
   );
 };
