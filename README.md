@@ -10,8 +10,7 @@
 - [x] Navigation
 - [x] Household creation/selection
 - [ ] User invite system
-  - [ ] Subscribe to household users
-  - [ ] Subscribe to pending users
+  - [ ] Implement accepting/rejecting invites
 - [ ] Grocery items
 - [ ] Shopping lists
 - [ ] Meals
