@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Avatar,
   Divider,
   Drawer,
@@ -8,7 +9,9 @@ import {
   ScrollArea,
   Select,
   Stack,
+  Text,
   Title,
+  Tooltip,
   useMantineTheme,
 } from '@mantine/core';
 import { FC, useCallback } from 'react';
@@ -21,6 +24,7 @@ import {
   MdOutlineShoppingCart,
   MdSettings,
   MdPeopleOutline,
+  MdMail,
 } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
@@ -85,7 +89,15 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           <Avatar radius='xl' size='lg' color={theme.primaryColor}>
             {initials}
           </Avatar>
-          <Title order={3}>{name}</Title>
+          <Stack spacing={0} sx={{ flexGrow: 1 }}>
+            <Title order={3}>{name}</Title>
+            <Text size='xs'>{user ? user.email : 'Unknown Email'}</Text>
+          </Stack>
+          <Tooltip label='Invites' position='left'>
+            <ActionIcon size='lg' component={Link} to='/invites'>
+              <MdMail size='1.5rem' />
+            </ActionIcon>
+          </Tooltip>
         </Group>
         <Select
           label='Household'
