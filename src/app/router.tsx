@@ -10,6 +10,7 @@ import SignupPage from '~/pages/SignupPage';
 import ConfirmEmailPage from '~/pages/ConfirmEmailPage';
 import UsersPage from '~/pages/UsersPage';
 import HouseholdRequired from '~/features/household/HouseholdRequired';
+import InvitesPage from '~/pages/InvitesPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
             <Route path='/' element={<HomePage />} />
             <Route path='/users' element={<UsersPage />} />
           </Route>
+          <Route path='/invites' element={<InvitesPage />} />
         </Route>
       </Route>
       <Route path='/login' element={<LoginPage />} />

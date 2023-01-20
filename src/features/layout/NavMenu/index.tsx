@@ -26,12 +26,13 @@ import {
   MdPeopleOutline,
   MdMail,
 } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
 import NewHouseholdForm from '~/features/household/NewHouseholdForm';
+import { supabase } from '~/lib/supabaseClient';
 
 interface Props {
   isMenuOpen: boolean;
@@ -42,6 +43,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const [isHouseholdModalOpen, householdModalHandlers] = useDisclosure(false);
 
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { households, currentHousehold, setCurrentHousehold } = useHousehold();
 
@@ -69,6 +71,15 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     }
 
     householdModalHandlers.open();
+  };
+
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error(error);
+      return;
+    }
+    navigate('/login');
   };
 
   return (
@@ -155,7 +166,12 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
             icon={<MdSettings />}
             {...getNavLinkProps('/settings')}
           />
-          <NavLink component='button' label='Logout' icon={<MdLogout />} />
+          <NavLink
+            component='button'
+            onClick={logout}
+            label='Logout'
+            icon={<MdLogout />}
+          />
         </Stack>
         <Footer />
       </Stack>
