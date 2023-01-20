@@ -3,9 +3,8 @@ import { supabase } from '~/lib/supabaseClient';
 import { useStore } from '~/features/store';
 
 export const useAuth = () => {
-  const { user, session, setSession } = useStore(s => s.auth);
-
-  console.log('useAuth', { user, session, setSession });
+  const { user, session, isLoading, setIsLoading, setSession, setUser } =
+    useStore(s => s.auth);
 
   useEffect(() => {
     // Get session data if already active
@@ -69,6 +68,7 @@ export const useAuth = () => {
 
   const logout = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
+    setUser(null);
 
     if (error) {
       console.error(error);
@@ -82,5 +82,7 @@ export const useAuth = () => {
     loginWithEmail,
     signup,
     logout,
+    isLoading,
+    setIsLoading,
   };
 };

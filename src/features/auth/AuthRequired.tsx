@@ -6,9 +6,9 @@ interface Props {}
 
 const AuthRequired: FC<Props> = () => {
   const location = useLocation();
-  const { user, session } = useAuth();
+  const { user, session, isLoading } = useAuth();
 
-  if (!user || !session) {
+  if ((!user || !session) && !isLoading) {
     return <Navigate to={`/login?redirectTo=${location.pathname}`} />;
   }
 

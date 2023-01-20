@@ -1,15 +1,11 @@
 import { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { createAuthSlice } from '~/features/auth/authSlice';
+import { AuthSlice, createAuthSlice } from '~/features/auth/authSlice';
 import { User } from '~/types';
 
 export interface Store {
-  auth: {
-    session: Session | null;
-    user: User | null;
-    setSession: (session: Session | null) => void;
-  };
+  auth: AuthSlice;
 }
 
 type Get = () => Store;
