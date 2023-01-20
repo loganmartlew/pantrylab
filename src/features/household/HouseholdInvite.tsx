@@ -25,19 +25,11 @@ const HouseholdInvite: FC<Props> = ({ invite }) => {
   const [isAcceptModalOpen, acceptModalHandlers] = useDisclosure(false);
   const [isDeclineModalOpen, declineModalHandlers] = useDisclosure(false);
 
-  const { user } = useAuth();
-
   const updateInviteStatus = async (status: 'accepted' | 'declined') => {
-    console.log(invite.id, status);
-    console.log(user?.id);
-    console.log(invite.user_id);
-    const x = await supabase
+    supabase
       .from('household_user_invites')
       .update({ status })
-      .eq('id', invite.id)
-      .select();
-
-    console.log(x);
+      .eq('id', invite.id);
   };
 
   return (
