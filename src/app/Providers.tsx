@@ -15,9 +15,7 @@ interface Props {
 const Providers: FC<Props> = ({ children }) => {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-      <AuthProvider>
-        <HouseholdProvider>{children}</HouseholdProvider>
-      </AuthProvider>
+      <HouseholdProvider>{children}</HouseholdProvider>
     </MantineProvider>
   );
 };
