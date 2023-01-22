@@ -10,12 +10,13 @@ import {
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 import { supabase } from '~/lib/supabaseClient';
 import { useAuth } from '~/features/auth/useAuth';
 import Logo from '~/components/Logo';
+import LoadingScreen from '~/components/LoadingScreen';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -28,7 +29,7 @@ const LoginPage: FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const { loginWithEmail } = useAuth();
+  const { loginWithEmail, isAuthenticated, isLoading } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -44,6 +45,14 @@ const LoginPage: FC = () => {
     console.log('Navigate:', searchParams.get('redirectTo') || '/');
     navigate(searchParams.get('redirectTo') || '/');
   };
+
+  if (isAuthenticated) {
+    return <Navigate to={searchParams.get('redirectTo') || '/'} />;
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Center sx={{ padding: '1em', minHeight: '100vh' }}>

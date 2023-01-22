@@ -10,12 +10,13 @@ import {
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
 import { supabase } from '~/lib/supabaseClient';
 import { useAuth } from '~/features/auth/useAuth';
 import Logo from '~/components/Logo';
+import LoadingScreen from '~/components/LoadingScreen';
 
 const signupSchema = z.object({
   firstName: z
@@ -36,7 +37,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 const LoginPage: FC = () => {
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+  const { signup, isAuthenticated, isLoading } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -83,6 +84,14 @@ const LoginPage: FC = () => {
       navigate('/confirmemail');
     }
   };
+
+  if (isAuthenticated) {
+    return <Navigate to='/' />;
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Center sx={{ padding: '1em', minHeight: '100vh' }}>

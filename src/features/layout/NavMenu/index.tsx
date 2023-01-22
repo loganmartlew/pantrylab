@@ -32,7 +32,6 @@ import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
 import NewHouseholdForm from '~/features/household/NewHouseholdForm';
-import { supabase } from '~/lib/supabaseClient';
 
 interface Props {
   isMenuOpen: boolean;
@@ -44,7 +43,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
 
   const theme = useMantineTheme();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { households, currentHousehold, setCurrentHousehold } = useHousehold();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
@@ -73,12 +72,8 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     householdModalHandlers.open();
   };
 
-  const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error(error);
-      return;
-    }
+  const onLogoutClick = async () => {
+    await logout();
     navigate('/login');
   };
 
@@ -168,7 +163,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           />
           <NavLink
             component='button'
-            onClick={logout}
+            onClick={onLogoutClick}
             label='Logout'
             icon={<MdLogout />}
           />

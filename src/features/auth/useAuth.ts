@@ -1,13 +1,18 @@
 import { useEffect, useCallback } from 'react';
 import { supabase } from '~/lib/supabaseClient';
 import { useStore } from '~/features/store';
+import { Session } from '@supabase/supabase-js';
+import { getUser } from './authApi';
 
 export const useAuth = () => {
   const { user, session, isLoading, setIsLoading, setSession, setUser } =
     useStore(s => s.auth);
 
+  const isAuthenticated = user && session;
+
   useEffect(() => {
     // Get session data if already active
+    // setIsLoading(true);
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
     });
@@ -25,9 +30,20 @@ export const useAuth = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (session) {
+      getUser(session.user.id).then(user => {
+        setUser(user);
+        setIsLoading(false);
+      });
+    }
+  }, [session]);
+
   const loginWithEmail = useCallback(
     async (email: string, password: string) => {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      setIsLoading(true);
+
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -46,6 +62,8 @@ export const useAuth = () => {
       firstName: string,
       lastName: string
     ) => {
+      setIsLoading(true);
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -62,6 +80,8 @@ export const useAuth = () => {
       }
 
       await loginWithEmail(email, password);
+
+      return data.session;
     },
     []
   );
@@ -84,5 +104,6 @@ export const useAuth = () => {
     logout,
     isLoading,
     setIsLoading,
+    isAuthenticated,
   };
 };

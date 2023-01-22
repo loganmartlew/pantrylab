@@ -17,9 +17,7 @@ export const createAuthSlice: StoreCreator<Store['auth']> = (set, get) => ({
   user: null,
   isLoading: false,
   setSession: async (session: Session | null) => {
-    set({ session, isLoading: true });
-    set({ user: await getUser(session?.user?.id ?? '') });
-    set({ isLoading: false });
+    set({ session });
   },
   setUser: (user: User | null) => {
     set({ user });
