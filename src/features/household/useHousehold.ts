@@ -20,11 +20,8 @@ export const useHousehold = () => {
 
   const { user } = useAuth();
 
-  const currentHousehold = useMemo(() => {
-    return (
-      households.find(household => household.id === currentHouseholdId) || null
-    );
-  }, [households, currentHouseholdId]);
+  const currentHousehold =
+    households.find(household => household.id === currentHouseholdId) || null;
 
   useEffect(() => {
     if (!user) {
@@ -36,7 +33,14 @@ export const useHousehold = () => {
       setHouseholds(households);
 
       if (households.length > 0 && !currentHouseholdId) {
-        setCurrentHouseholdId(households[0].id);
+        const newCurrentHouseholdId =
+          localStorage.getItem('currentHouseholdId') || '';
+
+        if (newCurrentHouseholdId) {
+          setCurrentHouseholdId(newCurrentHouseholdId);
+        } else {
+          setCurrentHouseholdId(households[0].id);
+        }
       }
     });
 
@@ -53,9 +57,8 @@ export const useHousehold = () => {
 
   const setCurrentHouseholdId = useCallback((householdId: string) => {
     setCurrentHouseholdIdAction(householdId);
-    getHouseholdUsers(householdId).then(users => {
-      if (!currentHousehold) return;
-      updateHousehold({ ...currentHousehold, users });
+    getUserHouseholds(user?.id || '').then(households => {
+      setHouseholds(households);
     });
   }, []);
 

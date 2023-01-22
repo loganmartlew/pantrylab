@@ -97,6 +97,8 @@ export const useHouseholdUsers = (householdId: string) => {
   useEffect(() => {
     if (!currentHousehold) return;
 
+    setExistingUsers(currentHousehold.users);
+
     getPendingUsers(currentHousehold.id).then(pendingUsers => {
       setPendingUsers(pendingUsers);
     });
