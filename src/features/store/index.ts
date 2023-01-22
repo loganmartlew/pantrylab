@@ -5,10 +5,12 @@ import {
   createHouseholdSlice,
   HouseholdSlice,
 } from '../household/householdSlice';
+import { InviteSlice, createInviteSlice } from '../invite/inviteSlice';
 
 export interface Store {
   auth: AuthSlice;
   household: HouseholdSlice;
+  invite: InviteSlice;
 }
 type StoreKeys = keyof Store;
 type Slices = Store[StoreKeys];
@@ -75,5 +77,6 @@ export const useStore = create<Store>()(
       set,
       get
     ),
+    invite: createSlice<InviteSlice>('invite', createInviteSlice, set, get),
   }))
 );

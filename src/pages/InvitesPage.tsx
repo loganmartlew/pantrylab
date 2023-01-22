@@ -1,7 +1,7 @@
 import { Box, Stack, Text, Title } from '@mantine/core';
 import { FC, useEffect, useState } from 'react';
 import { useAuth } from '~/features/auth/useAuth';
-import HouseholdInvite from '~/features/household/HouseholdInvite';
+import HouseholdInvite from '~/features/invite/HouseholdInvite';
 import { supabase } from '~/lib/supabaseClient';
 import { Household, Invite } from '~/types';
 

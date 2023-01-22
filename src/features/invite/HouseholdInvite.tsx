@@ -15,7 +15,7 @@ import { MdCheck, MdClose } from 'react-icons/md';
 import ConfirmationModal from '~/components/ConfirmationModal';
 import { supabase } from '~/lib/supabaseClient';
 import { Invite } from '~/types';
-import { useAuth } from '../auth/useAuth';
+import { useAuth } from '~/features/auth/useAuth';
 
 interface Props {
   invite: Invite;
