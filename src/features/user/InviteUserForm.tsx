@@ -9,44 +9,12 @@ import UserInviteCard from './UserInviteCard';
 
 interface Props {
   onClose?: () => void;
-  currentUsers: User[];
-  currentPendingUsers: User[];
+  searchUsers: (query: string) => Promise<User[]>;
+  onSubmit: (users: User[]) => void;
 }
 
-const InviteUserForm: FC<Props> = ({
-  onClose,
-  currentUsers,
-  currentPendingUsers,
-}) => {
+const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
   const [users, setUsers] = useState<User[]>([]);
-
-  const { user } = useAuth();
-  const { currentHousehold } = useHousehold();
-
-  const searchUsers = async (searchTerm: string) => {
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .neq('id', user?.id)
-      .like('email', `%${searchTerm}%`);
-
-    if (error) {
-      console.error(error);
-      return [];
-    }
-
-    if (!data) return [];
-
-    const users = data as User[];
-
-    const filteredUsers = users.filter(
-      user =>
-        !currentUsers.find(u => u.id === user.id) &&
-        !currentPendingUsers.find(u => u.id === user.id)
-    );
-
-    return filteredUsers;
-  };
 
   const addUser = (user: User) => {
     setUsers((prevUsers: User[]) => [...prevUsers, user]);
@@ -59,19 +27,7 @@ const InviteUserForm: FC<Props> = ({
   const submit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const invites = users.map(user => ({
-      user_id: user.id,
-      household_id: currentHousehold?.id,
-    }));
-
-    const { error } = await supabase
-      .from('household_user_invites')
-      .insert(invites);
-
-    if (error) {
-      console.error(error);
-      return;
-    }
+    await onSubmit(users);
 
     setUsers([]);
     if (onClose) onClose();
