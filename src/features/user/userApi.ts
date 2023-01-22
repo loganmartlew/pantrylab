@@ -138,7 +138,7 @@ export const openHouseholdUserInvitesChannel = (
   callback: (payload: unknown) => void
 ) => {
   return supabase
-    .channel('public:household_user_invites')
+    .channel('public:household_user_invites:household')
     .on(
       'postgres_changes',
       {

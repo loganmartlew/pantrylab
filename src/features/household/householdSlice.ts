@@ -45,7 +45,6 @@ export const createHouseholdSlice: StoreCreator<HouseholdSlice> = (
     }));
   },
   setCurrentHouseholdId: (householdId: string) => {
-    console.log('setting current household id', householdId);
     set({ currentHouseholdId: householdId });
     localStorage.setItem('currentHouseholdId', householdId);
   },

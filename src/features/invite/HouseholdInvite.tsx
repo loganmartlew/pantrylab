@@ -19,18 +19,17 @@ import { useAuth } from '~/features/auth/useAuth';
 
 interface Props {
   invite: Invite;
+  acceptInvite: (invite: Invite) => void;
+  declineInvite: (invite: Invite) => void;
 }
 
-const HouseholdInvite: FC<Props> = ({ invite }) => {
+const HouseholdInvite: FC<Props> = ({
+  invite,
+  acceptInvite,
+  declineInvite,
+}) => {
   const [isAcceptModalOpen, acceptModalHandlers] = useDisclosure(false);
   const [isDeclineModalOpen, declineModalHandlers] = useDisclosure(false);
-
-  const updateInviteStatus = async (status: 'accepted' | 'declined') => {
-    supabase
-      .from('household_user_invites')
-      .update({ status })
-      .eq('id', invite.id);
-  };
 
   return (
     <Paper shadow='xs' p='sm'>
@@ -52,7 +51,7 @@ const HouseholdInvite: FC<Props> = ({ invite }) => {
           <ConfirmationModal
             isOpen={isAcceptModalOpen}
             onClose={acceptModalHandlers.close}
-            onConfirm={() => updateInviteStatus('accepted')}
+            onConfirm={() => acceptInvite(invite)}
             title='Accept Invite'
             message='Are you sure you want to accept the invitation?'
           />
@@ -69,7 +68,7 @@ const HouseholdInvite: FC<Props> = ({ invite }) => {
           <ConfirmationModal
             isOpen={isDeclineModalOpen}
             onClose={declineModalHandlers.close}
-            onConfirm={() => updateInviteStatus('declined')}
+            onConfirm={() => declineInvite(invite)}
             title='Decline Invite'
             message='Are you sure you want to decline the invitation?'
           />

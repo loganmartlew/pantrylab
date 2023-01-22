@@ -1,11 +1,7 @@
-import { useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useStore } from '~/features/store';
 import { useAuth } from '~/features/auth/useAuth';
-import {
-  getHouseholdUsers,
-  getUserHouseholds,
-  openUserHouseholdsChannel,
-} from './householdApi';
+import { getUserHouseholds, openUserHouseholdsChannel } from './householdApi';
 import { supabase } from '~/lib/supabaseClient';
 
 export const useHousehold = () => {

@@ -32,6 +32,7 @@ import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
 import NewHouseholdForm from '~/features/household/NewHouseholdForm';
+import { useInvite } from '~/features/invite/useInvite';
 
 interface Props {
   isMenuOpen: boolean;
@@ -46,6 +47,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const { user, logout } = useAuth();
   const { households, currentHousehold, setCurrentHouseholdId } =
     useHousehold();
+  useInvite();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
