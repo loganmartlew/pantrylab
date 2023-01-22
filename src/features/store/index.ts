@@ -40,15 +40,15 @@ export const storeMergeSet = <T = Slices>(
   return (newState: NewState<T>) => {
     if (typeof newState === 'function') {
       storeSet(state => ({
-        auth: {
-          ...state.auth,
+        [sliceName]: {
+          ...state[sliceName],
           ...newState(state[sliceName] as T),
         },
       }));
     } else {
       storeSet(state => ({
-        auth: {
-          ...state.auth,
+        [sliceName]: {
+          ...state[sliceName],
           ...newState,
         },
       }));

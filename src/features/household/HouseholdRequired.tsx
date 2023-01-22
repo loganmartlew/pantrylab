@@ -1,13 +1,18 @@
 import { Box, Title } from '@mantine/core';
 import { FC } from 'react';
 import { useLocation, Outlet } from 'react-router-dom';
+import LoadingScreen from '~/components/LoadingScreen';
 import NewHouseholdForm from './NewHouseholdForm';
 import { useHousehold } from './useHousehold';
 
 interface Props {}
 
 const HouseholdRequired: FC<Props> = () => {
-  const { currentHousehold } = useHousehold();
+  const { currentHousehold, isLoading } = useHousehold();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   if (!currentHousehold) {
     return (

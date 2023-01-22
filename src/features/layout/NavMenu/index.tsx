@@ -44,7 +44,8 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { households, currentHousehold, setCurrentHousehold } = useHousehold();
+  const { households, currentHousehold, setCurrentHouseholdId } =
+    useHousehold();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
@@ -65,7 +66,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
 
   const handleHouseholdChange = (householdId: string) => {
     if (householdId !== '-1') {
-      setCurrentHousehold(householdId);
+      setCurrentHouseholdId(householdId);
       return;
     }
 
