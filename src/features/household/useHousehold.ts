@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { useStore } from '~/features/store';
 import { useAuth } from '~/features/auth/useAuth';
-import { getUserHouseholds, openUserHouseholdsChannel } from './householdApi';
+import {
+  getHouseholdUsers,
+  getUserHouseholds,
+  openUserHouseholdsChannel,
+} from './householdApi';
 import { supabase } from '~/lib/supabaseClient';
 
 export const useHousehold = () => {
@@ -10,14 +14,17 @@ export const useHousehold = () => {
     currentHouseholdId,
     isLoading,
     setHouseholds,
-    setCurrentHouseholdId,
-    setIsLoading,
+    setCurrentHouseholdId: setCurrentHouseholdIdAction,
+    updateHousehold,
   } = useStore(s => s.household);
 
   const { user } = useAuth();
 
-  const currentHousehold =
-    households.find(household => household.id === currentHouseholdId) || null;
+  const currentHousehold = useMemo(() => {
+    return (
+      households.find(household => household.id === currentHouseholdId) || null
+    );
+  }, [households, currentHouseholdId]);
 
   useEffect(() => {
     if (!user) {
@@ -42,6 +49,14 @@ export const useHousehold = () => {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, []);
+
+  const setCurrentHouseholdId = useCallback((householdId: string) => {
+    setCurrentHouseholdIdAction(householdId);
+    getHouseholdUsers(householdId).then(users => {
+      if (!currentHousehold) return;
+      updateHousehold({ ...currentHousehold, users });
+    });
   }, []);
 
   return {

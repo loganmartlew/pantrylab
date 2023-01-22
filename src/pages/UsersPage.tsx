@@ -18,8 +18,6 @@ const UsersPage: FC<Props> = () => {
   const { currentHousehold } = useHousehold();
   const {
     users,
-    existingUsers,
-    pendingUsers,
     isHouseholdOwner,
     removeUser,
     removePendingUser,

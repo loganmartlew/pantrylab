@@ -13,7 +13,7 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { user } = useAuth();
-  const { households, setCurrentHousehold } = useHousehold();
+  const { households, setCurrentHouseholdId } = useHousehold();
 
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setHouseholdName(e.target.value);
@@ -67,7 +67,7 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
       return;
     }
 
-    setCurrentHousehold(householdData[0].id);
+    setCurrentHouseholdId(householdData[0].id);
 
     setHouseholdName('');
     if (onClose) {

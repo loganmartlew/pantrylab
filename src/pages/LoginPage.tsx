@@ -42,7 +42,6 @@ const LoginPage: FC = () => {
   const submit = async (values: LoginFormValues) => {
     await loginWithEmail(values.email, values.password);
 
-    console.log('Navigate:', searchParams.get('redirectTo') || '/');
     navigate(searchParams.get('redirectTo') || '/');
   };
 

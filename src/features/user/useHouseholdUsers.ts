@@ -213,7 +213,6 @@ export const useHouseholdUsers = (householdId: string) => {
   );
 
   const searchUsersToInvite = async (searchTerm: string) => {
-    console.log('Search: ', searchTerm);
     const { data, error } = await supabase
       .from('users')
       .select('*')

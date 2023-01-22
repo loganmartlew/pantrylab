@@ -1,14 +1,14 @@
 import { supabase } from '~/lib/supabaseClient';
+import { Household, User } from '~/types';
 
 export const getUserHouseholds = async (userId: string) => {
   if (!userId) {
     return [];
   }
 
-  const { data, error } = await supabase
-    .from('households')
-    .select('*, household_users!inner(users(*))')
-    .eq('household_users.user_id', userId);
+  const { data, error } = await supabase.rpc('get_user_households', {
+    _user_id: userId,
+  });
 
   if (error) {
     console.error(error);
@@ -18,15 +18,28 @@ export const getUserHouseholds = async (userId: string) => {
     return [];
   }
 
-  const householdUsers = data.map(household => {
-    return {
-      id: household.id,
-      name: household.name,
-      created_at: household.created_at,
-      owner_id: household.owner_id,
-      users: household.household_users.map((hu: any) => hu.users),
-    };
-  });
+  return data as Household[];
+};
+
+export const getHouseholdUsers = async (householdId: string) => {
+  if (!householdId) {
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from('household_users')
+    .select('*, users!inner(*)')
+    .eq('household_id', householdId);
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  const householdUsers = data.map((hu: any) => hu.users) as User[];
 
   return householdUsers;
 };
