@@ -1,7 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { User } from '~/types';
-import { Store, StoreCreator } from '~/features/store';
-import { getUser } from './authApi';
+import { NewState, StoreCreator, storeMergeSet } from '~/features/store';
 
 export interface AuthSlice {
   session: Session | null;
@@ -12,7 +11,7 @@ export interface AuthSlice {
   setIsLoading: (isLoading: boolean) => void;
 }
 
-export const createAuthSlice: StoreCreator<Store['auth']> = (set, get) => ({
+export const createAuthSlice: StoreCreator<AuthSlice> = (set, get) => ({
   session: null,
   user: null,
   isLoading: false,

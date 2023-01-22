@@ -1,12 +1,17 @@
-import { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { AuthSlice, createAuthSlice } from '~/features/auth/authSlice';
-import { User } from '~/types';
+import {
+  createHouseholdSlice,
+  HouseholdSlice,
+} from '../household/householdSlice';
 
 export interface Store {
   auth: AuthSlice;
+  household: HouseholdSlice;
 }
+type StoreKeys = keyof Store;
+type Slices = Store[StoreKeys];
 
 type Get = () => Store;
 type Set = <
@@ -21,33 +26,54 @@ type Set = <
   action?: A | undefined
 ) => void;
 
-type NewState<T> = Partial<T> | ((state: T) => Partial<T>);
+export type NewState<T> = Partial<T> | ((state: T) => Partial<T>);
 
-type SetMerge<T> = (newState: NewState<T>) => void;
+export type StoreCreator<T = Slices> = (
+  set: ReturnType<typeof storeMergeSet<T>>,
+  get: Get
+) => T;
 
-export type StoreCreator<T> = (set: SetMerge<T>, get: Get) => T;
+export const storeMergeSet = <T = Slices>(
+  sliceName: StoreKeys,
+  storeSet: Set
+) => {
+  return (newState: NewState<T>) => {
+    if (typeof newState === 'function') {
+      storeSet(state => ({
+        auth: {
+          ...state.auth,
+          ...newState(state[sliceName] as T),
+        },
+      }));
+    } else {
+      storeSet(state => ({
+        auth: {
+          ...state.auth,
+          ...newState,
+        },
+      }));
+    }
+  };
+};
 
-const createSlice = (
-  sliceFn: StoreCreator<Store[typeof sliceName]>,
-  sliceName: keyof Store,
+const createSlice = <T = Slices>(
+  sliceName: StoreKeys,
+  sliceFn: StoreCreator<T>,
   set: Set,
   get: Get
 ) => {
-  function setMerge(newState: NewState<Store[typeof sliceName]>) {
-    if (typeof newState === 'function') {
-      set(state => ({
-        [sliceName]: { ...state[sliceName], ...newState(state[sliceName]) },
-      }));
-    } else {
-      set(state => ({ [sliceName]: { ...state[sliceName], ...newState } }));
-    }
-  }
-
-  return sliceFn(setMerge, get);
+  const mergeSet = storeMergeSet<T>(sliceName, set);
+  return sliceFn(mergeSet, get);
 };
 
 export const useStore = create<Store>()(
   devtools<Store>((set, get) => ({
-    auth: createSlice(createAuthSlice, 'auth', set, get),
+    auth: createSlice<AuthSlice>('auth', createAuthSlice, set, get),
+    household: createSlice<HouseholdSlice>(
+      'household',
+      createHouseholdSlice,
+      set,
+      get
+    ),
   }))
 );
