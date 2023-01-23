@@ -41,9 +41,26 @@ export const deleteItem = async (itemId: string) => {
     return null;
   }
 
-  const { error } = await supabase.from('items').delete().eq('id', itemId);
+  const { error: listsError } = await supabase
+    .from('list_items')
+    .delete()
+    .eq('item_id', itemId);
+  const { error: mealsError } = await supabase
+    .from('meal_items')
+    .delete()
+    .eq('item_id', itemId);
+  const { error: itemsError } = await supabase
+    .from('items')
+    .delete()
+    .eq('id', itemId);
 
-  if (error) {
-    console.error(error);
+  if (listsError) {
+    console.error(listsError);
+  }
+  if (mealsError) {
+    console.error(mealsError);
+  }
+  if (itemsError) {
+    console.error(itemsError);
   }
 };

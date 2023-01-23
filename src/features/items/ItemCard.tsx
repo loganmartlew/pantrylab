@@ -7,8 +7,10 @@ import {
   Tooltip,
   useMantineTheme,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd, MdCheck, MdDelete } from 'react-icons/md';
+import ConfirmDeleteModal from '~/components/ConfirmDeleteModal';
 import { Item } from '~/types';
 
 interface Props {
@@ -26,6 +28,8 @@ const ItemCard: FC<Props> = ({
   addToList,
   removeFromList,
 }) => {
+  const [isDeleteModalOpen, deleteModalHandlers] = useDisclosure(false);
+
   const theme = useMantineTheme();
 
   return (
@@ -38,7 +42,7 @@ const ItemCard: FC<Props> = ({
           {addedToList ? 'In list' : ''}
         </Text>
         <Tooltip label='Delete Item' position='left' withArrow>
-          <ActionIcon size='md' color='red' onClick={deleteItem}>
+          <ActionIcon size='md' color='red' onClick={deleteModalHandlers.open}>
             <MdDelete size={theme.fontSizes.xl} />
           </ActionIcon>
         </Tooltip>
@@ -67,6 +71,14 @@ const ItemCard: FC<Props> = ({
           </Tooltip>
         )}
       </Group>
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={deleteModalHandlers.close}
+        onConfirm={deleteItem}
+        phraseToType={item.name}
+        message='Are you sure you want to delete this item? This action cannot be undone.'
+        description='Doing so will also remove it from any lists or meals it is currently added to.'
+      />
     </Paper>
   );
 };
