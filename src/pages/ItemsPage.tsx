@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Modal,
   ScrollArea,
   Select,
   Stack,
@@ -8,14 +9,23 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { useHousehold } from '~/features/household/useHousehold';
+import NewItemForm from '~/features/items/NewItemForm';
 import { useItem } from '~/features/items/useItem';
 
 const ItemsPage: FC = () => {
+  const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
+
   const { currentHousehold } = useHousehold();
-  const { filteredItems } = useItem();
+  const { filteredItems, addItem } = useItem();
+
+  const addNewItem = (name: string) => {
+    addItem(name);
+    itemModalHandlers.close();
+  };
 
   return (
     <Box p='md'>
@@ -41,11 +51,19 @@ const ItemsPage: FC = () => {
         <Button
           variant='light'
           leftIcon={<MdAdd size='1.1rem' />}
+          onClick={itemModalHandlers.open}
           sx={{ width: '100%' }}
         >
           New Item
         </Button>
       </Box>
+      <Modal
+        opened={isItemModalOpen}
+        onClose={itemModalHandlers.close}
+        title='New Item'
+      >
+        <NewItemForm onSubmit={addNewItem} />
+      </Modal>
     </Box>
   );
 };

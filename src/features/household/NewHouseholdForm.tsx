@@ -79,7 +79,7 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
     <Box component='form' onSubmit={submit}>
       <TextInput
         label='Household Name'
-        placeholder='New Household'
+        placeholder='New household name'
         error={errorMessage}
         onChange={onNameChange}
         autoFocus
