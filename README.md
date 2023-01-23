@@ -9,9 +9,8 @@
 - [x] Authentication
 - [x] Navigation
 - [x] Household creation/selection
-- [ ] User invite system
-  - [ ] Implement accepting/rejecting invites
-- [ ] Grocery items
+- [x] User invite system
+- [x] Grocery items
 - [ ] Shopping lists
 - [ ] Meals
 - [ ] Meal plans
