@@ -22,8 +22,14 @@ const ItemsPage: FC = () => {
   const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
 
   const { currentHousehold } = useHousehold();
-  const { filteredItems, addItem, itemSearchTerm, onSearchChange, removeItem } =
-    useItem();
+  const {
+    items,
+    filteredItems,
+    addItem,
+    itemSearchTerm,
+    onSearchChange,
+    removeItem,
+  } = useItem();
 
   const addNewItem = (name: string) => {
     addItem(name);
@@ -80,7 +86,7 @@ const ItemsPage: FC = () => {
         onClose={itemModalHandlers.close}
         title='New Item'
       >
-        <NewItemForm onSubmit={addNewItem} />
+        <NewItemForm onSubmit={addNewItem} items={items} />
       </Modal>
     </Box>
   );

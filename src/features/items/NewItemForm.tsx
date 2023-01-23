@@ -1,11 +1,13 @@
 import { Box, Button, TextInput } from '@mantine/core';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { Item } from '~/types';
 
 interface Props {
   onSubmit: (name: string) => void;
+  items: Item[];
 }
 
-const NewItemForm: FC<Props> = ({ onSubmit }) => {
+const NewItemForm: FC<Props> = ({ onSubmit, items }) => {
   const [itemName, setItemName] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -20,7 +22,18 @@ const NewItemForm: FC<Props> = ({ onSubmit }) => {
     e.preventDefault();
 
     if (!itemName.trim()) {
-      setErrorMessage('Please enter a household name');
+      setErrorMessage('Please enter an item name');
+      return;
+    }
+
+    const existingItem = items.find(
+      item =>
+        item.name.toLowerCase() === itemName.toLowerCase() ||
+        item.name.trim().toLowerCase() === itemName.toLowerCase()
+    );
+
+    if (existingItem) {
+      setErrorMessage('Item with this name already exists');
       return;
     }
 
