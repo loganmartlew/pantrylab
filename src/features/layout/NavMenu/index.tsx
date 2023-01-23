@@ -25,6 +25,7 @@ import {
   MdSettings,
   MdPeopleOutline,
   MdMail,
+  MdMarkEmailUnread,
 } from 'react-icons/md';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
@@ -47,7 +48,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const { user, logout } = useAuth();
   const { households, currentHousehold, setCurrentHouseholdId } =
     useHousehold();
-  useInvite();
+  const { hasPendingInvites } = useInvite();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
@@ -104,7 +105,11 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           </Stack>
           <Tooltip label='Invites' position='left'>
             <ActionIcon size='lg' component={Link} to='/invites'>
-              <MdMail size='1.5rem' />
+              {hasPendingInvites ? (
+                <MdMarkEmailUnread size='1.5rem' />
+              ) : (
+                <MdMail size='1.5rem' />
+              )}
             </ActionIcon>
           </Tooltip>
         </Group>
