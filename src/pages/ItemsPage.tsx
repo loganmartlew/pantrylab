@@ -13,6 +13,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { useHousehold } from '~/features/household/useHousehold';
+import ItemCard from '~/features/items/ItemCard';
 import NewItemForm from '~/features/items/NewItemForm';
 import { useItem } from '~/features/items/useItem';
 
@@ -20,7 +21,7 @@ const ItemsPage: FC = () => {
   const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
 
   const { currentHousehold } = useHousehold();
-  const { filteredItems, addItem } = useItem();
+  const { filteredItems, addItem, itemSearchTerm, onSearchChange } = useItem();
 
   const addNewItem = (name: string) => {
     addItem(name);
@@ -33,19 +34,19 @@ const ItemsPage: FC = () => {
       <Title order={3} fw='normal' mb='md'>
         {currentHousehold?.name}
       </Title>
-      <Stack>
-        <Stack>
-          <TextInput placeholder='Search items' rightSection={<MdSearch />} />
-        </Stack>
-        <ScrollArea>
-          <Stack>
-            {filteredItems.length < 1 && (
-              <Text>No items in this household...</Text>
-            )}
-            {filteredItems.length >= 1 &&
-              filteredItems.map(item => <p>{item.name}</p>)}
-          </Stack>
-        </ScrollArea>
+      <TextInput
+        mb='md'
+        placeholder='Search items'
+        rightSection={<MdSearch />}
+        value={itemSearchTerm}
+        onChange={onSearchChange}
+      />
+      <Stack pb='sm'>
+        {filteredItems.length < 1 && <Text>No items in this household...</Text>}
+        {filteredItems.length >= 1 &&
+          filteredItems.map((item, i) => (
+            <ItemCard key={item.id} item={item} addedToList={i === 2} />
+          ))}
       </Stack>
       <Box p='md' sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
         <Button

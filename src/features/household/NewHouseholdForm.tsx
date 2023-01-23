@@ -80,8 +80,9 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
       <TextInput
         label='Household Name'
         placeholder='New household name'
-        error={errorMessage}
+        value={householdName}
         onChange={onNameChange}
+        error={errorMessage}
         autoFocus
         mb='sm'
       />
