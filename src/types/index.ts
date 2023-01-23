@@ -22,3 +22,10 @@ export interface Invite {
   user_id: string;
   status: 'pending' | 'accepted' | 'declined';
 }
+
+export interface Item {
+  id: string;
+  created_at: Date;
+  name: string;
+  household_id: string;
+}
