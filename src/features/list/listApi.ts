@@ -27,6 +27,7 @@ export const getHouseholdList = async (householdId: string) => {
     household_id: item.household_id,
     completed_at: item.completed_at,
     complete: item.complete,
+    details: item.details,
   }));
 
   return listItems as ListItem[];

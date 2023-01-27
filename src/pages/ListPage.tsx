@@ -21,7 +21,11 @@ const ListPage: FC = () => {
         )}
         {currentItems.length >= 1 &&
           currentItems.map(item => (
-            <ListItemCard key={item.id} item={item.item} details='Light blue' />
+            <ListItemCard
+              key={item.id}
+              item={item.item}
+              details={item.details}
+            />
           ))}
       </Stack>
     </Box>

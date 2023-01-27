@@ -38,4 +38,5 @@ export interface ListItem {
   household_id: string;
   completed_at: Date | null;
   complete: boolean;
+  details: string;
 }
