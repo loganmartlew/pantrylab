@@ -29,3 +29,13 @@ export interface Item {
   name: string;
   household_id: string;
 }
+
+export interface ListItem {
+  id: string;
+  created_at: Date;
+  item: Item;
+  item_id: string;
+  household_id: string;
+  completed_at: Date | null;
+  complete: boolean;
+}

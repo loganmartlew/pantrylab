@@ -14,9 +14,9 @@ import { FC } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import ConfirmDeleteModal from '~/components/ConfirmDeleteModal';
 import { useHousehold } from '~/features/household/useHousehold';
-import ItemCard from '~/features/items/ItemCard';
-import NewItemForm from '~/features/items/NewItemForm';
-import { useItem } from '~/features/items/useItem';
+import ItemCard from '~/features/item/ItemCard';
+import NewItemForm from '~/features/item/NewItemForm';
+import { useItem } from '~/features/item/useItem';
 
 const ItemsPage: FC = () => {
   const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
