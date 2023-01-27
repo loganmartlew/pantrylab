@@ -15,13 +15,13 @@ const ListPage: FC = () => {
         {currentHousehold?.name}
       </Title>
       <Stack>
-        <Title order={2}>Current Items</Title>
+        <Title order={2}>Current Items ({currentItems.length})</Title>
         {currentItems.length < 1 && (
           <Text>No items in this shopping list...</Text>
         )}
         {currentItems.length >= 1 &&
           currentItems.map(item => (
-            <ListItemCard key={item.id} item={item.item} />
+            <ListItemCard key={item.id} item={item.item} details='Light blue' />
           ))}
       </Stack>
     </Box>
