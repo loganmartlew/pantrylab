@@ -10,6 +10,19 @@ export const useList = () => {
   const [list, setList] = useState<ListItem[]>([]);
 
   const currentItems = list.filter(item => !item.complete);
+
+  const sortedCurrentItems = [...currentItems].sort((a, b) => {
+    if (a.created_at! < b.created_at!) {
+      return -1;
+    }
+
+    if (a.created_at! > b.created_at!) {
+      return 1;
+    }
+
+    return 0;
+  });
+
   const completedItems = list.filter(
     item => item.complete && item.completed_at
   );
@@ -78,8 +91,7 @@ export const useList = () => {
 
   return {
     list,
-    currentItems,
-    completedItems,
+    currentItems: sortedCurrentItems,
     historicItems: sortedHistoricItems,
   };
 };
