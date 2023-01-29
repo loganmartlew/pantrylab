@@ -1,15 +1,20 @@
 import {
   ActionIcon,
+  Box,
+  Button,
   Checkbox,
   Group,
   Menu,
+  Modal,
   Paper,
   Stack,
   Text,
+  TextInput,
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { FC } from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import { FC, FormEvent, useRef } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { Item } from '~/types';
@@ -29,7 +34,18 @@ const ListItemCard: FC<Props> = ({
   editItemDetails,
   removeItem,
 }) => {
+  const [isEditModalOpen, editModalHandlers] = useDisclosure(false);
   const theme = useMantineTheme();
+
+  const detailsRef = useRef<HTMLInputElement>(null);
+
+  const saveDetails = (e: FormEvent) => {
+    e.preventDefault();
+    if (detailsRef.current) {
+      editItemDetails(detailsRef.current.value);
+    }
+    editModalHandlers.close();
+  };
 
   return (
     <Paper shadow='xs' p='sm'>
@@ -51,7 +67,7 @@ const ListItemCard: FC<Props> = ({
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item icon={<MdEdit />} onClick={() => console.log('Edit')}>
+            <Menu.Item icon={<MdEdit />} onClick={editModalHandlers.open}>
               Edit Details
             </Menu.Item>
             <Menu.Item color='red' icon={<MdDelete />} onClick={removeItem}>
@@ -60,6 +76,25 @@ const ListItemCard: FC<Props> = ({
           </Menu.Dropdown>
         </Menu>
       </Group>
+      <Modal
+        opened={isEditModalOpen}
+        onClose={editModalHandlers.close}
+        title='Edit Item'
+      >
+        <Box component='form' onSubmit={saveDetails}>
+          <Title order={4} mb='sm'>
+            {item.name}
+          </Title>
+          <TextInput
+            label='Item Details'
+            placeholder='Details'
+            mb='sm'
+            ref={detailsRef}
+            defaultValue={details}
+          />
+          <Button type='submit'>Save</Button>
+        </Box>
+      </Modal>
     </Paper>
   );
 };
