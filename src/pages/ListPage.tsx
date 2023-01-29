@@ -1,5 +1,6 @@
 import { Box, Divider, Space, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
+import PageWrapper from '~/components/PageWrapper';
 import { useHousehold } from '~/features/household/useHousehold';
 import HistoricListItemCard from '~/features/list/HistoricListItemCard';
 import ListItemCard from '~/features/list/ListItemCard';
@@ -24,11 +25,7 @@ const ListPage: FC = () => {
   };
 
   return (
-    <Box p='md'>
-      <Title order={1}>Shopping List</Title>
-      <Title order={3} fw='normal' mb='md'>
-        {currentHousehold?.name}
-      </Title>
+    <PageWrapper title='Shopping List' subtitle={currentHousehold?.name}>
       <Stack>
         <Title order={2}>Current Items ({currentItems.length})</Title>
         {currentItems.length < 1 && (
@@ -63,7 +60,7 @@ const ListPage: FC = () => {
             </>
           ))}
       </Stack>
-    </Box>
+    </PageWrapper>
   );
 };
 

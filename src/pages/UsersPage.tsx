@@ -8,6 +8,7 @@ import UserCard from '~/features/user/UserCard';
 import InviteUserForm from '~/features/user/InviteUserForm';
 import { useHouseholdUsers } from '~/features/user/useHouseholdUsers';
 import { User } from '~/types';
+import PageWrapper from '~/components/PageWrapper';
 
 interface Props {}
 
@@ -38,11 +39,7 @@ const UsersPage: FC<Props> = () => {
   };
 
   return (
-    <Box p='md'>
-      <Title order={1}>Users</Title>
-      <Title order={3} fw='normal' mb='md'>
-        {currentHousehold?.name}
-      </Title>
+    <PageWrapper title='Users' subtitle={currentHousehold?.name}>
       <Stack>
         {isHouseholdOwner && (
           <Button
@@ -80,7 +77,7 @@ const UsersPage: FC<Props> = () => {
           onSubmit={handleInviteUsers}
         />
       </Modal>
-    </Box>
+    </PageWrapper>
   );
 };
 

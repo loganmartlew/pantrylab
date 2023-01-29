@@ -1,19 +1,14 @@
-import { Box, Stack, Text, Title } from '@mantine/core';
-import { FC, useEffect, useState } from 'react';
-import { useAuth } from '~/features/auth/useAuth';
+import { Stack, Text } from '@mantine/core';
+import { FC } from 'react';
+import PageWrapper from '~/components/PageWrapper';
 import HouseholdInvite from '~/features/invite/HouseholdInvite';
 import { useInvite } from '~/features/invite/useInvite';
-import { supabase } from '~/lib/supabaseClient';
-import { Household, Invite } from '~/types';
 
 const InvitesPage: FC = () => {
-  const { invites, sortedInvites, acceptInvite, declineInvite } = useInvite();
+  const { sortedInvites, acceptInvite, declineInvite } = useInvite();
 
   return (
-    <Box p='md'>
-      <Title order={1} mb='md'>
-        Household Invites
-      </Title>
+    <PageWrapper title='Household Invites'>
       <Stack>
         {sortedInvites.length < 1 && <Text>You have no pending invites.</Text>}
         {sortedInvites.length >= 1 &&
@@ -26,7 +21,7 @@ const InvitesPage: FC = () => {
             />
           ))}
       </Stack>
-    </Box>
+    </PageWrapper>
   );
 };
 

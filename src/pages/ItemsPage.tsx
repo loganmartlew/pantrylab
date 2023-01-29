@@ -12,6 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { FC, useState } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
+import PageWrapper from '~/components/PageWrapper';
 import { useHousehold } from '~/features/household/useHousehold';
 import ItemCard from '~/features/item/ItemCard';
 import NewItemForm from '~/features/item/NewItemForm';
@@ -54,11 +55,7 @@ const ItemsPage: FC = () => {
   };
 
   return (
-    <Box p='md'>
-      <Title order={1}>Grocery Items</Title>
-      <Title order={3} fw='normal' mb='md'>
-        {currentHousehold?.name}
-      </Title>
+    <PageWrapper title='Grocery Items' subtitle={currentHousehold?.name}>
       <TextInput
         mb='md'
         placeholder='Search items'
@@ -97,7 +94,7 @@ const ItemsPage: FC = () => {
       >
         <NewItemForm onSubmit={addNewItem} items={items} />
       </Modal>
-    </Box>
+    </PageWrapper>
   );
 };
 
