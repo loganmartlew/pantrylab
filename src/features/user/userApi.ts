@@ -55,7 +55,7 @@ export const deleteUserFromHousehold = async (
   householdId: string
 ) => {
   if (!userId) {
-    return;
+    return new Error('No user id provided');
   }
 
   const { error } = await supabase
@@ -76,7 +76,7 @@ export const deletePendingUserFromHousehold = async (
   householdId: string
 ) => {
   if (!userId || !householdId) {
-    return;
+    return new Error('No user id or household id provided');
   }
 
   const { error } = await supabase
@@ -97,7 +97,7 @@ export const inviteUsersToHousehold = async (
   householdId: string
 ) => {
   if (!users || !householdId) {
-    return;
+    return new Error('No users or household id provided');
   }
 
   const { error } = await supabase.from('household_user_invites').insert(

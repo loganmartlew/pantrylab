@@ -3,6 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Item } from '~/types';
 import { useHousehold } from '~/features/household/useHousehold';
 import { createItem, deleteItem, getHouseholdItems } from './itemApi';
+import {
+  addItemToHouseholdList,
+  deleteItem as deleteListItem,
+} from '~/features/list/listApi';
 
 const sortItems = (items: Item[]) => {
   return [...items].sort((a, b) => {

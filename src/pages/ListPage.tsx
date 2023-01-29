@@ -5,8 +5,21 @@ import ListItemCard from '~/features/list/ListItemCard';
 import { useList } from '~/features/list/useList';
 
 const ListPage: FC = () => {
-  const { currentItems, historicItems } = useList();
+  const { currentItems, historicItems, updateListItem, removeListItem } =
+    useList();
   const { currentHousehold } = useHousehold();
+
+  const completeItem = (itemId: string) => {
+    updateListItem(itemId, { complete: true });
+  };
+
+  const removeItem = (itemId: string) => {
+    removeListItem(itemId);
+  };
+
+  const editItemDetails = (itemId: string, details: string) => {
+    updateListItem(itemId, { details });
+  };
 
   return (
     <Box p='md'>
@@ -25,6 +38,9 @@ const ListPage: FC = () => {
               key={item.id}
               item={item.item}
               details={item.details}
+              completeItem={() => completeItem(item.id)}
+              removeItem={() => removeItem(item.id)}
+              editItemDetails={details => editItemDetails(item.id, details)}
             />
           ))}
       </Stack>

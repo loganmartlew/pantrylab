@@ -36,6 +36,10 @@ export const updateInviteStatus = async (
   inviteId: string,
   status: 'pending' | 'accepted' | 'declined'
 ) => {
+  if (!inviteId) {
+    return new Error('No invite id provided');
+  }
+
   const { error } = await supabase
     .from('household_user_invites')
     .update({ status })

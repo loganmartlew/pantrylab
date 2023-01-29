@@ -33,6 +33,63 @@ export const getHouseholdList = async (householdId: string) => {
   return listItems as ListItem[];
 };
 
+export const addItemToHouseholdList = async (
+  itemId: string,
+  householdId: string
+) => {
+  if (!itemId || !householdId) {
+    return new Error('No item id or household id provided');
+  }
+
+  const { error } = await supabase
+    .from('household_list_items')
+    .insert({ item_id: itemId, household_id: householdId });
+
+  if (error) {
+    console.error(error);
+  }
+
+  return error;
+};
+
+export const updateItem = async (
+  itemId: string,
+  newItem: Partial<ListItem>
+) => {
+  if (!itemId) {
+    return new Error('No item id provided');
+  }
+
+  const { error } = await supabase
+
+    .from('household_list_items')
+    .update(newItem)
+    .eq('id', itemId);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return error;
+};
+
+export const deleteItem = async (itemId: string) => {
+  if (!itemId) {
+    return new Error('No item id provided');
+  }
+
+  const { error } = await supabase
+    .from('household_list_items')
+    .delete()
+    .eq('id', itemId);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return error;
+};
+
 export const openHouseholdListChannel = (
   householdId: string,
   callback: (payload: unknown) => void

@@ -10,13 +10,14 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
-import ConfirmDeleteModal from '~/components/ConfirmDeleteModal';
 import { useHousehold } from '~/features/household/useHousehold';
 import ItemCard from '~/features/item/ItemCard';
 import NewItemForm from '~/features/item/NewItemForm';
 import { useItem } from '~/features/item/useItem';
+import { useList } from '~/features/list/useList';
+import { Item } from '~/types';
 
 const ItemsPage: FC = () => {
   const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
@@ -30,6 +31,9 @@ const ItemsPage: FC = () => {
     onSearchChange,
     removeItem,
   } = useItem();
+  const { currentItems, addItemToList, removeListItem } = useList();
+
+  const currentItemIds = currentItems.map(item => item.item.id);
 
   const addNewItem = (name: string) => {
     addItem(name);
@@ -40,9 +44,14 @@ const ItemsPage: FC = () => {
     removeItem(id);
   };
 
-  const addToList = (id: string) => {};
+  const addToList = (item: Item) => {
+    addItemToList(item);
+  };
 
-  const removeFromList = (id: string) => {};
+  const removeFromList = async (itemId: string) => {
+    const id = currentItems.find(item => item.item.id === itemId)?.id;
+    removeListItem(id ?? '');
+  };
 
   return (
     <Box p='md'>
@@ -60,13 +69,13 @@ const ItemsPage: FC = () => {
       <Stack pb='sm'>
         {filteredItems.length < 1 && <Text>No items in this household...</Text>}
         {filteredItems.length >= 1 &&
-          filteredItems.map((item, i) => (
+          filteredItems.map(item => (
             <ItemCard
               key={item.id}
               item={item}
-              addedToList={i === 2}
+              addedToList={currentItemIds.indexOf(item.id) >= 0}
               deleteItem={() => deleteItem(item.id)}
-              addToList={() => addToList(item.id)}
+              addToList={() => addToList(item)}
               removeFromList={() => removeFromList(item.id)}
             />
           ))}

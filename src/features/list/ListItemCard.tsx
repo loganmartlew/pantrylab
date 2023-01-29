@@ -17,15 +17,24 @@ import { Item } from '~/types';
 interface Props {
   item: Item;
   details: string;
+  completeItem: () => void;
+  removeItem: () => void;
+  editItemDetails: (details: string) => void;
 }
 
-const ListItemCard: FC<Props> = ({ item, details }) => {
+const ListItemCard: FC<Props> = ({
+  item,
+  details,
+  completeItem,
+  editItemDetails,
+  removeItem,
+}) => {
   const theme = useMantineTheme();
 
   return (
     <Paper shadow='xs' p='sm'>
       <Group spacing='sm' align='flex-start'>
-        <Checkbox radius='xl' size='sm' pt='0.2em' />
+        <Checkbox radius='xl' size='sm' pt='0.2em' onClick={completeItem} />
         <Stack sx={{ flexGrow: 1, gap: 0 }}>
           <Title order={4}>{item.name}</Title>
           {details && (
@@ -45,11 +54,7 @@ const ListItemCard: FC<Props> = ({ item, details }) => {
             <Menu.Item icon={<MdEdit />} onClick={() => console.log('Edit')}>
               Edit Details
             </Menu.Item>
-            <Menu.Item
-              color='red'
-              icon={<MdDelete />}
-              onClick={() => console.log('Remove')}
-            >
+            <Menu.Item color='red' icon={<MdDelete />} onClick={removeItem}>
               Remove Item
             </Menu.Item>
           </Menu.Dropdown>

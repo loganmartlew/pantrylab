@@ -24,7 +24,7 @@ export const getHouseholdItems = async (householdId: string) => {
 
 export const createItem = async (name: string, householdId: string) => {
   if (!name || !householdId) {
-    return null;
+    return new Error('No name or household id provided');
   }
 
   const { error } = await supabase
@@ -34,11 +34,13 @@ export const createItem = async (name: string, householdId: string) => {
   if (error) {
     console.error(error);
   }
+
+  return error;
 };
 
 export const deleteItem = async (itemId: string) => {
   if (!itemId) {
-    return null;
+    return new Error('No item id provided');
   }
 
   const { error: listsError } = await supabase
@@ -56,11 +58,16 @@ export const deleteItem = async (itemId: string) => {
 
   if (listsError) {
     console.error(listsError);
+    return listsError;
   }
   if (mealsError) {
     console.error(mealsError);
+    return mealsError;
   }
   if (itemsError) {
     console.error(itemsError);
+    return itemsError;
   }
+
+  return null;
 };

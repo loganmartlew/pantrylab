@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useHousehold } from '~/features/household/useHousehold';
 import { supabase } from '~/lib/supabaseClient';
 import { Item, ListItem } from '~/types';
-import { getHouseholdList, openHouseholdListChannel } from './listApi';
+import getHistoricItems from './getHistoricItems';
+import {
+  addItemToHouseholdList,
+  deleteItem,
+  getHouseholdList,
+  openHouseholdListChannel,
+  updateItem,
+} from './listApi';
 
 export const useList = () => {
   const { currentHousehold } = useHousehold();
@@ -27,43 +35,7 @@ export const useList = () => {
     item => item.complete && item.completed_at
   );
 
-  const sortedCompletedItems = [...completedItems].sort((a, b) => {
-    if (a.completed_at! < b.completed_at!) {
-      return 1;
-    }
-
-    if (a.completed_at! > b.completed_at!) {
-      return -1;
-    }
-
-    return 0;
-  });
-
-  const historicItemsObj = sortedCompletedItems.reduce((historic, item) => {
-    const date = item.completed_at!.toLocaleDateString();
-
-    return {
-      ...historic,
-      [date]: [...(historic[date] || []), item],
-    };
-  }, {} as { [key: string]: ListItem[] });
-
-  const historicItems = Object.keys(historicItemsObj).map(key => ({
-    date: key,
-    items: historicItemsObj[key],
-  }));
-
-  const sortedHistoricItems = [...historicItems].sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    }
-
-    if (a.date > b.date) {
-      return -1;
-    }
-
-    return 0;
-  });
+  const historicItems = getHistoricItems(completedItems);
 
   useEffect(() => {
     if (!currentHousehold) {
@@ -89,9 +61,86 @@ export const useList = () => {
     };
   }, [currentHousehold]);
 
+  const addItemToList = async (item: Item) => {
+    if (!currentHousehold) return;
+
+    const oldItems = [...list];
+    setList(items => [
+      ...items,
+      {
+        id: uuidv4(),
+        created_at: new Date(),
+        item: item,
+        item_id: item.id,
+        household_id: currentHousehold.id,
+        completed_at: null,
+        complete: false,
+        details: '',
+      },
+    ]);
+
+    const error = await addItemToHouseholdList(item.id, currentHousehold.id);
+
+    if (error) {
+      setList(oldItems);
+    }
+
+    getHouseholdList(currentHousehold.id).then(items => {
+      setList(items);
+    });
+  };
+
+  const updateListItem = async (itemId: string, newItem: Partial<ListItem>) => {
+    if (!currentHousehold) return;
+
+    const oldItems = [...list];
+    setList(items =>
+      items.map(item => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            ...newItem,
+          };
+        }
+
+        return item;
+      })
+    );
+
+    const error = await updateItem(itemId, newItem);
+
+    if (error) {
+      setList(oldItems);
+    }
+
+    getHouseholdList(currentHousehold.id).then(items => {
+      setList(items);
+    });
+  };
+
+  const removeListItem = async (itemId: string) => {
+    if (!currentHousehold) return;
+
+    const oldItems = [...list];
+    setList(items => items.filter(item => item.id !== itemId));
+
+    const error = await deleteItem(itemId);
+
+    if (error) {
+      setList(oldItems);
+    }
+
+    getHouseholdList(currentHousehold.id).then(items => {
+      setList(items);
+    });
+  };
+
   return {
     list,
     currentItems: sortedCurrentItems,
-    historicItems: sortedHistoricItems,
+    historicItems,
+    addItemToList,
+    updateListItem,
+    removeListItem,
   };
 };
