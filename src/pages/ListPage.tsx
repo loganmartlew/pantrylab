@@ -1,6 +1,7 @@
 import { Box, Divider, Space, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
 import { useHousehold } from '~/features/household/useHousehold';
+import HistoricListItemCard from '~/features/list/HistoricListItemCard';
 import ListItemCard from '~/features/list/ListItemCard';
 import { useList } from '~/features/list/useList';
 import { dateToTextString } from '~/lib/dates/date';
@@ -57,7 +58,7 @@ const ListPage: FC = () => {
                 labelPosition='center'
               />
               {dateSection.items.map(item => (
-                <Text>{item.item.name}</Text>
+                <HistoricListItemCard item={item.item} details={item.details} />
               ))}
             </>
           ))}
