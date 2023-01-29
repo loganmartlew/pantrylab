@@ -1,3 +1,4 @@
+import { dateToString, stringToDate } from '~/lib/dates/date';
 import { ListItem } from '~/types';
 
 export default (items: ListItem[]) => {
@@ -14,7 +15,8 @@ export default (items: ListItem[]) => {
   });
 
   const historicItemsObj = sortedItems.reduce((historic, item) => {
-    const date = item.completed_at!.toLocaleDateString();
+    const date = dateToString(item.completed_at!);
+    console.log(date);
 
     return {
       ...historic,
@@ -23,7 +25,7 @@ export default (items: ListItem[]) => {
   }, {} as { [key: string]: ListItem[] });
 
   const historicItems = Object.keys(historicItemsObj).map(key => ({
-    date: key,
+    date: stringToDate(key),
     items: historicItemsObj[key],
   }));
 

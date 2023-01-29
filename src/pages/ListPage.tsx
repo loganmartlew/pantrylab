@@ -1,8 +1,9 @@
-import { Box, Stack, Text, Title } from '@mantine/core';
+import { Box, Divider, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
 import { useHousehold } from '~/features/household/useHousehold';
 import ListItemCard from '~/features/list/ListItemCard';
 import { useList } from '~/features/list/useList';
+import { dateToTextString } from '~/lib/dates/date';
 
 const ListPage: FC = () => {
   const { currentItems, historicItems, updateListItem, removeListItem } =
@@ -50,7 +51,10 @@ const ListPage: FC = () => {
         {historicItems.length >= 1 &&
           historicItems.map(dateSection => (
             <>
-              <Text>{dateSection.date}</Text>
+              <Divider
+                label={dateToTextString(dateSection.date)}
+                labelPosition='center'
+              />
               {dateSection.items.map(item => (
                 <Text>{item.item.name}</Text>
               ))}
