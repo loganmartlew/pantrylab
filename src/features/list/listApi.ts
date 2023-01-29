@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { supabase } from '~/lib/supabaseClient';
 import { Item, ListItem } from '~/types';
 
@@ -21,11 +22,16 @@ export const getHouseholdList = async (householdId: string) => {
 
   const listItems = data.map(item => ({
     id: item.id,
-    created_at: item.created_at,
-    item: item.items,
+    created_at: dayjs(item.created_at).toDate(),
+    item: {
+      id: item.items.id,
+      name: item.items.name,
+      created_at: dayjs(item.items.created_at).toDate(),
+      household_id: item.items.household_id,
+    },
     item_id: item.item_id,
     household_id: item.household_id,
-    completed_at: item.completed_at,
+    completed_at: dayjs(item.completed_at).toDate(),
     complete: item.complete,
     details: item.details,
   }));

@@ -1,4 +1,5 @@
 import { Select } from '@mantine/core';
+import dayjs from 'dayjs';
 import { supabase } from '~/lib/supabaseClient';
 import { Invite } from '~/types';
 
@@ -22,7 +23,7 @@ export const getUserInvites = async (userId: string) => {
 
   const invites = data.map(invite => ({
     id: invite.id,
-    created_at: invite.created_at,
+    created_at: dayjs(invite.created_at).toDate(),
     household_id: invite.household_id,
     household: invite.households,
     status: invite.status,

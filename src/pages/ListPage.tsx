@@ -44,6 +44,19 @@ const ListPage: FC = () => {
             />
           ))}
       </Stack>
+      <Stack>
+        <Title order={2}>Past Items ({historicItems.length})</Title>
+        {historicItems.length < 1 && <Text>No items in this list...</Text>}
+        {historicItems.length >= 1 &&
+          historicItems.map(dateSection => (
+            <>
+              <Text>{dateSection.date}</Text>
+              {dateSection.items.map(item => (
+                <Text>{item.item.name}</Text>
+              ))}
+            </>
+          ))}
+      </Stack>
     </Box>
   );
 };

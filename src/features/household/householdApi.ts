@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { supabase } from '~/lib/supabaseClient';
 import { Household, User } from '~/types';
 
@@ -18,7 +19,15 @@ export const getUserHouseholds = async (userId: string) => {
     return [];
   }
 
-  return data as Household[];
+  const households = data.map((household: any) => ({
+    id: household.id,
+    name: household.name,
+    created_at: dayjs(household.created_at).toDate(),
+    users: household.users,
+    owner_id: household.owner_id,
+  })) as Household[];
+
+  return households;
 };
 
 export const getHouseholdUsers = async (householdId: string) => {
@@ -39,7 +48,13 @@ export const getHouseholdUsers = async (householdId: string) => {
     return [];
   }
 
-  const householdUsers = data.map((hu: any) => hu.users) as User[];
+  const householdUsers = data.map((hu: any) => ({
+    id: hu.users.id,
+    created_at: dayjs(hu.users.created_at).toDate(),
+    email: hu.users.email,
+    first_name: hu.users.first_name,
+    last_name: hu.users.last_name,
+  })) as User[];
 
   return householdUsers;
 };
