@@ -96,10 +96,15 @@ export const useList = () => {
     const oldItems = [...list];
     setList(items =>
       items.map(item => {
+        const consolidatedItem = {
+          ...item,
+          ...newItem,
+        };
+
         if (item.id === itemId) {
           return {
-            ...item,
-            ...newItem,
+            ...consolidatedItem,
+            completed_at: consolidatedItem.complete ? new Date() : null,
           };
         }
 

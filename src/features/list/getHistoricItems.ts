@@ -16,7 +16,6 @@ export default (items: ListItem[]) => {
 
   const historicItemsObj = sortedItems.reduce((historic, item) => {
     const date = dateToString(item.completed_at!);
-    console.log(date);
 
     return {
       ...historic,

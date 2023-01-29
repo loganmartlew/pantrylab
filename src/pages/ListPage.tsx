@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Text, Title } from '@mantine/core';
+import { Box, Divider, Space, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
 import { useHousehold } from '~/features/household/useHousehold';
 import ListItemCard from '~/features/list/ListItemCard';
@@ -45,8 +45,9 @@ const ListPage: FC = () => {
             />
           ))}
       </Stack>
+      <Space h='xl' />
       <Stack>
-        <Title order={2}>Past Items ({historicItems.length})</Title>
+        <Title order={2}>Completed Items ({historicItems.length})</Title>
         {historicItems.length < 1 && <Text>No items in this list...</Text>}
         {historicItems.length >= 1 &&
           historicItems.map(dateSection => (
