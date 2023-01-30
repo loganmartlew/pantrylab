@@ -1,10 +1,7 @@
 import { Box, Button, Stack } from '@mantine/core';
 import { FC, FormEvent, useState } from 'react';
 import DebouncedTextSearch from '~/components/DebouncedTextSearch';
-import { supabase } from '~/lib/supabaseClient';
 import { User } from '~/types';
-import { useAuth } from '../auth/useAuth';
-import { useHousehold } from '../household/useHousehold';
 import UserInviteCard from './UserInviteCard';
 
 interface Props {
@@ -40,6 +37,7 @@ const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
           label='Email Address'
           placeholder='Users email address'
           fetchData={searchUsers}
+          popover
           render={(result, clearSearch) => (
             <UserInviteCard
               key={result.id}

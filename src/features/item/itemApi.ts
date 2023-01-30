@@ -30,6 +30,35 @@ export const getHouseholdItems = async (householdId: string) => {
   return items as Item[];
 };
 
+export const searchItems = async (searchTerm: string, householdId: string) => {
+  if (!searchTerm || !householdId) {
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from('items')
+    .select('*')
+    .eq('household_id', householdId)
+    .ilike('name', `%${searchTerm}%`);
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  const items = data.map((item: any) => ({
+    id: item.id,
+    created_at: dayjs(item.created_at).toDate(),
+    name: item.name,
+    household_id: item.household_id,
+  }));
+
+  return items as Item[];
+};
+
 export const createItem = async (name: string, householdId: string) => {
   if (!name || !householdId) {
     return new Error('No name or household id provided');

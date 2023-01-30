@@ -15,5 +15,7 @@
 - [ ] Meals
 - [ ] Meal plans
 - [ ] Dashboard
+- [ ] Refactor hooks to take currentHousehold as argument
+- [ ] Notifications system
 - [ ] Database security/authorization
 - [ ] Deployment

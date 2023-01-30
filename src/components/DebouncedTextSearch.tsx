@@ -8,6 +8,7 @@ interface Props<T> {
   fetchData: (searchTerm: string) => Promise<T[]>;
   render: (result: T, clearSearch: () => void) => JSX.Element;
   debounce?: number;
+  popover?: boolean;
 }
 
 function DebouncedTextSearch<T>({
@@ -16,6 +17,7 @@ function DebouncedTextSearch<T>({
   fetchData,
   render,
   debounce = 500,
+  popover,
 }: Props<T>) {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [debouncedSearchTerm] = useDebouncedValue(searchTerm.trim(), debounce);
@@ -31,27 +33,39 @@ function DebouncedTextSearch<T>({
     fetchData(debouncedSearchTerm).then(setResults);
   }, [debouncedSearchTerm]);
 
+  const textInput = (
+    <TextInput
+      label={label}
+      placeholder={placeholder}
+      value={searchTerm}
+      name='search'
+      onChange={e => setSearchTerm(e.target.value)}
+    />
+  );
+
+  const resultsList = searchTerm.trim() && (
+    <Stack>
+      {!results || results.length < 1 ? (
+        <Text>No results</Text>
+      ) : (
+        results.map(result => render(result, () => setSearchTerm('')))
+      )}
+    </Stack>
+  );
+
+  if (popover)
+    return (
+      <Popover opened={!!debouncedSearchTerm && !!searchTerm} position='bottom'>
+        <Popover.Target>{textInput}</Popover.Target>
+        <Popover.Dropdown>{resultsList}</Popover.Dropdown>
+      </Popover>
+    );
+
   return (
-    <Popover opened={!!debouncedSearchTerm && !!searchTerm} position='bottom'>
-      <Popover.Target>
-        <TextInput
-          label={label}
-          placeholder={placeholder}
-          value={searchTerm}
-          name='search'
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-      </Popover.Target>
-      <Popover.Dropdown>
-        <Stack>
-          {!results || results.length < 1 ? (
-            <Text>No results</Text>
-          ) : (
-            results.map(result => render(result, () => setSearchTerm('')))
-          )}
-        </Stack>
-      </Popover.Dropdown>
-    </Popover>
+    <Stack>
+      {textInput}
+      {resultsList}
+    </Stack>
   );
 }
 

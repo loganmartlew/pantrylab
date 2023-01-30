@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHousehold } from '~/features/household/useHousehold';
 import { supabase } from '~/lib/supabaseClient';
 import { Item, ListItem } from '~/types';
+import { searchItems } from '~/features/item/itemApi';
 import getHistoricItems from './getHistoricItems';
 import {
   addItemToHouseholdList,
@@ -140,6 +141,14 @@ export const useList = () => {
     });
   };
 
+  const searchItemsToAdd = async (searchTerm: string) => {
+    if (!currentHousehold) return [];
+
+    const items = await searchItems(searchTerm, currentHousehold.id);
+
+    return items;
+  };
+
   return {
     list,
     currentItems: sortedCurrentItems,
@@ -147,5 +156,6 @@ export const useList = () => {
     addItemToList,
     updateListItem,
     removeListItem,
+    searchItemsToAdd,
   };
 };

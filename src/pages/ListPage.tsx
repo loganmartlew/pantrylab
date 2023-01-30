@@ -1,15 +1,33 @@
-import { Box, Divider, Space, Stack, Text, Title } from '@mantine/core';
+import {
+  Button,
+  Divider,
+  Modal,
+  Space,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
+import { MdAdd } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
 import { useHousehold } from '~/features/household/useHousehold';
+import AddToListForm from '~/features/list/AddToListForm';
 import HistoricListItemCard from '~/features/list/HistoricListItemCard';
 import ListItemCard from '~/features/list/ListItemCard';
 import { useList } from '~/features/list/useList';
 import { dateToTextString } from '~/lib/dates/date';
 
 const ListPage: FC = () => {
-  const { currentItems, historicItems, updateListItem, removeListItem } =
-    useList();
+  const [isAddItemModalOpen, addItemModalHandlers] = useDisclosure(false);
+
+  const {
+    currentItems,
+    historicItems,
+    updateListItem,
+    removeListItem,
+    searchItemsToAdd,
+  } = useList();
   const { currentHousehold } = useHousehold();
 
   const completeItem = (itemId: string) => {
@@ -27,6 +45,13 @@ const ListPage: FC = () => {
   return (
     <PageWrapper title='Shopping List' subtitle={currentHousehold?.name}>
       <Stack>
+        <Button
+          variant='light'
+          leftIcon={<MdAdd />}
+          onClick={addItemModalHandlers.open}
+        >
+          Add Item
+        </Button>
         <Title order={2}>Current Items ({currentItems.length})</Title>
         {currentItems.length < 1 && (
           <Text>No items in this shopping list...</Text>
@@ -60,6 +85,13 @@ const ListPage: FC = () => {
             </>
           ))}
       </Stack>
+      <Modal
+        title='Add Item'
+        opened={isAddItemModalOpen}
+        onClose={addItemModalHandlers.close}
+      >
+        <AddToListForm searchFn={searchItemsToAdd} />
+      </Modal>
     </PageWrapper>
   );
 };
