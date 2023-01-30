@@ -12,6 +12,7 @@ interface Props<T> {
   debouncedSearchTerm: string;
   results: T[];
   setResults: (results: T[]) => void;
+  error?: string;
 }
 
 function DebouncedTextSearch<T>({
@@ -24,6 +25,7 @@ function DebouncedTextSearch<T>({
   debouncedSearchTerm,
   results,
   setResults,
+  error,
 }: Props<T>) {
   const textInput = (
     <TextInput
@@ -32,6 +34,7 @@ function DebouncedTextSearch<T>({
       value={searchTerm}
       name='search'
       onChange={e => setSearchTerm(e.target.value)}
+      error={error}
     />
   );
 

@@ -61,18 +61,28 @@ export const searchItems = async (searchTerm: string, householdId: string) => {
 
 export const createItem = async (name: string, householdId: string) => {
   if (!name || !householdId) {
-    return new Error('No name or household id provided');
+    return null;
   }
 
-  const { error } = await supabase
+  const { error, data } = await supabase
     .from('items')
-    .insert({ name, household_id: householdId });
+    .insert({ name, household_id: householdId })
+    .select()
+    .limit(1)
+    .single();
 
   if (error) {
     console.error(error);
   }
 
-  return error;
+  const item: Item = {
+    id: data?.id,
+    created_at: dayjs(data?.created_at).toDate(),
+    name: data?.name,
+    household_id: data?.household_id,
+  };
+
+  return item;
 };
 
 export const deleteItem = async (itemId: string) => {

@@ -29,6 +29,7 @@ const ListPage: FC = () => {
     removeListItem,
     searchItemsToAdd,
     addItemToList,
+    addNewItemToList,
   } = useList();
   const { currentHousehold } = useHousehold();
 
@@ -49,7 +50,10 @@ const ListPage: FC = () => {
     addItemModalHandlers.close();
   };
 
-  const addNewItem = (name: string) => {};
+  const addNewItem = (name: string) => {
+    addNewItemToList(name);
+    addItemModalHandlers.close();
+  };
 
   return (
     <PageWrapper title='Shopping List' subtitle={currentHousehold?.name}>

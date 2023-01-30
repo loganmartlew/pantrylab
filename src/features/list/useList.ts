@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHousehold } from '~/features/household/useHousehold';
 import { supabase } from '~/lib/supabaseClient';
 import { Item, ListItem } from '~/types';
-import { searchItems } from '~/features/item/itemApi';
+import { createItem, searchItems } from '~/features/item/itemApi';
 import getHistoricItems from './getHistoricItems';
 import {
   addItemToHouseholdList,
@@ -149,6 +149,45 @@ export const useList = () => {
     return items;
   };
 
+  const addNewItemToList = async (name: string) => {
+    if (!currentHousehold) return;
+
+    const newListItem: ListItem = {
+      id: uuidv4(),
+      created_at: new Date(),
+      complete: false,
+      completed_at: null,
+      details: '',
+      household_id: currentHousehold.id,
+      item_id: '',
+      item: {
+        id: uuidv4(),
+        name,
+        household_id: currentHousehold.id,
+        created_at: new Date(),
+      },
+    };
+
+    const oldItems = [...list];
+    setList(items => [...items, newListItem]);
+
+    const item = await createItem(name, currentHousehold.id);
+    if (!item) {
+      setList(oldItems);
+      return;
+    }
+
+    const error = await addItemToHouseholdList(item.id, currentHousehold.id);
+    if (error) {
+      setList(oldItems);
+      return;
+    }
+
+    getHouseholdList(currentHousehold.id).then(items => {
+      setList(items);
+    });
+  };
+
   return {
     list,
     currentItems: sortedCurrentItems,
@@ -157,5 +196,6 @@ export const useList = () => {
     updateListItem,
     removeListItem,
     searchItemsToAdd,
+    addNewItemToList,
   };
 };
