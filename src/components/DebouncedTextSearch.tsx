@@ -3,36 +3,28 @@ import { useDebouncedValue } from '@mantine/hooks';
 import { FC, useEffect, useState } from 'react';
 
 interface Props<T> {
-  label: string;
-  placeholder: string;
-  fetchData: (searchTerm: string) => Promise<T[]>;
+  label?: string;
+  placeholder?: string;
   render: (result: T, clearSearch: () => void) => JSX.Element;
-  debounce?: number;
   popover?: boolean;
+  searchTerm: string;
+  setSearchTerm: (searchTerm: string) => void;
+  debouncedSearchTerm: string;
+  results: T[];
+  setResults: (results: T[]) => void;
 }
 
 function DebouncedTextSearch<T>({
   label,
   placeholder,
-  fetchData,
   render,
-  debounce = 500,
   popover,
+  searchTerm,
+  setSearchTerm,
+  debouncedSearchTerm,
+  results,
+  setResults,
 }: Props<T>) {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [debouncedSearchTerm] = useDebouncedValue(searchTerm.trim(), debounce);
-
-  const [results, setResults] = useState<T[]>([]);
-
-  useEffect(() => {
-    if (!debouncedSearchTerm) {
-      setResults([]);
-      return;
-    }
-
-    fetchData(debouncedSearchTerm).then(setResults);
-  }, [debouncedSearchTerm]);
-
   const textInput = (
     <TextInput
       label={label}

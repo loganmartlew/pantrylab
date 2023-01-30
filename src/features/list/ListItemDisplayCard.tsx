@@ -5,11 +5,12 @@ import { Item } from '~/types';
 interface Props {
   item: Item;
   details: string;
+  onClick?: () => void;
 }
 
-const HistoricListItemCard: FC<Props> = ({ item, details }) => {
+const ListItemDisplayCard: FC<Props> = ({ item, details, onClick }) => {
   return (
-    <Paper shadow='xs' p='sm'>
+    <Paper shadow='xs' p='sm' onClick={onClick}>
       <Stack sx={{ flexGrow: 1, gap: 0 }}>
         <Title order={4}>{item.name}</Title>
         {details && (
@@ -22,4 +23,4 @@ const HistoricListItemCard: FC<Props> = ({ item, details }) => {
   );
 };
 
-export default HistoricListItemCard;
+export default ListItemDisplayCard;

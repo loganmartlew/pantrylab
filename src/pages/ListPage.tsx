@@ -13,10 +13,11 @@ import { MdAdd } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
 import { useHousehold } from '~/features/household/useHousehold';
 import AddToListForm from '~/features/list/AddToListForm';
-import HistoricListItemCard from '~/features/list/HistoricListItemCard';
 import ListItemCard from '~/features/list/ListItemCard';
+import ListItemDisplayCard from '~/features/list/ListItemDisplayCard';
 import { useList } from '~/features/list/useList';
 import { dateToTextString } from '~/lib/dates/date';
+import { Item } from '~/types';
 
 const ListPage: FC = () => {
   const [isAddItemModalOpen, addItemModalHandlers] = useDisclosure(false);
@@ -27,6 +28,7 @@ const ListPage: FC = () => {
     updateListItem,
     removeListItem,
     searchItemsToAdd,
+    addItemToList,
   } = useList();
   const { currentHousehold } = useHousehold();
 
@@ -41,6 +43,13 @@ const ListPage: FC = () => {
   const editItemDetails = (itemId: string, details: string) => {
     updateListItem(itemId, { details });
   };
+
+  const addItem = (item: Item) => {
+    addItemToList(item);
+    addItemModalHandlers.close();
+  };
+
+  const addNewItem = (name: string) => {};
 
   return (
     <PageWrapper title='Shopping List' subtitle={currentHousehold?.name}>
@@ -80,7 +89,7 @@ const ListPage: FC = () => {
                 labelPosition='center'
               />
               {dateSection.items.map(item => (
-                <HistoricListItemCard item={item.item} details={item.details} />
+                <ListItemDisplayCard item={item.item} details={item.details} />
               ))}
             </>
           ))}
@@ -90,7 +99,11 @@ const ListPage: FC = () => {
         opened={isAddItemModalOpen}
         onClose={addItemModalHandlers.close}
       >
-        <AddToListForm searchFn={searchItemsToAdd} />
+        <AddToListForm
+          searchFn={searchItemsToAdd}
+          addItemToList={addItem}
+          addNewItemToList={addNewItem}
+        />
       </Modal>
     </PageWrapper>
   );
