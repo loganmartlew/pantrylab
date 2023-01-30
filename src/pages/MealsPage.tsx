@@ -5,13 +5,15 @@ import { MdAdd } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
 import { useHousehold } from '~/features/household/useHousehold';
 import { useList } from '~/features/list/useList';
-import MealForm from '~/features/meal/MealForm';
+import MealForm, { MealFormValues } from '~/features/meal/MealForm';
 
 const MealsPage: FC = () => {
   const [isMealModalOpen, mealModalHandlers] = useDisclosure(false);
 
   const { currentHousehold } = useHousehold();
   const { searchItemsToAdd } = useList();
+
+  const handleSubmit = (values: MealFormValues) => {};
 
   return (
     <PageWrapper title='Saved Meals' subtitle={currentHousehold?.name}>
@@ -29,7 +31,7 @@ const MealsPage: FC = () => {
         opened={isMealModalOpen}
         onClose={mealModalHandlers.close}
       >
-        <MealForm searchFn={searchItemsToAdd} />
+        <MealForm searchFn={searchItemsToAdd} onSubmit={handleSubmit} />
       </Modal>
     </PageWrapper>
   );
