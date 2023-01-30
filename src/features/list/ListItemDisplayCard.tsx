@@ -10,7 +10,7 @@ interface Props {
 
 const ListItemDisplayCard: FC<Props> = ({ item, details, onClick }) => {
   return (
-    <Paper shadow='xs' p='sm' onClick={onClick}>
+    <Paper shadow='xs' p='sm' onClick={onClick} sx={{ minWidth: '250px' }}>
       <Stack sx={{ flexGrow: 1, gap: 0 }}>
         <Title order={4}>{item.name}</Title>
         {details && (

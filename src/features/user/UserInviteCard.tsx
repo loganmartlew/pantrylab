@@ -36,7 +36,10 @@ const UserInviteCard: FC<Props> = ({
       shadow='xs'
       p='sm'
       onClick={onClick}
-      sx={{ '&:hover': { backgroundColor: `hsl(0, 0%, 95%)` } }}
+      sx={{
+        minWidth: '250px',
+        '&:hover': { backgroundColor: `hsl(0, 0%, 95%)` },
+      }}
     >
       <Group align='center' spacing='md'>
         <Avatar radius='xl' size='md' color={theme.primaryColor}>

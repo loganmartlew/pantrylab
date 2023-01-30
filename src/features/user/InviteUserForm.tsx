@@ -1,6 +1,7 @@
 import { Box, Button, Stack } from '@mantine/core';
 import { FC, FormEvent, useState } from 'react';
 import DebouncedTextSearch from '~/components/DebouncedTextSearch';
+import useDebouncedTextSearch from '~/hooks/useDebouncedTextSearch';
 import { User } from '~/types';
 import UserInviteCard from './UserInviteCard';
 
@@ -12,6 +13,8 @@ interface Props {
 
 const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
   const [users, setUsers] = useState<User[]>([]);
+
+  const searchProps = useDebouncedTextSearch(searchUsers);
 
   const addUser = (user: User) => {
     setUsers((prevUsers: User[]) => [...prevUsers, user]);
@@ -36,7 +39,6 @@ const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
         <DebouncedTextSearch<User>
           label='Email Address'
           placeholder='Users email address'
-          fetchData={searchUsers}
           popover
           render={(result, clearSearch) => (
             <UserInviteCard
@@ -48,6 +50,7 @@ const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
               }}
             />
           )}
+          {...searchProps}
         />
         <Stack>
           {users.map(user => (

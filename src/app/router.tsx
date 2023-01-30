@@ -13,6 +13,7 @@ import HouseholdRequired from '~/features/household/HouseholdRequired';
 import InvitesPage from '~/pages/InvitesPage';
 import ItemsPage from '~/pages/ItemsPage';
 import ListPage from '~/pages/ListPage';
+import MealsPage from '~/pages/MealsPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
           <Route element={<HouseholdRequired />}>
             <Route path='/' element={<HomePage />} />
             <Route path='/list' element={<ListPage />} />
+            <Route path='/meals' element={<MealsPage />} />
             <Route path='/items' element={<ItemsPage />} />
             <Route path='/users' element={<UsersPage />} />
           </Route>
