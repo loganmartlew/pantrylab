@@ -87,15 +87,19 @@ const ListPage: FC = () => {
         {historicItems.length < 1 && <Text>No items in this list...</Text>}
         {historicItems.length >= 1 &&
           historicItems.map(dateSection => (
-            <>
+            <Stack key={dateToTextString(dateSection.date)}>
               <Divider
                 label={dateToTextString(dateSection.date)}
                 labelPosition='center'
               />
               {dateSection.items.map(item => (
-                <ListItemDisplayCard item={item.item} details={item.details} />
+                <ListItemDisplayCard
+                  item={item.item}
+                  details={item.details}
+                  key={item.id}
+                />
               ))}
-            </>
+            </Stack>
           ))}
       </Stack>
       <Modal
