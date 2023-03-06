@@ -13,6 +13,10 @@
 - [x] Grocery items
 - [x] Shopping lists
 - [ ] Meals
+  - [ ] Details page
+  - [ ] Delete
+  - [ ] Edit
+  - [ ] Item details
 - [ ] Meal plans
 - [ ] Dashboard
 - [ ] Refactoring
