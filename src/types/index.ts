@@ -40,3 +40,11 @@ export interface ListItem {
   complete: boolean;
   details: string;
 }
+
+export interface Meal {
+  id: string;
+  created_at: Date;
+  name: string;
+  household_id: string;
+  description: string;
+}

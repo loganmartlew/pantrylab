@@ -64,6 +64,7 @@ const MealForm: FC<Props> = ({ searchFn, onSubmit }) => {
   };
 
   const submit = async (values: MealFormValues) => {
+    form.reset();
     onSubmit(values);
   };
 
@@ -93,6 +94,7 @@ const MealForm: FC<Props> = ({ searchFn, onSubmit }) => {
             placeholder='Search items'
             render={(item, clearSearch) => (
               <MealItemCard
+                key={item.id}
                 item={item}
                 onClick={() => {
                   addItem(item);
