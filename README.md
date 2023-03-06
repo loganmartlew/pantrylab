@@ -16,9 +16,12 @@
 - [ ] Meal plans
 - [ ] Dashboard
 - [ ] Refactoring
+  - [ ] Use suspense for loading states (maybe nextjs)
+  - [ ] Move to react query
   - [ ] Hooks take currentHousehold as argument
   - [ ] Reusable ItemCard component
   - [ ] More generic entity hooks with page specific hooks
+  - [ ] Use less subscriptions/websockets
 - [ ] Notifications system
 - [ ] Database security/authorization
 - [ ] Deployment
