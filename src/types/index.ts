@@ -47,4 +47,5 @@ export interface Meal {
   name: string;
   household_id: string;
   description: string;
+  items: Item[];
 }

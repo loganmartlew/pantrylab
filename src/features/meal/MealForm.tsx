@@ -23,7 +23,7 @@ const mealSchema = z.object({
   description: z
     .string()
     .max(200, { message: 'Description must be less than 200 characters' })
-    .optional(),
+    .default(''),
   items: z.array(
     z.object({
       id: z.string(),
