@@ -23,6 +23,7 @@ export const useMeal = () => {
   const { currentHousehold } = useHousehold();
 
   useEffect(() => {
+    console.log('useMeal useEffect');
     if (!currentHousehold) {
       setMeals([]);
       return;
@@ -31,7 +32,7 @@ export const useMeal = () => {
     getHouseholdMeals(currentHousehold.id).then(meals => {
       setMeals(meals);
     });
-  });
+  }, [currentHousehold]);
 
   const addMeal = async (name: string, description: string, items: Item[]) => {
     if (!currentHousehold) return;
