@@ -14,6 +14,7 @@ import InvitesPage from '~/pages/InvitesPage';
 import ItemsPage from '~/pages/ItemsPage';
 import ListPage from '~/pages/ListPage';
 import MealsPage from '~/pages/MealsPage';
+import MealDetailsPage from '~/pages/MealDetailsPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
             <Route path='/' element={<HomePage />} />
             <Route path='/list' element={<ListPage />} />
             <Route path='/meals' element={<MealsPage />} />
+            <Route path='/meals/:id' element={<MealDetailsPage />} />
             <Route path='/items' element={<ItemsPage />} />
             <Route path='/users' element={<UsersPage />} />
           </Route>

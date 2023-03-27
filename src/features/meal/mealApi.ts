@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { supabase } from '~/lib/supabaseClient';
-import { Meal } from '~/types';
+import { Item, Meal } from '~/types';
 
 export const getHouseholdMeals = async (householdId: string) => {
   if (!householdId) {
@@ -29,6 +29,39 @@ export const getHouseholdMeals = async (householdId: string) => {
   }));
 
   return meals as Meal[];
+};
+
+export const getMeal = async (mealId: string) => {
+  if (!mealId) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from('meals')
+    .select('*, items(*)')
+    .eq('id', mealId)
+    .limit(1)
+    .single();
+
+  console.log(data);
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  const meal = {
+    id: data.id,
+    created_at: dayjs(data.created_at).toDate(),
+    name: data.name,
+    household_id: data.household_id,
+    description: data.description,
+  };
+
+  return meal as Meal;
 };
 
 export const createMeal = async (
