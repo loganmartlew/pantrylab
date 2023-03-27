@@ -36,32 +36,49 @@ export const getMeal = async (mealId: string) => {
     return null;
   }
 
-  const { data, error } = await supabase
+  const { data: mealData, error: mealError } = await supabase
     .from('meals')
-    .select('*, items(*)')
+    .select('*')
     .eq('id', mealId)
     .limit(1)
     .single();
 
-  console.log(data);
-
-  if (error) {
-    console.error(error);
+  if (mealError) {
+    console.error(mealError);
   }
 
-  if (!data) {
+  if (!mealData) {
     return null;
   }
 
-  const meal = {
-    id: data.id,
-    created_at: dayjs(data.created_at).toDate(),
-    name: data.name,
-    household_id: data.household_id,
-    description: data.description,
+  const { data: itemsData, error: itemsError } = await supabase
+    .from('meal_items')
+    .select('*, items!inner(*)')
+    .eq('meal_id', mealId);
+
+  if (itemsError) {
+    console.error(itemsError);
+  }
+
+  const itemsDataArr = itemsData || [];
+
+  const items = itemsDataArr.map(item => ({
+    id: item.items.id,
+    created_at: dayjs(item.items.created_at).toDate(),
+    name: item.items.name,
+    household_id: item.items.household_id,
+  }));
+
+  const meal: Meal = {
+    id: mealData.id,
+    created_at: dayjs(mealData.created_at).toDate(),
+    name: mealData.name,
+    household_id: mealData.household_id,
+    description: mealData.description,
+    items,
   };
 
-  return meal as Meal;
+  return meal;
 };
 
 export const createMeal = async (

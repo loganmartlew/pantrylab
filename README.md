@@ -21,7 +21,7 @@
 - [ ] Dashboard
 - [ ] Refactoring
   - [ ] Use suspense for loading states (maybe nextjs)
-  - [ ] Move to react query
+  - [ ] Move to react query or graphql
   - [ ] Hooks take currentHousehold as argument
   - [ ] Reusable ItemCard component
   - [ ] More generic entity hooks with page specific hooks
