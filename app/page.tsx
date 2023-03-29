@@ -1,19 +1,19 @@
 'use client';
 
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { useAuth } from '~/features/auth/useAuth';
 
 export default function Page() {
-  const { data, status } = useSession();
-
-  console.log(data);
+  const { logout, isAuth } = useAuth();
 
   return (
     <div>
-      <p>Hello {data ? 'authed' : 'unauthed'}</p>
-      {data ? (
-        <button onClick={() => signOut()}>Log Out</button>
+      <p>Hello {isAuth ? 'authed' : 'unauthed'}</p>
+      {isAuth ? (
+        <button onClick={() => logout()}>Log Out</button>
       ) : (
-        <button onClick={() => signIn()}>Log In</button>
+        <Link href='/auth/login'>Log In</Link>
       )}
     </div>
   );

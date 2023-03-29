@@ -1,12 +1,13 @@
 'use client';
 
 import { FC } from 'react';
-import { signIn } from 'next-auth/react';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 import { Button, Center, Stack, Text, TextInput, Title } from '@mantine/core';
 import Logo from '~/components/Logo';
 import TextLink from '~/components/TextLink';
+import { useAuth } from '~/features/auth/useAuth';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -16,6 +17,9 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginPage: FC = () => {
+  const { loginWithEmail } = useAuth();
+  const router = useRouter();
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -25,12 +29,26 @@ const LoginPage: FC = () => {
   });
 
   const submit = async (values: LoginFormValues) => {
-    await signIn('credentials', {
+    const data = await loginWithEmail({
       email: values.email,
       password: values.password,
-      redirect: true,
-      callbackUrl: '/',
     });
+
+    console.log(data);
+
+    if (!data) {
+      console.error('Login failed unexpectedly');
+      return;
+    }
+
+    if (data.error) {
+      console.error(data.error);
+      return;
+    }
+
+    if (data.ok) {
+      router.push(data.url ?? '/');
+    }
   };
 
   return (

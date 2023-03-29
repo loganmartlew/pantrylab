@@ -1,109 +1,38 @@
-import { useEffect, useCallback } from 'react';
-import { supabase } from '~/lib/supabaseClient';
-import { useStore } from '~/features/store';
-import { Session } from '@supabase/supabase-js';
-import { getUser } from './authApi';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
+interface Credentials {
+  email: string;
+  password: string;
+}
 
 export const useAuth = () => {
-  const { user, session, isLoading, setIsLoading, setSession, setUser } =
-    useStore(s => s.auth);
+  const { data, status } = useSession();
+  const router = useRouter();
 
-  const isAuthenticated = user && session;
+  const user = data?.user || null;
 
-  useEffect(() => {
-    // Get session data if already active
-    // setIsLoading(true);
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
+  const isAuth = status === 'authenticated';
+  const isLoading = status === 'loading';
+
+  const loginWithEmail = ({ email, password }: Credentials) =>
+    signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+      callbackUrl: '/',
     });
 
-    // Listen for changes to auth state
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setSession(session);
-    });
-
-    // Cleanup useffect hook
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (session) {
-      getUser(session.user.id).then(user => {
-        setUser(user);
-        setIsLoading(false);
-      });
-    }
-  }, [session]);
-
-  const loginWithEmail = useCallback(
-    async (email: string, password: string) => {
-      setIsLoading(true);
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        console.error(error);
-      }
-    },
-    []
-  );
-
-  const signup = useCallback(
-    async (
-      email: string,
-      password: string,
-      firstName: string,
-      lastName: string
-    ) => {
-      setIsLoading(true);
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            firstName,
-            lastName,
-          },
-        },
-      });
-
-      if (error) {
-        console.error(error);
-      }
-
-      await loginWithEmail(email, password);
-
-      return data.session;
-    },
-    []
-  );
-
-  const logout = useCallback(async () => {
-    const { error } = await supabase.auth.signOut();
-    setUser(null);
-
-    if (error) {
-      console.error(error);
-    }
-  }, []);
+  const logout = async () => {
+    const data = await signOut({ callbackUrl: '/', redirect: false });
+    router.push(data.url || '/');
+  };
 
   return {
     user,
-    session,
-    setSession,
-    loginWithEmail,
-    signup,
-    logout,
+    isAuth,
     isLoading,
-    setIsLoading,
-    isAuthenticated,
+    loginWithEmail,
+    logout,
   };
 };
