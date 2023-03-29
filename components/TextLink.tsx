@@ -1,26 +1,16 @@
 import { FC, ReactNode } from 'react';
 import { Box, Sx, Text, useMantineTheme } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
-interface BaseProps {
+interface Props {
   children: ReactNode;
   sx?: Sx;
   justify?: 'center' | 'start' | 'end';
-}
-
-interface RouterLinkProps extends BaseProps {
-  type: 'router';
-  to: string;
-  href?: never;
-}
-
-interface HyperLinkProps extends BaseProps {
-  type: 'hyper';
+  type: 'router' | 'hyper';
   href: string;
-  to?: never;
 }
 
-const RouterLink: FC<RouterLinkProps> = props => {
+const RouterLink: FC<Props> = props => {
   return (
     <Text component={Link} {...props}>
       {props.children}
@@ -28,15 +18,13 @@ const RouterLink: FC<RouterLinkProps> = props => {
   );
 };
 
-const HyperLink: FC<HyperLinkProps> = props => {
+const HyperLink: FC<Props> = props => {
   return (
     <Text component='a' {...props}>
       {props.children}
     </Text>
   );
 };
-
-type Props = RouterLinkProps | HyperLinkProps;
 
 const TextLink: FC<Props> = props => {
   const theme = useMantineTheme();
