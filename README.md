@@ -29,3 +29,16 @@
 - [ ] Notifications system
 - [ ] Database security/authorization
 - [ ] Deployment
+
+## Next Todo:
+
+- [ ] Auth flow
+  - [x] Login
+  - [x] Logout
+  - [ ] Signup
+  - [ ] Route protection
+  - [ ] Change password
+  - [ ] Forgot password
+- [ ] Migrate app as is
+- [ ] Move to GraphQL
+- [ ] Eliminate Zustand, maybe some Jotai
