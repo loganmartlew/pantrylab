@@ -28,27 +28,11 @@ const LoginPage: FC = () => {
     validate: zodResolver(loginSchema),
   });
 
-  const submit = async (values: LoginFormValues) => {
-    const data = await loginWithEmail({
+  const submit = (values: LoginFormValues) => {
+    loginWithEmail({
       email: values.email,
       password: values.password,
     });
-
-    console.log(data);
-
-    if (!data) {
-      console.error('Login failed unexpectedly');
-      return;
-    }
-
-    if (data.error) {
-      console.error(data.error);
-      return;
-    }
-
-    if (data.ok) {
-      router.push(data.url ?? '/');
-    }
   };
 
   return (
