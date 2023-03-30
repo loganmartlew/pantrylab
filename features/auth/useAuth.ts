@@ -1,5 +1,6 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { User } from '~/src/types';
 
 interface Credentials {
   email: string;
@@ -10,7 +11,7 @@ export const useAuth = () => {
   const { data, status } = useSession();
   const router = useRouter();
 
-  const user = data?.user || null;
+  const user = (data?.user || null) as User | null;
 
   const isAuth = status === 'authenticated';
   const isLoading = status === 'loading';

@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useAuth } from '~/features/auth/useAuth';
 
@@ -15,6 +14,7 @@ export default function Page() {
       ) : (
         <Link href='/auth/login'>Log In</Link>
       )}
+      <Link href='/app'>Go to app</Link>
     </div>
   );
 }

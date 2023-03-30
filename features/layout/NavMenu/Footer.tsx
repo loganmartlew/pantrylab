@@ -14,12 +14,16 @@ const Footer: FC<Props> = () => {
       </Text>
       <TextLink
         type='router'
-        to='/privacy'
+        href='/privacy'
         sx={{ fontSize: theme.fontSizes.xs }}
       >
         Privacy
       </TextLink>
-      <TextLink type='router' to='/terms' sx={{ fontSize: theme.fontSizes.xs }}>
+      <TextLink
+        type='router'
+        href='/terms'
+        sx={{ fontSize: theme.fontSizes.xs }}
+      >
         Terms
       </TextLink>
     </Group>

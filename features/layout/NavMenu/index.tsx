@@ -1,3 +1,5 @@
+'use client';
+
 import {
   ActionIcon,
   Avatar,
@@ -14,7 +16,7 @@ import {
   Tooltip,
   useMantineTheme,
 } from '@mantine/core';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback } from 'react';
 import {
   MdBookmarkBorder,
   MdCalendarToday,
@@ -27,13 +29,14 @@ import {
   MdMail,
   MdMarkEmailUnread,
 } from 'react-icons/md';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAuth } from '~/features/auth/useAuth';
 import { useHousehold } from '~/features/household/useHousehold';
 import Footer from './Footer';
 import NewHouseholdForm from '~/features/household/NewHouseholdForm';
 import { useInvite } from '~/features/invite/useInvite';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   isMenuOpen: boolean;
@@ -44,11 +47,12 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const [isHouseholdModalOpen, householdModalHandlers] = useDisclosure(false);
 
   const theme = useMantineTheme();
-  const navigate = useNavigate();
+  const pathname = usePathname();
   const { user, logout } = useAuth();
-  const { households, currentHousehold, setCurrentHouseholdId } =
-    useHousehold();
-  const { hasPendingInvites } = useInvite();
+  // const { households, currentHousehold, setCurrentHouseholdId } =
+  //   useHousehold();
+  // const { hasPendingInvites } = useInvite();
+  const hasPendingInvites = false;
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
@@ -56,29 +60,28 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const getNavLinkProps = useCallback(
     (path: string) => ({
       component: Link,
-      to: path,
-      active: location.pathname === path,
+      href: path,
+      active: pathname === path,
     }),
-    []
+    [pathname]
   );
 
-  const householdData = households.map(household => ({
-    label: household.name,
-    value: household.id,
-  }));
+  // const householdData = households.map(household => ({
+  //   label: household.name,
+  //   value: household.id,
+  // }));
 
   const handleHouseholdChange = (householdId: string) => {
     if (householdId !== '-1') {
-      setCurrentHouseholdId(householdId);
+      // setCurrentHouseholdId(householdId);
       return;
     }
 
     householdModalHandlers.open();
   };
 
-  const onLogoutClick = async () => {
-    await logout();
-    navigate('/login');
+  const onLogoutClick = () => {
+    logout();
   };
 
   return (
@@ -104,7 +107,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
             <Text size='xs'>{user ? user.email : 'Unknown Email'}</Text>
           </Stack>
           <Tooltip label='Invites' position='left'>
-            <ActionIcon size='lg' component={Link} to='/invites'>
+            <ActionIcon size='lg' component={Link} href='/invites'>
               {hasPendingInvites ? (
                 <MdMarkEmailUnread size='1.5rem' />
               ) : (
@@ -116,8 +119,9 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
         <Select
           label='Household'
           placeholder='Select a Household'
-          data={[{ value: '-1', label: 'New Household' }, ...householdData]}
-          value={currentHousehold?.id}
+          // data={[{ value: '-1', label: 'New Household' }, ...householdData]}
+          data={[{ value: '-1', label: 'New Household' }]}
+          // value={currentHousehold?.id}
           onChange={handleHouseholdChange}
         />
         <Modal

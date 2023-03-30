@@ -1,6 +1,6 @@
 import { Box, Sx, Title, useMantineTheme } from '@mantine/core';
 import { FC, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -34,7 +34,7 @@ const Logo: FC<Props> = ({ size, sx, homeLink }) => {
   );
 
   return homeLink ? (
-    <Box component={Link} to='/' sx={{ textDecoration: 'none' }}>
+    <Box component={Link} href='/' sx={{ textDecoration: 'none' }}>
       {logo}
     </Box>
   ) : (
