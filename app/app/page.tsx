@@ -10,16 +10,11 @@ const AppPage: FC<Props> = () => {
   const router = useRouter();
   const { user, logout } = useAuth();
 
-  const onLogoutClick = async () => {
-    await logout();
-    router.push('/auth/login');
-  };
-
   return (
     <div>
       <h1>{'Home'}</h1>
       <p>Welcome {user?.first_name}</p>
-      <button onClick={onLogoutClick}>logout</button>
+      <button onClick={logout}>logout</button>
     </div>
   );
 };

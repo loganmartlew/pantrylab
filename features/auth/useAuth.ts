@@ -19,6 +19,7 @@ export const useAuth = () => {
 
   const [user, setUser] = useState<User | null>(null);
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     console.log('[useAuth] user', user);
@@ -30,12 +31,14 @@ export const useAuth = () => {
         console.error('Error fetching session', error);
         setUser(null);
         setIsVerified(false);
+        setIsLoading(false);
         return;
       }
 
       if (!data || !data.session) {
         setUser(null);
         setIsVerified(false);
+        setIsLoading(false);
         return;
       }
 
@@ -57,6 +60,7 @@ export const useAuth = () => {
 
           if (data) {
             setUser(data);
+            setIsLoading(false);
           }
         });
     });
@@ -65,6 +69,7 @@ export const useAuth = () => {
       if (!session) {
         setUser(null);
         setIsVerified(false);
+        setIsLoading(false);
         return;
       }
 
@@ -86,6 +91,7 @@ export const useAuth = () => {
 
           if (data) {
             setUser(data);
+            setIsLoading(false);
           }
         });
     });
@@ -128,6 +134,7 @@ export const useAuth = () => {
   return {
     user,
     isAuth,
+    isLoading,
     loginWithEmail,
     logout,
     signup,

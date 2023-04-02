@@ -1,23 +1,37 @@
-import { FC } from 'react';
-import { Navigate, useLocation, Outlet } from 'react-router-dom';
+'use client';
+
+import { FC, ReactNode } from 'react';
 import LoadingScreen from '~/components/LoadingScreen';
 import { useAuth } from './useAuth';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
-interface Props {}
+interface Props {
+  children: ReactNode;
+}
 
-const AuthRequired: FC<Props> = () => {
-  const location = useLocation();
-  const { user, session, isLoading } = useAuth();
+const AuthRequired: FC<Props> = ({ children }) => {
+  const router = useRouter();
+  const params = useSearchParams();
+  const pathname = usePathname();
+  const { isAuth, isLoading } = useAuth();
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
-  if ((!user || !session) && !isLoading) {
-    return <Navigate to={`/login?redirectTo=${location.pathname}`} />;
+  if (!isAuth) {
+    router.push(
+      `/${
+        params?.get('redirectedFrom')
+          ? `redirectedFrom=${params?.get('redirectedFrom')}`
+          : `redirectedFrom=${pathname}`
+      }`
+    );
+
+    return null;
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 };
 
 export default AuthRequired;

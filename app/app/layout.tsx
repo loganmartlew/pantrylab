@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import AuthRequired from '~/features/auth/AuthRequired';
 import AppLayoutWrapper from '~/features/layout/AppLayout';
 
 interface Props {
@@ -6,7 +7,11 @@ interface Props {
 }
 
 const AppLayout: FC<Props> = ({ children }) => {
-  return <AppLayoutWrapper>{children}</AppLayoutWrapper>;
+  return (
+    <AuthRequired>
+      <AppLayoutWrapper>{children}</AppLayoutWrapper>
+    </AuthRequired>
+  );
 };
 
 export default AppLayout;
