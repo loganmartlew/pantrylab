@@ -36,7 +36,7 @@
   - [x] Login
   - [x] Logout
   - [ ] Signup
-  - [ ] Route protection
+  - [x] Route protection
   - [ ] Change password
   - [ ] Forgot password
 - [ ] Migrate app as is
