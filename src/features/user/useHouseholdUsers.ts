@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite, User } from '~/types';
 import { useAuth } from '~/features/auth/useAuth';
 import {

@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import TextLink from '~/components/TextLink';
 import { GoogleButton, FacebookButton } from '~/components/SocialButtons';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { useAuth } from '~/features/auth/useAuth';
 import Logo from '~/components/Logo';
 import LoadingScreen from '~/components/LoadingScreen';

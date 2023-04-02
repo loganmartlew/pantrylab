@@ -1,5 +1,6 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useSupabase } from '~/lib/supabase';
 import { User } from '~/src/types';
 
 interface LoginCredentials {
@@ -13,39 +14,108 @@ interface SignupCredentials extends LoginCredentials {
 }
 
 export const useAuth = () => {
-  const { data, status } = useSession();
+  const { supabase } = useSupabase();
   const router = useRouter();
 
-  const user = (data?.user || null) as User | null;
+  const [user, setUser] = useState<User | null>(null);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
 
-  const isAuth = status === 'authenticated';
-  const isLoading = status === 'loading';
+  useEffect(() => {
+    console.log('[useAuth] user', user);
+  }, [user]);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) {
+        console.error('Error fetching session', error);
+        setUser(null);
+        setIsVerified(false);
+        return;
+      }
+
+      if (!data || !data.session) {
+        setUser(null);
+        setIsVerified(false);
+        return;
+      }
+
+      const userId = data.session?.user.id;
+      const isVerified = data.session?.user.email_confirmed_at !== null;
+
+      setIsVerified(isVerified);
+
+      supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            console.log('Error fetching user', error);
+            return;
+          }
+
+          if (data) {
+            setUser(data);
+          }
+        });
+    });
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        setUser(null);
+        setIsVerified(false);
+        return;
+      }
+
+      const userId = session?.user.id;
+      const isVerified = session?.user.email_confirmed_at !== null;
+
+      setIsVerified(isVerified);
+
+      supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            console.log('Error fetching user', error);
+            return;
+          }
+
+          if (data) {
+            setUser(data);
+          }
+        });
+    });
+  }, [supabase]);
+
+  const isAuth = !!user;
 
   const loginWithEmail = async ({ email, password }: LoginCredentials) => {
-    const data = await signIn('credentials', {
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-      redirect: false,
-      callbackUrl: '/',
     });
-    if (!data) {
-      console.error('Login failed unexpectedly');
+
+    if (error) {
+      console.error('Error logging in', error);
       return;
     }
 
-    if (data.error) {
-      console.error(data.error);
-      return;
-    }
-
-    if (data.ok) {
-      router.push(data.url ?? '/');
-    }
+    router.push('/');
   };
 
   const logout = async () => {
-    const data = await signOut({ callbackUrl: '/', redirect: false });
-    router.push(data.url || '/');
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error('Error logging out', error);
+      return;
+    }
+
+    router.push('/');
   };
 
   const signup = async ({
@@ -58,7 +128,6 @@ export const useAuth = () => {
   return {
     user,
     isAuth,
-    isLoading,
     loginWithEmail,
     logout,
     signup,

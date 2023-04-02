@@ -1,23 +1,31 @@
-'use client';
+import 'server-only';
+import SupabaseListener from '~/lib/supabase/SupabaseListener';
+import SupabaseProvider from '~/lib/supabase/SupabaseProvider';
+import { createClient } from '~/lib/supabase/supabaseServer';
 
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import Providers from './providers';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  session,
 }: {
   children: React.ReactNode;
-  session: Session;
 }) {
+  const supabase = createClient();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
-    <html lang='en-US'>
+    <html lang='en'>
       <head />
       <body>
-        <SessionProvider session={session}>
-          <Providers>{children}</Providers>
-        </SessionProvider>
+        <SupabaseProvider>
+          <Providers>
+            <SupabaseListener serverAccessToken={session?.access_token} />
+            {children}
+          </Providers>
+        </SupabaseProvider>
       </body>
     </html>
   );

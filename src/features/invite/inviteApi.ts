@@ -1,6 +1,6 @@
 import { Select } from '@mantine/core';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite } from '~/types';
 
 export const getUserInvites = async (userId: string) => {

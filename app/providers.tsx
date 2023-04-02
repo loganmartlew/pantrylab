@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, ReactNode } from 'react';
 import RootStyleRegistry from './style-provider';
 import dayjs from 'dayjs';

@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useMemo } from 'react';
 import { useStore } from '~/features/store';
 import { useAuth } from '~/features/auth/useAuth';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import {
   getUserInvites,
   openUserInvitesChannel,

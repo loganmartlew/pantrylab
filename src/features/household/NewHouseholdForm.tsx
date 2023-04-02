@@ -1,6 +1,6 @@
 import { Box, Button, TextInput } from '@mantine/core';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { useAuth } from '../auth/useAuth';
 import { useHousehold } from './useHousehold';
 

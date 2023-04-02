@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useStore } from '~/features/store';
 import { useAuth } from '~/features/auth/useAuth';
 import { getUserHouseholds, openUserHouseholdsChannel } from './householdApi';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 
 export const useHousehold = () => {
   const {

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { Item, Meal } from '~/types';
 
 export const getHouseholdMeals = async (householdId: string) => {

@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { useStore } from '~/features/store';
 import { Session } from '@supabase/supabase-js';
 import { getUser } from './authApi';

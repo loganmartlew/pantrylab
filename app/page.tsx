@@ -14,6 +14,8 @@ import { useAuth } from '~/features/auth/useAuth';
 export default function Page() {
   const { isAuth, user } = useAuth();
 
+  console.log('[Page] isAuth, user', isAuth, user);
+
   const theme = useMantineTheme();
 
   const loggedIn = (

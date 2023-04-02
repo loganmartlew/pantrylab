@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { FC } from 'react';
 import { MdCheck, MdClose } from 'react-icons/md';
 import ConfirmationModal from '~/components/ConfirmationModal';
-import { supabase } from '~/lib/supabaseClient';
+import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite } from '~/types';
 import { useAuth } from '~/features/auth/useAuth';
 

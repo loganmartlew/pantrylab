@@ -37,7 +37,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 const SignupPage: FC = () => {
   const router = useRouter();
 
-  const { signup, isAuth, isLoading } = useAuth();
+  const { signup, isAuth } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -81,10 +81,6 @@ const SignupPage: FC = () => {
 
   if (isAuth) {
     router.push('/app');
-  }
-
-  if (isLoading) {
-    return <LoadingScreen />;
   }
 
   return (
@@ -134,7 +130,11 @@ const SignupPage: FC = () => {
         </form>
         <Text fz='sm' sx={{ display: 'flex', marginInline: 'auto' }}>
           Already have an account?
-          <TextLink type='router' href='/login' sx={{ marginLeft: '0.6ch' }}>
+          <TextLink
+            type='router'
+            href='/auth/login'
+            sx={{ marginLeft: '0.6ch' }}
+          >
             Login
           </TextLink>
         </Text>
