@@ -19,8 +19,6 @@ export default function Page() {
 
   const { isAuth, user } = useAuth();
 
-  console.log('[Page] isAuth, user', isAuth, user);
-
   const theme = useMantineTheme();
 
   const loggedIn = (
@@ -37,7 +35,7 @@ export default function Page() {
       <Text color='white'>You are not logged in</Text>
       <Button
         component={Link}
-        href={getUrlWithRedirected('/auth/login', params, pathname)}
+        href={getUrlWithRedirected('/auth/login', false, params, pathname)}
         variant='outline'
         sx={{ borderColor: theme.white, color: theme.white }}
       >
@@ -45,7 +43,7 @@ export default function Page() {
       </Button>
       <Button
         component={Link}
-        href={getUrlWithRedirected('/auth/signup', params, pathname)}
+        href={getUrlWithRedirected('/auth/signup', false, params, pathname)}
         variant='white'
       >
         Sign Up

@@ -71,7 +71,7 @@ const LoginPage: FC = () => {
           Don&apos;t have an account?
           <TextLink
             type='router'
-            href={getUrlWithRedirected('/auth/signup', params, pathname)}
+            href={getUrlWithRedirected('/auth/signup', false, params, pathname)}
             sx={{ marginLeft: '0.6ch' }}
           >
             Sign Up

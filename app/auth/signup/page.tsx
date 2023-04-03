@@ -39,7 +39,7 @@ const SignupPage: FC = () => {
   const params = useSearchParams();
   const pathname = usePathname();
 
-  const { signup, isAuth } = useAuth();
+  const { signup } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -80,10 +80,6 @@ const SignupPage: FC = () => {
       lastName: values.lastName,
     });
   };
-
-  if (isAuth) {
-    router.push('/app');
-  }
 
   return (
     <Center sx={{ padding: '1em', minHeight: '100vh' }}>
@@ -134,7 +130,7 @@ const SignupPage: FC = () => {
           Already have an account?
           <TextLink
             type='router'
-            href={getUrlWithRedirected('/auth/login', params, pathname)}
+            href={getUrlWithRedirected('/auth/login', false, params, pathname)}
             sx={{ marginLeft: '0.6ch' }}
           >
             Login

@@ -1,7 +1,19 @@
 import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
-import type { NextRequest } from 'next/server';
+const unauthenticated = (req: NextRequest) => {
+  const redirectUrl = req.nextUrl.clone();
+  redirectUrl.pathname = '/';
+  redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname);
+  return NextResponse.redirect(redirectUrl);
+};
+
+const unverified = (req: NextRequest) => {
+  const redirectUrl = req.nextUrl.clone();
+  redirectUrl.pathname = '/confirmemail';
+  redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname);
+  return NextResponse.redirect(redirectUrl);
+};
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -14,7 +26,7 @@ export async function middleware(req: NextRequest) {
 
   // Unauthenticated
   if (!session || !session.user) {
-    return res;
+    return unauthenticated(req);
   }
 
   const {
@@ -24,23 +36,21 @@ export async function middleware(req: NextRequest) {
 
   if (error) {
     console.error(error);
-    return res;
+    return unauthenticated(req);
   }
+
+  const isConfirmed = !!user?.email_confirmed_at;
+  const wasVerified = !!user?.confirmation_sent_at;
+  const isVerified = isConfirmed && wasVerified;
 
   // Unauthenticated
   if (!user) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = '/';
-    redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname);
-    return NextResponse.redirect(redirectUrl);
+    return unauthenticated(req);
   }
 
   // Unconfirmed email
-  if (!user.email_confirmed_at) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = '/confirmemail';
-    redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname);
-    return NextResponse.redirect(redirectUrl);
+  if (!isVerified) {
+    return unverified(req);
   }
 
   return res;

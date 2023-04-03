@@ -23,7 +23,6 @@ export const useMeal = () => {
   const { currentHousehold } = useHousehold();
 
   useEffect(() => {
-    console.log('useMeal useEffect');
     if (!currentHousehold) {
       setMeals([]);
       return;

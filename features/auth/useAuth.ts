@@ -1,17 +1,10 @@
+import { Session, User as AuthUser } from '@supabase/supabase-js';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSupabase } from '~/lib/supabase';
-import { User } from '~/src/types';
-
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-interface SignupCredentials extends LoginCredentials {
-  firstName: string;
-  lastName: string;
-}
+import { LoginCredentials, SignupCredentials, User } from '~/src/types';
+import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import { useTempCredentials } from './tempCredentialsAtom';
 
 export const useAuth = () => {
   const { supabase } = useSupabase();
@@ -22,12 +15,44 @@ export const useAuth = () => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    console.log('[useAuth] user', user);
-  }, [user]);
+  const { setCredentials } = useTempCredentials();
+
+  const sessionCallback = useCallback(
+    async (session: Session | null, user: AuthUser | null) => {
+      if (!session || !user) {
+        setUser(null);
+        setIsVerified(false);
+        setIsLoading(false);
+        return;
+      }
+
+      const userId = user.id;
+      const isVerified = !!user.email_confirmed_at;
+      const wasVerified = !!user.confirmation_sent_at;
+
+      setIsVerified(isVerified && wasVerified);
+
+      const userData = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (userData.error) {
+        console.error('Error fetching user', userData.error);
+        return;
+      }
+
+      if (userData.data) {
+        setUser(userData.data);
+        setIsLoading(false);
+      }
+    },
+    [supabase]
+  );
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data, error }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
       if (error) {
         console.error('Error fetching session', error);
         setUser(null);
@@ -36,37 +61,6 @@ export const useAuth = () => {
         return;
       }
 
-      if (!data || !data.session) {
-        setUser(null);
-        setIsVerified(false);
-        setIsLoading(false);
-        return;
-      }
-
-      const userId = data.session?.user.id;
-      const isVerified = data.session?.user.email_confirmed_at !== null;
-
-      setIsVerified(isVerified);
-
-      supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single()
-        .then(({ data, error }) => {
-          if (error) {
-            console.log('Error fetching user', error);
-            return;
-          }
-
-          if (data) {
-            setUser(data);
-            setIsLoading(false);
-          }
-        });
-    });
-
-    supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
         setUser(null);
         setIsVerified(false);
@@ -74,29 +68,23 @@ export const useAuth = () => {
         return;
       }
 
-      const userId = session?.user.id;
-      const isVerified = session?.user.email_confirmed_at !== null;
+      supabase.auth.getUser().then(({ data, error }) => {
+        if (error) {
+          console.error('Error fetching user', error);
+          setUser(null);
+          setIsVerified(false);
+          setIsLoading(false);
+          return;
+        }
 
-      setIsVerified(isVerified);
-
-      supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single()
-        .then(({ data, error }) => {
-          if (error) {
-            console.log('Error fetching user', error);
-            return;
-          }
-
-          if (data) {
-            setUser(data);
-            setIsLoading(false);
-          }
-        });
+        sessionCallback(session, data.user);
+      });
     });
-  }, [supabase]);
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      sessionCallback(session, session?.user ?? null);
+    });
+  }, [supabase, sessionCallback]);
 
   const isAuth = !!user;
 
@@ -108,19 +96,28 @@ export const useAuth = () => {
 
     if (error) {
       console.error('Error logging in', error);
+
+      if (
+        error.name === 'AuthApiError' &&
+        error.message === 'Email not confirmed'
+      ) {
+        router.push(
+          getUrlWithRedirected('/confirmemail', true, params, '/app')
+        );
+        return;
+      }
+
       return;
     }
 
-    router.push(params?.get('redirectedFrom') ?? '/');
+    setCredentials(null);
+    router.push(params?.get('redirectedFrom') ?? '/app');
   };
 
-  const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      console.error('Error logging out', error);
-      return;
-    }
+  const logout = () => {
+    supabase.auth.signOut().catch(error => {
+      console.error(error);
+    });
 
     router.push('/');
   };
@@ -130,12 +127,33 @@ export const useAuth = () => {
     password,
     firstName,
     lastName,
-  }: SignupCredentials) => {};
+  }: SignupCredentials) => {
+    setCredentials({ email, password });
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          firstName,
+          lastName,
+        },
+      },
+    });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    await loginWithEmail({ email, password });
+  };
 
   return {
     user,
     isAuth,
     isLoading,
+    isVerified,
     loginWithEmail,
     logout,
     signup,
