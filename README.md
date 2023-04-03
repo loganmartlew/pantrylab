@@ -35,7 +35,7 @@
 - [ ] Auth flow
   - [x] Login
   - [x] Logout
-  - [ ] Signup
+  - [x] Signup
   - [x] Route protection
   - [ ] Change password
   - [ ] Forgot password

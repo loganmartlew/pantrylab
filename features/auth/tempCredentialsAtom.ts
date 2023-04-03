@@ -1,6 +1,6 @@
 import { atom, useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { LoginCredentials } from '~/src/types';
+import { LoginCredentials } from '~/types';
 
 export const tempCredentialsAtom = atom<LoginCredentials | null>(null);
 

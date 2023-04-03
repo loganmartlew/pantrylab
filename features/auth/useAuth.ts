@@ -2,7 +2,7 @@ import { Session, User as AuthUser } from '@supabase/supabase-js';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import { useSupabase } from '~/lib/supabase';
-import { LoginCredentials, SignupCredentials, User } from '~/src/types';
+import { LoginCredentials, SignupCredentials, User } from '~/types';
 import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 import { useTempCredentials } from './tempCredentialsAtom';
 
