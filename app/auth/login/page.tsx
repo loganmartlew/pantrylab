@@ -7,7 +7,8 @@ import { Button, Center, Stack, Text, TextInput, Title } from '@mantine/core';
 import Logo from '~/components/Logo';
 import TextLink from '~/components/TextLink';
 import { useAuth } from '~/features/auth/useAuth';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -19,6 +20,8 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 const LoginPage: FC = () => {
   const { loginWithEmail } = useAuth();
   const router = useRouter();
+  const params = useSearchParams();
+  const pathname = usePathname();
 
   const form = useForm({
     initialValues: {
@@ -68,7 +71,7 @@ const LoginPage: FC = () => {
           Don&apos;t have an account?
           <TextLink
             type='router'
-            href='/auth/signup'
+            href={getUrlWithRedirected('/auth/signup', params, pathname)}
             sx={{ marginLeft: '0.6ch' }}
           >
             Sign Up

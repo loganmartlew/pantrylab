@@ -1,9 +1,10 @@
 'use client';
 
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import LoadingScreen from '~/components/LoadingScreen';
 import { useAuth } from './useAuth';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 
 interface Props {
   children: ReactNode;
@@ -15,20 +16,14 @@ const AuthRequired: FC<Props> = ({ children }) => {
   const pathname = usePathname();
   const { isAuth, isLoading } = useAuth();
 
+  useEffect(() => {
+    if (!isAuth && !isLoading) {
+      router.push(getUrlWithRedirected('/', params, pathname));
+    }
+  }, [isAuth, isLoading, params, pathname, router]);
+
   if (isLoading) {
     return <LoadingScreen />;
-  }
-
-  if (!isAuth) {
-    router.push(
-      `/${
-        params?.get('redirectedFrom')
-          ? `redirectedFrom=${params?.get('redirectedFrom')}`
-          : `redirectedFrom=${pathname}`
-      }`
-    );
-
-    return null;
   }
 
   return <>{children}</>;

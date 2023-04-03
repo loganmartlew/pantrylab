@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSupabase } from '~/lib/supabase';
 import { User } from '~/src/types';
@@ -16,6 +16,7 @@ interface SignupCredentials extends LoginCredentials {
 export const useAuth = () => {
   const { supabase } = useSupabase();
   const router = useRouter();
+  const params = useSearchParams();
 
   const [user, setUser] = useState<User | null>(null);
   const [isVerified, setIsVerified] = useState<boolean>(false);
@@ -110,7 +111,7 @@ export const useAuth = () => {
       return;
     }
 
-    router.push('/');
+    router.push(params?.get('redirectedFrom') ?? '/');
   };
 
   const logout = async () => {

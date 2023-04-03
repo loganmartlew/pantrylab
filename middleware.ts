@@ -12,8 +12,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  console.log('MIDDLEWARE');
-
   // Unauthenticated
   if (!session || !session.user) {
     return res;
@@ -23,8 +21,6 @@ export async function middleware(req: NextRequest) {
     data: { user },
     error,
   } = await supabase.auth.getUser();
-
-  console.log(user);
 
   if (error) {
     console.error(error);

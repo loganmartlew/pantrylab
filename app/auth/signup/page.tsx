@@ -15,8 +15,8 @@ import { z } from 'zod';
 import TextLink from '~/components/TextLink';
 import { useAuth } from '~/features/auth/useAuth';
 import Logo from '~/components/Logo';
-import LoadingScreen from '~/components/LoadingScreen';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 
 const signupSchema = z.object({
   firstName: z
@@ -36,6 +36,8 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 const SignupPage: FC = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const pathname = usePathname();
 
   const { signup, isAuth } = useAuth();
 
@@ -132,7 +134,7 @@ const SignupPage: FC = () => {
           Already have an account?
           <TextLink
             type='router'
-            href='/auth/login'
+            href={getUrlWithRedirected('/auth/login', params, pathname)}
             sx={{ marginLeft: '0.6ch' }}
           >
             Login

@@ -9,9 +9,14 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useAuth } from '~/features/auth/useAuth';
+import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 
 export default function Page() {
+  const params = useSearchParams();
+  const pathname = usePathname();
+
   const { isAuth, user } = useAuth();
 
   console.log('[Page] isAuth, user', isAuth, user);
@@ -32,13 +37,17 @@ export default function Page() {
       <Text color='white'>You are not logged in</Text>
       <Button
         component={Link}
-        href='/auth/login'
+        href={getUrlWithRedirected('/auth/login', params, pathname)}
         variant='outline'
         sx={{ borderColor: theme.white, color: theme.white }}
       >
         Log In
       </Button>
-      <Button component={Link} href='/auth/signup' variant='white'>
+      <Button
+        component={Link}
+        href={getUrlWithRedirected('/auth/signup', params, pathname)}
+        variant='white'
+      >
         Sign Up
       </Button>
     </>
