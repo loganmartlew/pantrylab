@@ -1,8 +1,11 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Item } from '~/types';
 
-export const getHouseholdItems = async (householdId: string) => {
+export const getHouseholdItems = async (
+  supabase: SupabaseClient,
+  householdId: string
+) => {
   if (!householdId) {
     return [];
   }
@@ -30,7 +33,11 @@ export const getHouseholdItems = async (householdId: string) => {
   return items as Item[];
 };
 
-export const searchItems = async (searchTerm: string, householdId: string) => {
+export const searchItems = async (
+  supabase: SupabaseClient,
+  searchTerm: string,
+  householdId: string
+) => {
   if (!searchTerm || !householdId) {
     return [];
   }
@@ -59,7 +66,11 @@ export const searchItems = async (searchTerm: string, householdId: string) => {
   return items as Item[];
 };
 
-export const createItem = async (name: string, householdId: string) => {
+export const createItem = async (
+  supabase: SupabaseClient,
+  name: string,
+  householdId: string
+) => {
   if (!name || !householdId) {
     return null;
   }
@@ -85,7 +96,7 @@ export const createItem = async (name: string, householdId: string) => {
   return item;
 };
 
-export const deleteItem = async (itemId: string) => {
+export const deleteItem = async (supabase: SupabaseClient, itemId: string) => {
   if (!itemId) {
     return new Error('No item id provided');
   }

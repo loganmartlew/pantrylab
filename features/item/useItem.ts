@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Item } from '~/types';
 import { useHousehold } from '~/features/household/useHousehold';
 import { createItem, deleteItem, getHouseholdItems } from './itemApi';
+import { useSupabase } from '~/lib/supabase';
 
 const sortItems = (items: Item[]) => {
   return [...items].sort((a, b) => {
@@ -17,6 +18,8 @@ const sortItems = (items: Item[]) => {
 };
 
 export const useItem = () => {
+  const { supabase } = useSupabase();
+
   const [items, setItems] = useState<Item[]>([]);
   const sortedItems = useMemo(() => sortItems(items), [items]);
 
@@ -40,10 +43,10 @@ export const useItem = () => {
       return;
     }
 
-    getHouseholdItems(currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then(items => {
       setItems(items);
     });
-  }, [currentHousehold]);
+  }, [currentHousehold, supabase]);
 
   const addItem = async (name: string) => {
     if (!currentHousehold) return;
@@ -58,13 +61,13 @@ export const useItem = () => {
     const oldItems = [...items];
     setItems(items => [...items, newItem]);
 
-    const item = await createItem(name, currentHousehold.id || '');
+    const item = await createItem(supabase, name, currentHousehold.id || '');
 
     if (!item) {
       setItems(oldItems);
     }
 
-    getHouseholdItems(currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then(items => {
       setItems(items);
     });
   };
@@ -75,13 +78,13 @@ export const useItem = () => {
     const oldItems = [...items];
     setItems(items => items.filter(item => item.id !== itemId));
 
-    const error = await deleteItem(itemId);
+    const error = await deleteItem(supabase, itemId);
 
     if (error) {
       setItems(oldItems);
     }
 
-    getHouseholdItems(currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then(items => {
       setItems(items);
     });
   };

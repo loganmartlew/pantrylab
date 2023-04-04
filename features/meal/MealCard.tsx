@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
 import { MdDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Meal } from '~/types';
 
 interface Props {
@@ -19,7 +19,7 @@ const MealCard: FC<Props> = ({ meal, onClick, onDelete, deleteable }) => {
       onClick={onClick}
       sx={{ minWidth: '250px' }}
       component={Link}
-      to={`/meals/${meal.id}`}
+      href={`/app/meals/${meal.id}`}
     >
       <Group sx={{ justifyContent: 'space-between' }}>
         <Title order={4}>{meal.name}</Title>

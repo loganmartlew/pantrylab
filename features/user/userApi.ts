@@ -1,8 +1,8 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { User } from '~/types';
 
-export const getUser = async (userId: string) => {
+export const getUser = async (supabase: SupabaseClient, userId: string) => {
   if (!userId) {
     return null;
   }
@@ -33,7 +33,10 @@ export const getUser = async (userId: string) => {
   return user;
 };
 
-export const getPendingUsers = async (householdId: string) => {
+export const getPendingUsers = async (
+  supabase: SupabaseClient,
+  householdId: string
+) => {
   if (!householdId) {
     return [];
   }
@@ -60,6 +63,7 @@ export const getPendingUsers = async (householdId: string) => {
 };
 
 export const deleteUserFromHousehold = async (
+  supabase: SupabaseClient,
   userId: string,
   householdId: string
 ) => {
@@ -81,6 +85,7 @@ export const deleteUserFromHousehold = async (
 };
 
 export const deletePendingUserFromHousehold = async (
+  supabase: SupabaseClient,
   userId: string,
   householdId: string
 ) => {
@@ -102,6 +107,7 @@ export const deletePendingUserFromHousehold = async (
 };
 
 export const inviteUsersToHousehold = async (
+  supabase: SupabaseClient,
   users: User[],
   householdId: string
 ) => {
@@ -124,6 +130,7 @@ export const inviteUsersToHousehold = async (
 };
 
 export const openHouseholdUsersChannel = (
+  supabase: SupabaseClient,
   householdId: string,
   callback: (payload: unknown) => void
 ) => {
@@ -143,6 +150,7 @@ export const openHouseholdUsersChannel = (
 };
 
 export const openHouseholdUserInvitesChannel = (
+  supabase: SupabaseClient,
   householdId: string,
   callback: (payload: unknown) => void
 ) => {

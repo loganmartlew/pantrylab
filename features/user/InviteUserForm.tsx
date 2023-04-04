@@ -1,7 +1,9 @@
 import { Box, Button, Stack } from '@mantine/core';
 import { FC, FormEvent, useState } from 'react';
-import DebouncedTextSearch from '~/components/DebouncedTextSearch';
-import useDebouncedTextSearch from '~/hooks/useDebouncedTextSearch';
+import {
+  DebouncedTextSearch,
+  useDebouncedTextSearch,
+} from '~/components/DebouncedTextSearch';
 import { User } from '~/types';
 import UserInviteCard from './UserInviteCard';
 

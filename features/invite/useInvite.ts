@@ -1,15 +1,17 @@
 import { useEffect, useCallback, useMemo } from 'react';
 import { useStore } from '~/features/store';
 import { useAuth } from '~/features/auth/useAuth';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import {
   getUserInvites,
   openUserInvitesChannel,
   updateInviteStatus,
 } from './inviteApi';
 import { Invite } from '~/types';
+import { useSupabase } from '~/lib/supabase';
 
 export const useInvite = () => {
+  const { supabase } = useSupabase();
+
   const { invites, setInvites, addInvite, updateInvite, deleteInvite } =
     useStore(s => s.invite);
 
@@ -35,12 +37,12 @@ export const useInvite = () => {
       return;
     }
 
-    getUserInvites(user.id).then(invites => {
+    getUserInvites(supabase, user.id).then(invites => {
       setInvites(invites);
     });
 
-    const userInvitesChannel = openUserInvitesChannel(user.id, () => {
-      getUserInvites(user.id).then(invites => {
+    const userInvitesChannel = openUserInvitesChannel(supabase, user.id, () => {
+      getUserInvites(supabase, user.id).then(invites => {
         setInvites(invites);
       });
     });
@@ -48,20 +50,20 @@ export const useInvite = () => {
     return () => {
       supabase.removeChannel(userInvitesChannel);
     };
-  }, [user]);
+  }, [user, supabase, setInvites]);
 
   const acceptInvite = useCallback(
     async (invite: Invite) => {
       const oldInvites = [...invites];
       updateInvite({ ...invite, status: 'accepted' });
 
-      const error = await updateInviteStatus(invite.id, 'accepted');
+      const error = await updateInviteStatus(supabase, invite.id, 'accepted');
 
       if (error) {
         setInvites(oldInvites);
       }
     },
-    [invites]
+    [invites, setInvites, updateInvite, supabase]
   );
 
   const declineInvite = useCallback(
@@ -69,13 +71,13 @@ export const useInvite = () => {
       const oldInvites = [...invites];
       updateInvite({ ...invite, status: 'declined' });
 
-      const error = await updateInviteStatus(invite.id, 'declined');
+      const error = await updateInviteStatus(supabase, invite.id, 'declined');
 
       if (error) {
         setInvites(oldInvites);
       }
     },
-    [invites]
+    [invites, setInvites, updateInvite, supabase]
   );
 
   return {

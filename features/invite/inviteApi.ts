@@ -1,9 +1,12 @@
 import { Select } from '@mantine/core';
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite } from '~/types';
 
-export const getUserInvites = async (userId: string) => {
+export const getUserInvites = async (
+  supabase: SupabaseClient,
+  userId: string
+) => {
   if (!userId) {
     return [];
   }
@@ -34,6 +37,7 @@ export const getUserInvites = async (userId: string) => {
 };
 
 export const updateInviteStatus = async (
+  supabase: SupabaseClient,
   inviteId: string,
   status: 'pending' | 'accepted' | 'declined'
 ) => {
@@ -54,6 +58,7 @@ export const updateInviteStatus = async (
 };
 
 export const openUserInvitesChannel = (
+  supabase: SupabaseClient,
   userId: string,
   callback: (payload: unknown) => void
 ) => {

@@ -39,6 +39,7 @@
   - [x] Route protection
   - [ ] Change password
   - [ ] Forgot password
-- [ ] Migrate app as is
+- [x] Migrate app as is
+- [ ] Implement server components (server wrapper around data based components to show loading states)
 - [ ] Move to GraphQL
 - [ ] Eliminate Zustand, maybe some Jotai

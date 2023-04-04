@@ -1,7 +1,9 @@
 import { Box, Button, Group, Stack } from '@mantine/core';
 import { FC, FormEvent, useState } from 'react';
-import DebouncedTextSearch from '~/components/DebouncedTextSearch';
-import useDebouncedTextSearch from '~/hooks/useDebouncedTextSearch';
+import {
+  DebouncedTextSearch,
+  useDebouncedTextSearch,
+} from '~/components/DebouncedTextSearch';
 import { Item } from '~/types';
 import { getHouseholdItems } from '~/features/item/itemApi';
 import ListItemDisplayCard from './ListItemDisplayCard';

@@ -1,8 +1,11 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Item, Meal } from '~/types';
 
-export const getHouseholdMeals = async (householdId: string) => {
+export const getHouseholdMeals = async (
+  supabase: SupabaseClient,
+  householdId: string
+) => {
   if (!householdId) {
     return [];
   }
@@ -31,7 +34,7 @@ export const getHouseholdMeals = async (householdId: string) => {
   return meals as Meal[];
 };
 
-export const getMeal = async (mealId: string) => {
+export const getMeal = async (supabase: SupabaseClient, mealId: string) => {
   if (!mealId) {
     return null;
   }
@@ -82,6 +85,7 @@ export const getMeal = async (mealId: string) => {
 };
 
 export const createMeal = async (
+  supabase: SupabaseClient,
   name: string,
   description: string,
   items: Item[],

@@ -49,10 +49,9 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const theme = useMantineTheme();
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  // const { households, currentHousehold, setCurrentHouseholdId } =
-  //   useHousehold();
-  // const { hasPendingInvites } = useInvite();
-  const hasPendingInvites = false;
+  const { households, currentHousehold, setCurrentHouseholdId } =
+    useHousehold();
+  const { hasPendingInvites } = useInvite();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
@@ -66,14 +65,14 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     [pathname]
   );
 
-  // const householdData = households.map(household => ({
-  //   label: household.name,
-  //   value: household.id,
-  // }));
+  const householdData = households.map(household => ({
+    label: household.name,
+    value: household.id,
+  }));
 
   const handleHouseholdChange = (householdId: string) => {
     if (householdId !== '-1') {
-      // setCurrentHouseholdId(householdId);
+      setCurrentHouseholdId(householdId);
       return;
     }
 
@@ -107,7 +106,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
             <Text size='xs'>{user ? user.email : 'Unknown Email'}</Text>
           </Stack>
           <Tooltip label='Invites' position='left'>
-            <ActionIcon size='lg' component={Link} href='/invites'>
+            <ActionIcon size='lg' component={Link} href='/app/invites'>
               {hasPendingInvites ? (
                 <MdMarkEmailUnread size='1.5rem' />
               ) : (
@@ -119,9 +118,9 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
         <Select
           label='Household'
           placeholder='Select a Household'
-          // data={[{ value: '-1', label: 'New Household' }, ...householdData]}
-          data={[{ value: '-1', label: 'New Household' }]}
-          // value={currentHousehold?.id}
+          data={[{ value: '-1', label: 'New Household' }, ...householdData]}
+          // data={[{ value: '-1', label: 'New Household' }]}
+          value={currentHousehold?.id}
           onChange={handleHouseholdChange}
         />
         <Modal
@@ -137,32 +136,32 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
             <NavLink
               label='Dashboard'
               icon={<MdDashboard />}
-              {...getNavLinkProps('/')}
+              {...getNavLinkProps('/app')}
             />
             <NavLink
               label='Shopping List'
               icon={<MdFormatListBulleted />}
-              {...getNavLinkProps('/list')}
+              {...getNavLinkProps('/app/list')}
             />
             <NavLink
               label='Meal Plan'
               icon={<MdCalendarToday />}
-              {...getNavLinkProps('/mealplan')}
+              {...getNavLinkProps('/app/mealplan')}
             />
             <NavLink
               label='Saved Meals'
               icon={<MdBookmarkBorder />}
-              {...getNavLinkProps('/meals')}
+              {...getNavLinkProps('/app/meals')}
             />
             <NavLink
               label='Grocery Items'
               icon={<MdOutlineShoppingCart />}
-              {...getNavLinkProps('/items')}
+              {...getNavLinkProps('/app/items')}
             />
             <NavLink
               label='Users'
               icon={<MdPeopleOutline />}
-              {...getNavLinkProps('/users')}
+              {...getNavLinkProps('/app/users')}
             />
           </Stack>
         </ScrollArea>
@@ -171,7 +170,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
           <NavLink
             label='Settings'
             icon={<MdSettings />}
-            {...getNavLinkProps('/settings')}
+            {...getNavLinkProps('/app/settings')}
           />
           <NavLink
             component='button'

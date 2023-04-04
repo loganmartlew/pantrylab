@@ -1,14 +1,16 @@
 import { Box, Button, TextInput } from '@mantine/core';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { useAuth } from '../auth/useAuth';
 import { useHousehold } from './useHousehold';
+import { useSupabase } from '~/lib/supabase';
 
 interface Props {
   onClose?: () => void;
 }
 
 const NewHouseholdForm: FC<Props> = ({ onClose }) => {
+  const { supabase } = useSupabase();
+
   const [householdName, setHouseholdName] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 

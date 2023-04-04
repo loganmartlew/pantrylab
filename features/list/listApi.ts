@@ -1,8 +1,11 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Item, ListItem } from '~/types';
 
-export const getHouseholdList = async (householdId: string) => {
+export const getHouseholdList = async (
+  supabase: SupabaseClient,
+  householdId: string
+) => {
   if (!householdId) {
     return [];
   }
@@ -40,6 +43,7 @@ export const getHouseholdList = async (householdId: string) => {
 };
 
 export const addItemToHouseholdList = async (
+  supabase: SupabaseClient,
   itemId: string,
   householdId: string
 ) => {
@@ -59,6 +63,7 @@ export const addItemToHouseholdList = async (
 };
 
 export const updateItem = async (
+  supabase: SupabaseClient,
   itemId: string,
   newItem: Partial<ListItem>
 ) => {
@@ -79,7 +84,7 @@ export const updateItem = async (
   return error;
 };
 
-export const deleteItem = async (itemId: string) => {
+export const deleteItem = async (supabase: SupabaseClient, itemId: string) => {
   if (!itemId) {
     return new Error('No item id provided');
   }
@@ -97,6 +102,7 @@ export const deleteItem = async (itemId: string) => {
 };
 
 export const openHouseholdListChannel = (
+  supabase: SupabaseClient,
   householdId: string,
   callback: (payload: unknown) => void
 ) => {

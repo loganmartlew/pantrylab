@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { AuthSlice, createAuthSlice } from '~/features/auth/authSlice';
 import {
   createHouseholdSlice,
   HouseholdSlice,
@@ -8,7 +7,6 @@ import {
 import { InviteSlice, createInviteSlice } from '../invite/inviteSlice';
 
 export interface Store {
-  auth: AuthSlice;
   household: HouseholdSlice;
   invite: InviteSlice;
 }
@@ -70,7 +68,6 @@ const createSlice = <T = Slices>(
 
 export const useStore = create<Store>()(
   devtools<Store>((set, get) => ({
-    auth: createSlice<AuthSlice>('auth', createAuthSlice, set, get),
     household: createSlice<HouseholdSlice>(
       'household',
       createHouseholdSlice,

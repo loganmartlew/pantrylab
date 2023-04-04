@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Meal, Item } from '~/types';
 import { useHousehold } from '~/features/household/useHousehold';
 import { createMeal, getHouseholdMeals } from './mealApi';
+import { useSupabase } from '~/lib/supabase';
 
 const sortMeals = (items: Meal[]) => {
   return [...items].sort((a, b) => {
@@ -17,6 +18,8 @@ const sortMeals = (items: Meal[]) => {
 };
 
 export const useMeal = () => {
+  const { supabase } = useSupabase();
+
   const [meals, setMeals] = useState<Meal[]>([]);
   const sortedMeals = useMemo(() => sortMeals(meals), [meals]);
 
@@ -28,10 +31,10 @@ export const useMeal = () => {
       return;
     }
 
-    getHouseholdMeals(currentHousehold.id).then(meals => {
+    getHouseholdMeals(supabase, currentHousehold.id).then(meals => {
       setMeals(meals);
     });
-  }, [currentHousehold]);
+  }, [currentHousehold, supabase]);
 
   const addMeal = async (name: string, description: string, items: Item[]) => {
     if (!currentHousehold) return;
@@ -49,6 +52,7 @@ export const useMeal = () => {
     setMeals(meals => [...meals, newMeal]);
 
     const meal = await createMeal(
+      supabase,
       name,
       description,
       items,
@@ -59,7 +63,7 @@ export const useMeal = () => {
       setMeals(oldMeals);
     }
 
-    getHouseholdMeals(currentHousehold.id).then(meals => {
+    getHouseholdMeals(supabase, currentHousehold.id).then(meals => {
       setMeals(meals);
     });
   };

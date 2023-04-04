@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite, User } from '~/types';
 import { useAuth } from '~/features/auth/useAuth';
 import {
@@ -12,6 +11,7 @@ import {
   openHouseholdUsersChannel,
 } from './userApi';
 import { useHousehold } from '~/features/household/useHousehold';
+import { useSupabase } from '~/lib/supabase';
 
 type HouseholdUsersPayload =
   | {
@@ -78,6 +78,8 @@ const sortUsers = (
 };
 
 export const useHouseholdUsers = (householdId: string) => {
+  const { supabase } = useSupabase();
+
   const [pendingUsers, setPendingUsers] = useState<User[]>([]);
 
   const { user } = useAuth();
@@ -99,11 +101,12 @@ export const useHouseholdUsers = (householdId: string) => {
 
     setExistingUsers(currentHousehold.users);
 
-    getPendingUsers(currentHousehold.id).then(pendingUsers => {
+    getPendingUsers(supabase, currentHousehold.id).then(pendingUsers => {
       setPendingUsers(pendingUsers);
     });
 
     const householdUsersChannel = openHouseholdUsersChannel(
+      supabase,
       currentHousehold.id,
       pl => {
         const payload = pl as HouseholdUsersPayload;
@@ -116,7 +119,7 @@ export const useHouseholdUsers = (householdId: string) => {
           return;
         }
 
-        getUser(payload.new.user_id).then(user => {
+        getUser(supabase, payload.new.user_id).then(user => {
           if (!user) return;
 
           if (payload.eventType === 'INSERT') {
@@ -133,6 +136,7 @@ export const useHouseholdUsers = (householdId: string) => {
     );
 
     const householdUserInvitesChannel = openHouseholdUserInvitesChannel(
+      supabase,
       currentHousehold.id,
       pl => {
         const payload = pl as HouseholdUserInvitesPayload;
@@ -147,7 +151,7 @@ export const useHouseholdUsers = (householdId: string) => {
           return;
         }
 
-        getUser(payload.new.user_id).then(user => {
+        getUser(supabase, payload.new.user_id).then(user => {
           if (!user) return;
 
           if (payload.eventType === 'INSERT') {
@@ -170,20 +174,24 @@ export const useHouseholdUsers = (householdId: string) => {
       supabase.removeChannel(householdUsersChannel);
       supabase.removeChannel(householdUserInvitesChannel);
     };
-  }, [currentHousehold]);
+  }, [currentHousehold, supabase]);
 
   const removeUser = useCallback(
     async (userId: string) => {
       const oldUsers = [...existingUsers];
       setExistingUsers(users => users.filter(user => user.id !== userId));
 
-      const error = await deleteUserFromHousehold(userId, householdId);
+      const error = await deleteUserFromHousehold(
+        supabase,
+        userId,
+        householdId
+      );
 
       if (error) {
         setExistingUsers(oldUsers);
       }
     },
-    [existingUsers, householdId]
+    [existingUsers, householdId, supabase]
   );
 
   const removePendingUser = useCallback(
@@ -191,13 +199,17 @@ export const useHouseholdUsers = (householdId: string) => {
       const oldPendingUsers = [...pendingUsers];
       setPendingUsers(users => users.filter(user => user.id !== userId));
 
-      const error = await deletePendingUserFromHousehold(userId, householdId);
+      const error = await deletePendingUserFromHousehold(
+        supabase,
+        userId,
+        householdId
+      );
 
       if (error) {
         setPendingUsers(oldPendingUsers);
       }
     },
-    [pendingUsers, householdId]
+    [pendingUsers, householdId, supabase]
   );
 
   const inviteUsers = useCallback(
@@ -205,13 +217,17 @@ export const useHouseholdUsers = (householdId: string) => {
       const oldPendingUsers = [...pendingUsers];
       setPendingUsers(users => [...users, ...newUsers]);
 
-      const error = await inviteUsersToHousehold(newUsers, householdId);
+      const error = await inviteUsersToHousehold(
+        supabase,
+        newUsers,
+        householdId
+      );
 
       if (error) {
         setPendingUsers(oldPendingUsers);
       }
     },
-    [pendingUsers, householdId]
+    [pendingUsers, householdId, supabase]
   );
 
   const searchUsersToInvite = async (searchTerm: string) => {

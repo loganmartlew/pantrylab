@@ -10,8 +10,10 @@ import {
 import { useForm, zodResolver } from '@mantine/form';
 import { FC, FormEvent, useState } from 'react';
 import { z } from 'zod';
-import DebouncedTextSearch from '~/components/DebouncedTextSearch';
-import useDebouncedTextSearch from '~/hooks/useDebouncedTextSearch';
+import {
+  DebouncedTextSearch,
+  useDebouncedTextSearch,
+} from '~/components/DebouncedTextSearch';
 import { Item } from '~/types';
 import MealItemCard from './MealItemCard';
 

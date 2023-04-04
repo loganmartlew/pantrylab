@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useHousehold } from '~/features/household/useHousehold';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Item, ListItem } from '~/types';
 import { createItem, searchItems } from '~/features/item/itemApi';
 import getHistoricItems from './getHistoricItems';
@@ -12,8 +11,11 @@ import {
   openHouseholdListChannel,
   updateItem,
 } from './listApi';
+import { useSupabase } from '~/lib/supabase';
 
 export const useList = () => {
+  const { supabase } = useSupabase();
+
   const { currentHousehold } = useHousehold();
 
   const [list, setList] = useState<ListItem[]>([]);
@@ -44,14 +46,15 @@ export const useList = () => {
       return;
     }
 
-    getHouseholdList(currentHousehold.id).then(items => {
+    getHouseholdList(supabase, currentHousehold.id).then(items => {
       setList(items);
     });
 
     const householdListChannel = openHouseholdListChannel(
+      supabase,
       currentHousehold.id,
       () => {
-        getHouseholdList(currentHousehold.id).then(items => {
+        getHouseholdList(supabase, currentHousehold.id).then(items => {
           setList(items);
         });
       }
@@ -60,7 +63,7 @@ export const useList = () => {
     return () => {
       supabase.removeChannel(householdListChannel);
     };
-  }, [currentHousehold]);
+  }, [currentHousehold, supabase]);
 
   const addItemToList = async (item: Item) => {
     if (!currentHousehold) return;
@@ -80,13 +83,17 @@ export const useList = () => {
       },
     ]);
 
-    const error = await addItemToHouseholdList(item.id, currentHousehold.id);
+    const error = await addItemToHouseholdList(
+      supabase,
+      item.id,
+      currentHousehold.id
+    );
 
     if (error) {
       setList(oldItems);
     }
 
-    getHouseholdList(currentHousehold.id).then(items => {
+    getHouseholdList(supabase, currentHousehold.id).then(items => {
       setList(items);
     });
   };
@@ -113,13 +120,13 @@ export const useList = () => {
       })
     );
 
-    const error = await updateItem(itemId, newItem);
+    const error = await updateItem(supabase, itemId, newItem);
 
     if (error) {
       setList(oldItems);
     }
 
-    getHouseholdList(currentHousehold.id).then(items => {
+    getHouseholdList(supabase, currentHousehold.id).then(items => {
       setList(items);
     });
   };
@@ -130,13 +137,13 @@ export const useList = () => {
     const oldItems = [...list];
     setList(items => items.filter(item => item.id !== itemId));
 
-    const error = await deleteItem(itemId);
+    const error = await deleteItem(supabase, itemId);
 
     if (error) {
       setList(oldItems);
     }
 
-    getHouseholdList(currentHousehold.id).then(items => {
+    getHouseholdList(supabase, currentHousehold.id).then(items => {
       setList(items);
     });
   };
@@ -144,7 +151,7 @@ export const useList = () => {
   const searchItemsToAdd = async (searchTerm: string) => {
     if (!currentHousehold) return [];
 
-    const items = await searchItems(searchTerm, currentHousehold.id);
+    const items = await searchItems(supabase, searchTerm, currentHousehold.id);
 
     return items;
   };
@@ -171,19 +178,23 @@ export const useList = () => {
     const oldItems = [...list];
     setList(items => [...items, newListItem]);
 
-    const item = await createItem(name, currentHousehold.id);
+    const item = await createItem(supabase, name, currentHousehold.id);
     if (!item) {
       setList(oldItems);
       return;
     }
 
-    const error = await addItemToHouseholdList(item.id, currentHousehold.id);
+    const error = await addItemToHouseholdList(
+      supabase,
+      item.id,
+      currentHousehold.id
+    );
     if (error) {
       setList(oldItems);
       return;
     }
 
-    getHouseholdList(currentHousehold.id).then(items => {
+    getHouseholdList(supabase, currentHousehold.id).then(items => {
       setList(items);
     });
   };

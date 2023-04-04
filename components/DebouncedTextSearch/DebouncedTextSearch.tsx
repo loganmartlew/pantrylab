@@ -1,6 +1,4 @@
 import { Popover, Stack, Text, TextInput } from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
-import { FC, useEffect, useState } from 'react';
 
 interface Props<T> {
   label?: string;
@@ -24,7 +22,6 @@ function DebouncedTextSearch<T>({
   setSearchTerm,
   debouncedSearchTerm,
   results,
-  setResults,
   error,
 }: Props<T>) {
   const textInput = (

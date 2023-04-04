@@ -1,8 +1,11 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Household, User } from '~/types';
 
-export const getUserHouseholds = async (userId: string) => {
+export const getUserHouseholds = async (
+  supabase: SupabaseClient,
+  userId: string
+) => {
   if (!userId) {
     return [];
   }
@@ -30,7 +33,10 @@ export const getUserHouseholds = async (userId: string) => {
   return households;
 };
 
-export const getHouseholdUsers = async (householdId: string) => {
+export const getHouseholdUsers = async (
+  supabase: SupabaseClient,
+  householdId: string
+) => {
   if (!householdId) {
     return [];
   }
@@ -60,6 +66,7 @@ export const getHouseholdUsers = async (householdId: string) => {
 };
 
 export const openUserHouseholdsChannel = (
+  supabase: SupabaseClient,
   userId: string,
   callback: (payload: unknown) => void
 ) => {
