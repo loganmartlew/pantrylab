@@ -1,4 +1,3 @@
-import { Select } from '@mantine/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 import { Invite } from '~/types';

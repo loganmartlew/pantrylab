@@ -6,6 +6,8 @@ import RootStyleRegistry from './style-provider';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relative from 'dayjs/plugin/relativeTime';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from '~/lib/graphql/apolloClient';
 
 interface Props {
   children: ReactNode;
@@ -17,7 +19,9 @@ dayjs.extend(customParseFormat);
 const Providers: FC<Props> = ({ children }) => {
   return (
     <RootStyleRegistry>
-      <JotaiProvider>{children}</JotaiProvider>
+      <ApolloProvider client={apolloClient}>
+        <JotaiProvider>{children}</JotaiProvider>
+      </ApolloProvider>
     </RootStyleRegistry>
   );
 };
