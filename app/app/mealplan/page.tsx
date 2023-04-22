@@ -9,6 +9,7 @@ import {
   MdOutlineKeyboardArrowRight,
 } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
+import MealPlanDay from '~/features/mealplan/MealPlanDay';
 import { dateToTextString, endOfWeek, startOfWeek } from '~/lib/dates/date';
 
 interface Props {}
@@ -31,6 +32,16 @@ const MealPlanPage: FC<Props> = () => {
     });
   };
 
+  const weekDates = [
+    dayjs(weekStartDate).toDate(),
+    dayjs(weekStartDate).add(1, 'day').toDate(),
+    dayjs(weekStartDate).add(2, 'day').toDate(),
+    dayjs(weekStartDate).add(3, 'day').toDate(),
+    dayjs(weekStartDate).add(4, 'day').toDate(),
+    dayjs(weekStartDate).add(5, 'day').toDate(),
+    dayjs(weekStartDate).add(6, 'day').toDate(),
+  ];
+
   return (
     <PageWrapper title='Meal Plan'>
       <Stack>
@@ -45,29 +56,10 @@ const MealPlanPage: FC<Props> = () => {
             <MdOutlineKeyboardArrowRight fontSize='1.8rem' />
           </ActionIcon>
         </Group>
-        <Stack spacing='xl'>
-          <Stack spacing='xs'>
-            <Title order={3}>Monday</Title>
-            <Button
-              size='xs'
-              variant='light'
-              leftIcon={<MdAdd size='1rem' />}
-              sx={{ width: 'max-content' }}
-            >
-              Add Meal
-            </Button>
-          </Stack>
-          <Stack spacing='xs'>
-            <Title order={3}>Tuesday</Title>
-            <Button
-              size='xs'
-              variant='light'
-              leftIcon={<MdAdd size='1rem' />}
-              sx={{ width: 'max-content' }}
-            >
-              Add Meal
-            </Button>
-          </Stack>
+        <Stack spacing='lg'>
+          {weekDates.map(date => (
+            <MealPlanDay date={date} key={date.toISOString()} />
+          ))}
         </Stack>
       </Stack>
     </PageWrapper>
