@@ -1,26 +1,26 @@
 import { ActionIcon, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { MdDelete } from 'react-icons/md';
 import Link from 'next/link';
 import { Meal } from '~/types';
 
 interface Props {
   meal: Meal;
+  linkToMeal?: boolean;
   deleteable?: boolean;
   onClick?: () => void;
   onDelete?: () => void;
 }
 
-const MealCard: FC<Props> = ({ meal, onClick, onDelete, deleteable }) => {
+const MealCard: FC<Props> = ({
+  meal,
+  onClick,
+  onDelete,
+  deleteable,
+  linkToMeal,
+}) => {
   return (
-    <Paper
-      shadow='xs'
-      p='sm'
-      onClick={onClick}
-      sx={{ minWidth: '250px' }}
-      component={Link}
-      href={`/app/meals/${meal.id}`}
-    >
+    <Wrapper linkToMeal={linkToMeal} meal={meal} onClick={onClick}>
       <Group sx={{ justifyContent: 'space-between' }}>
         <Title order={4}>{meal.name}</Title>
         {deleteable && (
@@ -29,6 +29,33 @@ const MealCard: FC<Props> = ({ meal, onClick, onDelete, deleteable }) => {
           </ActionIcon>
         )}
       </Group>
+    </Wrapper>
+  );
+};
+
+const Wrapper: FC<{
+  children: ReactNode;
+  linkToMeal?: boolean;
+  meal: Meal;
+  onClick?: () => void;
+}> = ({ children, linkToMeal, meal, onClick }) => {
+  if (linkToMeal) {
+    return (
+      <Paper
+        shadow='xs'
+        p='sm'
+        sx={{ minWidth: '250px' }}
+        component={Link}
+        href={`/app/meals/${meal.id}`}
+      >
+        {children}
+      </Paper>
+    );
+  }
+
+  return (
+    <Paper shadow='xs' p='sm' sx={{ minWidth: '250px' }} onClick={onClick}>
+      {children}
     </Paper>
   );
 };

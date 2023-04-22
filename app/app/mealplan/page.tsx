@@ -1,6 +1,15 @@
 'use client';
 
-import { ActionIcon, Button, Group, Stack, Text, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import {
@@ -9,13 +18,16 @@ import {
   MdOutlineKeyboardArrowRight,
 } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
+import MealSelector from '~/features/meal/MealSelector';
 import MealPlanDay from '~/features/mealplan/MealPlanDay';
 import { dateToTextString, endOfWeek, startOfWeek } from '~/lib/dates/date';
 
 interface Props {}
 
 const MealPlanPage: FC<Props> = () => {
+  const [isModalOpen, modalHandlers] = useDisclosure(false);
   const [weekDate, setWeekDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const weekStartDate = startOfWeek(weekDate);
   const weekEndDate = endOfWeek(weekDate);
@@ -32,15 +44,20 @@ const MealPlanPage: FC<Props> = () => {
     });
   };
 
-  const weekDates = [
-    dayjs(weekStartDate).toDate(),
-    dayjs(weekStartDate).add(1, 'day').toDate(),
-    dayjs(weekStartDate).add(2, 'day').toDate(),
-    dayjs(weekStartDate).add(3, 'day').toDate(),
-    dayjs(weekStartDate).add(4, 'day').toDate(),
-    dayjs(weekStartDate).add(5, 'day').toDate(),
-    dayjs(weekStartDate).add(6, 'day').toDate(),
-  ];
+  const weekDates = [0, 1, 2, 3, 4, 5, 6].map(day =>
+    dayjs(weekStartDate).add(day, 'day').toDate()
+  );
+
+  const addMealClick = (date: Date) => {
+    setSelectedDate(date);
+    modalHandlers.open();
+  };
+
+  const addMeal = (mealId: string) => {
+    console.log(mealId);
+    console.log(selectedDate);
+    modalHandlers.close();
+  };
 
   return (
     <PageWrapper title='Meal Plan'>
@@ -58,10 +75,21 @@ const MealPlanPage: FC<Props> = () => {
         </Group>
         <Stack spacing='lg'>
           {weekDates.map(date => (
-            <MealPlanDay date={date} key={date.toISOString()} />
+            <MealPlanDay
+              date={date}
+              addMealClick={addMealClick}
+              key={date.toISOString()}
+            />
           ))}
         </Stack>
       </Stack>
+      <Modal
+        title='Add Meal'
+        opened={isModalOpen}
+        onClose={modalHandlers.close}
+      >
+        <MealSelector onSelectMeal={addMeal} />
+      </Modal>
     </PageWrapper>
   );
 };

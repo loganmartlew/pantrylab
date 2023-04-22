@@ -13,9 +13,10 @@ import { MdAdd, MdToday } from 'react-icons/md';
 
 interface Props {
   date: Date;
+  addMealClick: (date: Date) => void;
 }
 
-const MealPlanDay: FC<Props> = ({ date }) => {
+const MealPlanDay: FC<Props> = ({ date, addMealClick }) => {
   const theme = useMantineTheme();
 
   const isToday = dayjs(date).isSame(dayjs(), 'date');
@@ -39,6 +40,7 @@ const MealPlanDay: FC<Props> = ({ date }) => {
         size='xs'
         variant='light'
         leftIcon={<MdAdd size='1rem' />}
+        onClick={() => addMealClick(date)}
         sx={{ width: 'max-content' }}
       >
         Add Meal

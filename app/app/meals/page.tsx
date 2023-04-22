@@ -37,7 +37,7 @@ const MealsPage: FC = () => {
         {sortedMeals.length < 1 && <Text>No meals in this household...</Text>}
         {sortedMeals.length >= 1 &&
           sortedMeals.map(meal => (
-            <MealCard key={meal.id} meal={meal} deleteable />
+            <MealCard key={meal.id} meal={meal} deleteable linkToMeal />
           ))}
       </Stack>
       <Modal
