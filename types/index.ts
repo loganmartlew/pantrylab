@@ -50,6 +50,15 @@ export interface Meal {
   items: Item[];
 }
 
+export interface PlannedMeal {
+  id: string;
+  created_at: Date;
+  meal: Meal;
+  meal_id: string;
+  household_id: string;
+  date: Date;
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;

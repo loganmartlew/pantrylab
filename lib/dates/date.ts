@@ -29,3 +29,9 @@ export const dateToTextString = (date: Date) =>
   dayjs(date).format(dateTextFormat);
 export const textStringToDate = (date: string) =>
   dayjs(date, dateTextFormat).toDate();
+
+export const isoDateFormat = 'YYYY-MM-DD';
+export const dateToIsoString = (date: Date) =>
+  dayjs(date).format(isoDateFormat);
+export const isoStringToDate = (date: string) =>
+  dayjs(date, isoDateFormat).toDate();

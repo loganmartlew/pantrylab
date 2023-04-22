@@ -1,62 +1,50 @@
 'use client';
 
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { ActionIcon, Group, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import {
-  MdAdd,
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from 'react-icons/md';
 import PageWrapper from '~/components/PageWrapper';
 import MealSelector from '~/features/meal/MealSelector';
 import MealPlanDay from '~/features/mealplan/MealPlanDay';
-import { dateToTextString, endOfWeek, startOfWeek } from '~/lib/dates/date';
+import { useMealPlan } from '~/features/mealplan/useMealPlan';
+import { dateToTextString } from '~/lib/dates/date';
+import { Meal, PlannedMeal } from '~/types';
 
-interface Props {}
-
-const MealPlanPage: FC<Props> = () => {
+const MealPlanPage: FC = () => {
   const [isModalOpen, modalHandlers] = useDisclosure(false);
-  const [weekDate, setWeekDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const weekStartDate = startOfWeek(weekDate);
-  const weekEndDate = endOfWeek(weekDate);
-
-  const prevWeek = () => {
-    setWeekDate(prev => {
-      return dayjs(prev).subtract(1, 'week').toDate();
-    });
-  };
-
-  const nextWeek = () => {
-    setWeekDate(prev => {
-      return dayjs(prev).add(1, 'week').toDate();
-    });
-  };
-
-  const weekDates = [0, 1, 2, 3, 4, 5, 6].map(day =>
-    dayjs(weekStartDate).add(day, 'day').toDate()
-  );
+  const {
+    nextWeek,
+    prevWeek,
+    weekDates,
+    weekEndDate,
+    weekStartDate,
+    addPlannedMeal,
+    plannedMeals,
+    removePlannedMeal,
+  } = useMealPlan();
 
   const addMealClick = (date: Date) => {
     setSelectedDate(date);
     modalHandlers.open();
   };
 
-  const addMeal = (mealId: string) => {
-    console.log(mealId);
-    console.log(selectedDate);
+  const addMeal = async (meal: Meal) => {
+    if (!selectedDate) return;
+
+    await addPlannedMeal(meal, selectedDate);
+
     modalHandlers.close();
+  };
+
+  const removeMeal = async (plannedMeal: PlannedMeal) => {
+    await removePlannedMeal(plannedMeal.id);
   };
 
   return (
@@ -78,6 +66,8 @@ const MealPlanPage: FC<Props> = () => {
             <MealPlanDay
               date={date}
               addMealClick={addMealClick}
+              plannedMeals={plannedMeals}
+              removeMeal={removeMeal}
               key={date.toISOString()}
             />
           ))}

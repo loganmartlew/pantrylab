@@ -10,16 +10,28 @@ import {
 import dayjs from 'dayjs';
 import { FC } from 'react';
 import { MdAdd, MdToday } from 'react-icons/md';
+import { PlannedMeal } from '~/types';
+import MealCard from '../meal/MealCard';
 
 interface Props {
   date: Date;
+  plannedMeals: PlannedMeal[];
   addMealClick: (date: Date) => void;
+  removeMeal: (plannedMeal: PlannedMeal) => void;
 }
 
-const MealPlanDay: FC<Props> = ({ date, addMealClick }) => {
+const MealPlanDay: FC<Props> = ({
+  date,
+  addMealClick,
+  plannedMeals,
+  removeMeal,
+}) => {
   const theme = useMantineTheme();
 
   const isToday = dayjs(date).isSame(dayjs(), 'date');
+  const daysPlannedMeals = plannedMeals.filter(meal => {
+    return dayjs(meal.date).isSame(date, 'date');
+  });
 
   return (
     <Stack spacing='xs'>
@@ -36,6 +48,14 @@ const MealPlanDay: FC<Props> = ({ date, addMealClick }) => {
         )}
         <Title order={3}>{dayjs(date).format('dddd')}</Title>
       </Group>
+      {daysPlannedMeals.map(plannedMeal => (
+        <MealCard
+          key={plannedMeal.id}
+          meal={plannedMeal.meal}
+          onDelete={() => removeMeal(plannedMeal)}
+          deleteable
+        />
+      ))}
       <Button
         size='xs'
         variant='light'
