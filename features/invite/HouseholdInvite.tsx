@@ -6,16 +6,13 @@ import {
   Text,
   Title,
   Tooltip,
-  useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FC } from 'react';
 import { MdCheck, MdClose } from 'react-icons/md';
 import ConfirmationModal from '~/components/ConfirmationModal';
-import { supabase } from '~/lib/supabase/supabaseClient';
 import { Invite } from '~/types';
-import { useAuth } from '~/features/auth/useAuth';
 
 interface Props {
   invite: Invite;

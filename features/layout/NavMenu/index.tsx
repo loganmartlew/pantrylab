@@ -37,7 +37,6 @@ import NewHouseholdForm from '~/features/household/NewHouseholdForm';
 import { useInvite } from '~/features/invite/useInvite';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useInviteCount } from '~/features/invite/inviteCountAtom';
 
 interface Props {
   isMenuOpen: boolean;
@@ -53,8 +52,6 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
   const { households, currentHousehold, setCurrentHouseholdId } =
     useHousehold();
   const { hasPendingInvites } = useInvite();
-
-  useInviteCount();
 
   const initials = user ? user.first_name[0] + user.last_name[0] : '??';
   const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
