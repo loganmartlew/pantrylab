@@ -82,7 +82,17 @@ export const useAuth = () => {
     });
 
     supabase.auth.onAuthStateChange((event, session) => {
-      sessionCallback(session, session?.user ?? null);
+      supabase.auth.getUser().then(({ data, error }) => {
+        if (error) {
+          console.error('Error fetching user', error);
+          setUser(null);
+          setIsVerified(false);
+          setIsLoading(false);
+          return;
+        }
+
+        sessionCallback(session, data.user);
+      });
     });
   }, [supabase, sessionCallback]);
 
