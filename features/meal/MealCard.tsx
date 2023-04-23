@@ -1,6 +1,14 @@
-import { ActionIcon, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from '@mantine/core';
 import { FC, ReactNode } from 'react';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdPlaylistAddCheck } from 'react-icons/md';
 import Link from 'next/link';
 import { Meal } from '~/types';
 
@@ -8,6 +16,7 @@ interface Props {
   meal: Meal;
   linkToMeal?: boolean;
   deleteable?: boolean;
+  added?: boolean;
   onClick?: () => void;
   onDelete?: () => void;
 }
@@ -18,11 +27,19 @@ const MealCard: FC<Props> = ({
   onDelete,
   deleteable,
   linkToMeal,
+  added,
 }) => {
+  const theme = useMantineTheme();
+
   return (
     <Wrapper linkToMeal={linkToMeal} meal={meal} onClick={onClick}>
       <Group sx={{ justifyContent: 'space-between' }}>
-        <Title order={4}>{meal.name}</Title>
+        <Group spacing='xs'>
+          <Title order={4}>{meal.name}</Title>
+          {added && (
+            <MdPlaylistAddCheck color={theme.colors[theme.primaryColor][7]} />
+          )}
+        </Group>
         {deleteable && (
           <ActionIcon color='red' onClick={onDelete}>
             <MdDelete onClick={onDelete} />

@@ -28,6 +28,7 @@ const MealPlanPage: FC = () => {
     addPlannedMeal,
     plannedMeals,
     removePlannedMeal,
+    addPlannedRangeToList,
   } = useMealPlan();
 
   const addMealClick = (date: Date) => {
@@ -45,6 +46,10 @@ const MealPlanPage: FC = () => {
 
   const removeMeal = async (plannedMeal: PlannedMeal) => {
     await removePlannedMeal(plannedMeal.id);
+  };
+
+  const addRangeToList = async (startDate: Date, endDate: Date) => {
+    await addPlannedRangeToList(startDate, endDate);
   };
 
   return (
@@ -68,6 +73,7 @@ const MealPlanPage: FC = () => {
               addMealClick={addMealClick}
               plannedMeals={plannedMeals}
               removeMeal={removeMeal}
+              addRangeToList={addRangeToList}
               key={date.toISOString()}
             />
           ))}

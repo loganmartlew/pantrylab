@@ -7,6 +7,7 @@ import { useHousehold } from '~/features/household/useHousehold';
 import { Meal, PlannedMeal } from '~/types';
 import {
   addMealToHouseholdMealPlan,
+  addRangeToHouseholdList,
   getHouseholdMealPlan,
   removeMealFromHouseholdMealPlan,
 } from './mealPlanApi';
@@ -81,6 +82,7 @@ export const useMealPlan = () => {
         household_id: currentHousehold.id,
         meal,
         meal_id: meal.id,
+        added_list_item_ids: null,
       },
     ]);
 
@@ -115,12 +117,33 @@ export const useMealPlan = () => {
 
     const error = await removeMealFromHouseholdMealPlan(
       supabase,
-      plannedMealId
+      plannedMealId,
+      currentHousehold.id
     );
 
     if (error) {
       setPlannedMeals(oldPlannedMeals);
     }
+
+    getHouseholdMealPlan(
+      supabase,
+      currentHousehold.id,
+      weekStartDate,
+      weekEndDate
+    ).then(plannedMeals => {
+      setPlannedMeals(plannedMeals);
+    });
+  };
+
+  const addPlannedRangeToList = async (startDate: Date, endDate: Date) => {
+    if (!currentHousehold) return;
+
+    await addRangeToHouseholdList(
+      supabase,
+      currentHousehold.id,
+      startDate,
+      endDate
+    );
 
     getHouseholdMealPlan(
       supabase,
@@ -141,5 +164,6 @@ export const useMealPlan = () => {
     plannedMeals: sortedPlannedMeals,
     addPlannedMeal,
     removePlannedMeal,
+    addPlannedRangeToList,
   };
 };

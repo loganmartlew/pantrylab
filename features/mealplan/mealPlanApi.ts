@@ -28,19 +28,20 @@ export const getHouseholdMealPlan = async (
     return [];
   }
 
-  const plannedMeals = data.map(item => ({
-    id: item.id,
-    date: isoStringToDate(item.date),
-    created_at: dayjs(item.created_at).toDate(),
+  const plannedMeals = data.map(plannedMeal => ({
+    id: plannedMeal.id,
+    date: isoStringToDate(plannedMeal.date),
+    created_at: dayjs(plannedMeal.created_at).toDate(),
     meal: {
-      id: item.meals.id,
-      name: item.meals.name,
-      created_at: dayjs(item.meals.created_at).toDate(),
-      household_id: item.meals.household_id,
-      description: item.meals.description,
+      id: plannedMeal.meals.id,
+      name: plannedMeal.meals.name,
+      created_at: dayjs(plannedMeal.meals.created_at).toDate(),
+      household_id: plannedMeal.meals.household_id,
+      description: plannedMeal.meals.description,
     },
-    meal_id: item.meal_id,
-    household_id: item.household_id,
+    meal_id: plannedMeal.meal_id,
+    household_id: plannedMeal.household_id,
+    added_list_item_ids: plannedMeal.added_list_items,
   }));
 
   return plannedMeals as PlannedMeal[];
@@ -71,16 +72,49 @@ export const addMealToHouseholdMealPlan = async (
 
 export const removeMealFromHouseholdMealPlan = async (
   supabase: SupabaseClient,
-  plannedMealId: string
+  plannedMealId: string,
+  householdId: string
 ) => {
   if (!plannedMealId) {
     return new Error('No planned meal id provided');
   }
 
+  await supabase.rpc('remove_planned_meal_from_list', {
+    _planned_meal_id: plannedMealId,
+    _household_id: householdId,
+  });
+
   const { error } = await supabase
     .from('planned_meals')
     .delete()
     .eq('id', plannedMealId);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return error;
+};
+
+export const addRangeToHouseholdList = async (
+  supabase: SupabaseClient,
+  householdId: string,
+  startDate: Date,
+  endDate: Date
+) => {
+  if (!householdId) {
+    return new Error('No household id provided');
+  }
+
+  if (!startDate || !endDate) {
+    return new Error('No date range provided');
+  }
+
+  const { error } = await supabase.rpc('add_planned_range_to_list', {
+    _household_id: householdId,
+    _start_date: dateToIsoString(startDate),
+    _end_date: dateToIsoString(endDate),
+  });
 
   if (error) {
     console.error(error);

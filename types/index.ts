@@ -57,6 +57,7 @@ export interface PlannedMeal {
   meal_id: string;
   household_id: string;
   date: Date;
+  added_list_item_ids: string[] | null;
 }
 
 export interface LoginCredentials {

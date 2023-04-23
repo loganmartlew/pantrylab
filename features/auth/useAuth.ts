@@ -77,6 +77,7 @@ export const useAuth = () => {
           return;
         }
 
+        console.log('SESSION CB: effect');
         sessionCallback(session, data.user);
       });
     });
@@ -91,6 +92,7 @@ export const useAuth = () => {
           return;
         }
 
+        console.log('SESSION CB: state changed');
         sessionCallback(session, data.user);
       });
     });
