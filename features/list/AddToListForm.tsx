@@ -8,6 +8,7 @@ import { Item } from '~/types';
 import { getHouseholdItems } from '~/features/item/itemApi';
 import ListItemDisplayCard from './ListItemDisplayCard';
 import { useHousehold } from '~/features/household/useHousehold';
+import { useSupabase } from '~/lib/supabase';
 
 interface Props {
   searchFn: (searchTerm: string) => Promise<Item[]>;
@@ -20,6 +21,8 @@ const AddToListForm: FC<Props> = ({
   addItemToList,
   addNewItemToList,
 }) => {
+  const { supabase } = useSupabase();
+
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const searchProps = useDebouncedTextSearch(searchFn);
@@ -44,7 +47,10 @@ const AddToListForm: FC<Props> = ({
       return;
     }
 
-    const householdItems = await getHouseholdItems(currentHousehold?.id ?? '');
+    const householdItems = await getHouseholdItems(
+      supabase,
+      currentHousehold?.id ?? ''
+    );
 
     const existingItem = householdItems.find(
       item =>
