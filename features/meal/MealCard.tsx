@@ -2,12 +2,10 @@ import {
   ActionIcon,
   Group,
   Paper,
-  Stack,
-  Text,
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { FC, ReactNode } from 'react';
+import { FC, MouseEvent, ReactNode } from 'react';
 import { MdDelete, MdPlaylistAddCheck } from 'react-icons/md';
 import Link from 'next/link';
 import { Meal } from '~/types';
@@ -31,6 +29,10 @@ const MealCard: FC<Props> = ({
 }) => {
   const theme = useMantineTheme();
 
+  const onDeleteClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  };
+
   return (
     <Wrapper linkToMeal={linkToMeal} meal={meal} onClick={onClick}>
       <Group sx={{ justifyContent: 'space-between' }}>
@@ -41,8 +43,8 @@ const MealCard: FC<Props> = ({
           )}
         </Group>
         {deleteable && (
-          <ActionIcon color='red' onClick={onDelete}>
-            <MdDelete onClick={onDelete} />
+          <ActionIcon color='red' onClick={onDeleteClick}>
+            <MdDelete />
           </ActionIcon>
         )}
       </Group>

@@ -10,7 +10,7 @@ const Footer: FC<Props> = () => {
   return (
     <Group p='xs'>
       <Text size='xs' sx={{ flex: '1 0 0' }}>
-        &copy; Grocer 2023
+        &copy; PantryLab 2023
       </Text>
       <TextLink
         type='router'

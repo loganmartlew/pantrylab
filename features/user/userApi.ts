@@ -22,6 +22,10 @@ export const getUser = async (supabase: SupabaseClient, userId: string) => {
 
   const userData = data.find(u => u.id === userId);
 
+  if (!userData) {
+    return null;
+  }
+
   const user: User = {
     id: userData.id,
     created_at: dayjs(userData.created_at).toDate(),

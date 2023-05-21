@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import Logo from '~/components/Logo';
 import { useAuth } from '~/features/auth/useAuth';
 import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
 
@@ -60,9 +61,7 @@ export default function Page() {
       }}
     >
       <Stack>
-        <Title order={1} color='white'>
-          Grocer
-        </Title>
+        <Logo size='xl' variant='textLogo' color='white' />
         {isAuth ? loggedIn : notLoggedIn}
       </Stack>
     </Center>

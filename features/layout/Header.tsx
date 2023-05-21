@@ -25,7 +25,7 @@ const Header: FC<Props> = ({ isMenuOpen, openMenu }) => {
           title={buttonTitle}
           color='hsl(0, 0%, 40%)'
         />
-        <Logo size='sm' sx={{ transform: 'translateY(-0.075em)' }} homeLink />
+        <Logo size='md' sx={{ transform: 'translateY(-0.075em)' }} homeLink />
       </Group>
     </Box>
   );
