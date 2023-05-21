@@ -1,4 +1,4 @@
-import { Box, Sx, Title, useMantineTheme } from '@mantine/core';
+import { Box, Sx } from '@mantine/core';
 import { FC, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -27,8 +27,6 @@ const Logo: FC<Props> = ({
   variant = 'textLogo',
   color = 'primary',
 }) => {
-  const theme = useMantineTheme();
-
   const sizes = useMemo(
     () => ({
       xs: '1.5em',
@@ -60,17 +58,6 @@ const Logo: FC<Props> = ({
     };
     return map[variant][color];
   }, [variant, color]);
-
-  // const logo = (
-  //   <Title
-  //     order={1}
-  //     color={theme.primaryColor}
-  //     fz={sizes[size || 'sm']}
-  //     sx={sx}
-  //   >
-  //     Grocer
-  //   </Title>
-  // );
 
   const logo = (
     <Box component='span'>

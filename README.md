@@ -1,4 +1,4 @@
-# Grocer
+# PantryLab
 
 ##### An app to help you manage the food in your house
 
