@@ -44,7 +44,7 @@ export const useAuth = () => {
       }
 
       if (userData.data) {
-        setUser(userData.data);
+        setUser(userData.data as User);
         setIsLoading(false);
       }
     },
