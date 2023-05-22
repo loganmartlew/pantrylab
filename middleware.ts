@@ -1,5 +1,8 @@
 import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse, NextRequest } from 'next/server';
+import { Buffer } from 'buffer/';
+
+global.Buffer = Buffer as unknown as BufferConstructor;
 
 const unauthenticated = (req: NextRequest) => {
   const redirectUrl = req.nextUrl.clone();
