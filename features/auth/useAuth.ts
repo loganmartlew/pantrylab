@@ -77,7 +77,6 @@ export const useAuth = () => {
           return;
         }
 
-        console.log('SESSION CB: effect');
         sessionCallback(session, data.user);
       });
     });
