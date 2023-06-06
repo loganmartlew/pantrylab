@@ -4,7 +4,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many --target=serve --projects=client --parallel",
-    "build:client": "nx run client:build"
+    "dev:client": "nx run client:serve",
+    "build": "nx run-many --target=build --projects=client --parallel",
+    "build:client": "nx run client:build",
+    "lint": "nx run-many --target=lint --projects=client --parallel",
+    "lint:client": "nx run client:lint",
+    "test": "nx run-many --target=test --projects=client --parallel",
+    "test:client": "nx run client:test"
   },
   "private": true,
   "devDependencies": {
