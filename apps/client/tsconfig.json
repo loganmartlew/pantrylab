@@ -16,10 +16,17 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "paths": {
-      "~/public/*": ["./apps/client/public/*"],
-      "~/*": ["./apps/client/src/*"]
+      "~/public/*": [
+        "./apps/client/public/*"
+      ],
+      "~/*": [
+        "./apps/client/src/*"
+      ]
     }
   },
   "include": [
@@ -30,7 +37,9 @@
     "../../apps/client/.next/types/**/*.ts",
     "../../dist/apps/client/.next/types/**/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../dist/dist/apps/client/.next/types/**/*.ts",
+    "../../dist/apps/dist/apps/client/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
