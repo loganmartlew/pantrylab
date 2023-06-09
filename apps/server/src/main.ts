@@ -1,8 +1,17 @@
 import Logger from '@pantrylab/logger';
 import config from '@pantrylab/config';
-import { App, ExpressLoader, HTTPLoggerLoader } from '@pantrylab/framework';
+import {
+  App,
+  ErrorLoader,
+  ExpressLoader,
+  HTTPLoggerLoader,
+} from '@pantrylab/framework';
 
-const app = new App({ loaders: [HTTPLoggerLoader, ExpressLoader] });
+console.error = Logger.error;
+
+const app = new App({
+  loaders: [HTTPLoggerLoader, ExpressLoader, ErrorLoader],
+});
 app.start(config.port, () => {
   Logger.info('--------------------------------------------------');
   Logger.info('---------------- PantryLab Server ----------------');
