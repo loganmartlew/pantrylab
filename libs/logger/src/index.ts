@@ -1,8 +1,8 @@
+import config from '@pantrylab/config';
 import winston from 'winston';
-import config from '../config';
 
 const transports = [];
-if (config.isDevelopment) {
+if (!config.isDevelopment) {
   transports.push(new winston.transports.Console());
 } else {
   transports.push(
