@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@pantrylab/config": ["libs/config/src/index.ts"],
-      "@pantrylab/logger": ["libs/logger/src/index.ts"]
+      "@pantrylab/logger": ["libs/logger/src/index.ts"],
+      "@pantrylab/framework": ["libs/framework/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

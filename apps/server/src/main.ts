@@ -1,6 +1,6 @@
 import Logger from '@pantrylab/logger';
 import config from '@pantrylab/config';
-import App from './framework/App';
+import { App } from '@pantrylab/framework';
 
 const app = new App();
 app.start(config.port, () => {
