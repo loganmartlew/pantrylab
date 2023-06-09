@@ -1,8 +1,8 @@
 import winston from 'winston';
-import { environment } from '../environments/environment';
+import config from '../config';
 
 const transports = [];
-if (environment.mode !== 'development') {
+if (config.isDevelopment) {
   transports.push(new winston.transports.Console());
 } else {
   transports.push(
