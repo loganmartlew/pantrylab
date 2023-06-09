@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import ApiError from '../errors/ApiError';
 import errorCodes from '../errors/errorCodes';
 import { Loader } from '../types';
+import { ApiResponse } from '../api';
 
 const ErrorLoader: Loader = async (app) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,7 +14,7 @@ const ErrorLoader: Loader = async (app) => {
 
     console.error(apiError);
 
-    const response: ApiResponse = {
+    const response: ApiResponse<void> = {
       status: apiError.statusCode,
       message: apiError.message,
       error: apiError,
