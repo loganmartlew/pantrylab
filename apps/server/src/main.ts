@@ -1,7 +1,6 @@
-import getApp from '@server/app';
-import { environment } from '@server/environments/environment';
-import Logger from '@server/logger';
-import App from '@server/framework/App';
+import { environment } from './environments/environment';
+import Logger from './logger';
+import App from './framework/App';
 
 // async function main() {
 //   const app = await getApp();

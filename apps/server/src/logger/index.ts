@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { environment } from '@server/environments/environment';
+import { environment } from '../environments/environment';
 
 const transports = [];
 if (environment.mode !== 'development') {
