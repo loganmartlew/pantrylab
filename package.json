@@ -14,7 +14,10 @@
     "lint:server": "nx run server:lint",
     "test": "nx run-many --target=test --projects=client,server --parallel",
     "test:client": "nx run client:test",
-    "test:server": "nx run server:test"
+    "test:server": "nx run server:test",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push"
   },
   "private": true,
   "devDependencies": {
@@ -57,6 +60,7 @@
     "nx": "16.3.2",
     "nx-cloud": "latest",
     "prettier": "^2.6.2",
+    "prisma": "^4.15.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.0.2"

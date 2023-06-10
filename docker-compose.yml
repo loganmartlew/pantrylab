@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: pantrylab-dev-postgres
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=pantrylab
+    ports:
+      - '2348:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
