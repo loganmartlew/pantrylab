@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx run-many --target=serve --projects=client --parallel",
+    "dev": "nx run-many --target=serve --projects=client,server --parallel",
     "dev:client": "nx run client:serve",
-    "build": "nx run-many --target=build --projects=client --parallel",
+    "dev:server": "nx run server:serve",
+    "build": "nx run-many --target=build --projects=client,server --parallel",
     "build:client": "nx run client:build",
-    "lint": "nx run-many --target=lint --projects=client --parallel",
+    "build:server": "nx run server:build",
+    "lint": "nx run-many --target=lint --projects=client,server --parallel",
     "lint:client": "nx run client:lint",
-    "test": "nx run-many --target=test --projects=client --parallel",
-    "test:client": "nx run client:test"
+    "lint:server": "nx run server:lint",
+    "test": "nx run-many --target=test --projects=client,server --parallel",
+    "test:client": "nx run client:test",
+    "test:server": "nx run server:test"
   },
   "private": true,
   "devDependencies": {
