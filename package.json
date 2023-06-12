@@ -17,7 +17,8 @@
     "test:server": "nx run server:test",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:formatschema": "prisma format --schema=./prisma/schema.prisma"
   },
   "private": true,
   "devDependencies": {

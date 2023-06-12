@@ -8,8 +8,36 @@ datasource db {
 }
 
 model Household {
-  id        String      @id @default(uuid())
+  id        String          @id @default(uuid())
   name      String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  users     HouseholdUser[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model User {
+  id         String          @id @default(uuid())
+  email      String          @unique
+  firstName  String
+  lastName   String
+  households HouseholdUser[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+model HouseholdUser {
+  houshold    Household @relation(fields: [householdId], references: [id])
+  householdId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  role        HouseholdUserRole
+
+  @@id([householdId, userId])
+}
+
+enum HouseholdUserRole {
+  OWNER
+  USER
 }
