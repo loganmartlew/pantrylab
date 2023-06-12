@@ -16,6 +16,7 @@ import { ItemEntity } from './entities/item.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
+import { Search } from '../decorators/search.decorator';
 
 @Controller('items')
 @ApiTags('items')
@@ -33,8 +34,8 @@ export class ItemsController {
 
   @Get()
   @ApiCreatedResponse({ type: ItemEntity, isArray: true })
-  findAll(@HouseholdId() householdId: string) {
-    return this.itemsService.findAllInHousehold(householdId);
+  findAll(@HouseholdId() householdId: string, @Search() search: string) {
+    return this.itemsService.findAllInHousehold(householdId, search);
   }
 
   @Get(':id')

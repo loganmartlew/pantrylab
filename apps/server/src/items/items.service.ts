@@ -18,9 +18,9 @@ export class ItemsService {
     return items;
   }
 
-  async findAllInHousehold(householdId: string) {
+  async findAllInHousehold(householdId: string, search = '') {
     const items = await this.db.item.findMany({
-      where: { householdId },
+      where: { householdId, name: { contains: search, mode: 'insensitive' } },
     });
     return items;
   }
