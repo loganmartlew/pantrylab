@@ -13,6 +13,7 @@ import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
+import { HouseholdId } from '../decorators/householdId.decorator';
 
 @Controller('users')
 @ApiTags('users')
@@ -24,8 +25,8 @@ export class UsersController {
 
   @Get()
   @ApiCreatedResponse({ type: UserEntity, isArray: true })
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@HouseholdId() householdId: string) {
+    return this.usersService.findAllInHousehold(householdId);
   }
 
   @Get(':id')
