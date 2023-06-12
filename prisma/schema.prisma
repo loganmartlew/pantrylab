@@ -11,6 +11,7 @@ model Household {
   id        String          @id @default(uuid())
   name      String
   users     HouseholdUser[]
+  items     Item[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 }
@@ -26,15 +27,24 @@ model User {
 }
 
 model HouseholdUser {
-  houshold    Household @relation(fields: [householdId], references: [id])
+  houshold    Household         @relation(fields: [householdId], references: [id])
   householdId String
-  user        User      @relation(fields: [userId], references: [id])
+  user        User              @relation(fields: [userId], references: [id])
   userId      String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   role        HouseholdUserRole
 
   @@id([householdId, userId])
+}
+
+model Item {
+  id          String    @id @default(uuid())
+  name        String
+  household   Household @relation(fields: [householdId], references: [id])
+  householdId String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum HouseholdUserRole {

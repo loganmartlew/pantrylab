@@ -6,9 +6,10 @@ import { HouseholdsModule } from '../households/households.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { UsersModule } from '../users/users.module';
+import { ItemsModule } from '../items/items.module';
 
 @Module({
-  imports: [HouseholdsModule, UsersModule],
+  imports: [HouseholdsModule, UsersModule, ItemsModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -61,6 +61,7 @@ export class HouseholdsController {
         objectName: this.objectName,
       }
     );
+
     return household;
   }
 
@@ -74,6 +75,7 @@ export class HouseholdsController {
         objectName: this.objectName,
       }
     );
+
     return household;
   }
 }

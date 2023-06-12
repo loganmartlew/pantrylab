@@ -14,6 +14,7 @@ import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from '
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { <%= nameUpperSingular %>Entity } from './entities/<%= nameLowerSingular %>.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
+import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('<%= nameLowerPlural %>')
 @ApiTags('<%= nameLowerPlural %>')
@@ -49,7 +50,7 @@ export class <%= nameUpperPlural %>Controller {
 
   @Patch(':id')
   @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() update<%= nameUpperSingular %>Dto: <%= nameUpperSingular %>UpdateDto
   ) {
@@ -57,14 +58,18 @@ export class <%= nameUpperPlural %>Controller {
       () => this.<%= nameLowerPlural %>Service.update(id, update<%= nameUpperSingular %>Dto),
       { id, objectName: this.objectName }
     );
+
+    return <%= nameLowerSingular %>;
   }
 
   @Delete(':id')
   @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     const <%= nameLowerSingular %> = await handleControllerMutation(
       () => this.<%= nameLowerPlural %>Service.remove(id),
       { id, objectName: this.objectName }
     );
+
+    return <%= nameLowerSingular %>;
   }
 }

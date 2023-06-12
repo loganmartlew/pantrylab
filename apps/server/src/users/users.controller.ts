@@ -47,6 +47,7 @@ export class UsersController {
       () => this.usersService.update(id, updateUserDto),
       { id, objectName: this.objectName }
     );
+
     return user;
   }
 }
