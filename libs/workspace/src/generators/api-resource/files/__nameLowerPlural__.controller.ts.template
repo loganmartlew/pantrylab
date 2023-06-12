@@ -19,6 +19,8 @@ import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.
 @ApiTags('<%= nameLowerPlural %>')
 @UseFilters(PrismaClientExceptionFilter)
 export class <%= nameUpperPlural %>Controller {
+  private objectName = '<%= nameUpperSingular %>';
+
   constructor(private readonly <%= nameLowerPlural %>Service: <%= nameUpperPlural %>Service) {}
 
   @Post()
@@ -51,12 +53,18 @@ export class <%= nameUpperPlural %>Controller {
     @Param('id') id: string,
     @Body() update<%= nameUpperSingular %>Dto: <%= nameUpperSingular %>UpdateDto
   ) {
-    return this.<%= nameLowerPlural %>Service.update(id, update<%= nameUpperSingular %>Dto);
+    const <%= nameLowerSingular %> = await handleControllerMutation(
+      () => this.<%= nameLowerPlural %>Service.update(id, update<%= nameUpperSingular %>Dto),
+      { id, objectName: this.objectName }
+    );
   }
 
   @Delete(':id')
   @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
   remove(@Param('id') id: string) {
-    return this.<%= nameLowerPlural %>Service.remove(id);
+    const <%= nameLowerSingular %> = await handleControllerMutation(
+      () => this.<%= nameLowerPlural %>Service.remove(id),
+      { id, objectName: this.objectName }
+    );
   }
 }

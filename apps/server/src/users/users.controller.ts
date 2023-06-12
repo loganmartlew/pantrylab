@@ -12,11 +12,14 @@ import { UserUpdateDto } from './dto/user.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
+import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('users')
 @ApiTags('users')
 @UseFilters(PrismaClientExceptionFilter)
 export class UsersController {
+  private objectName = 'User';
+
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
@@ -39,7 +42,11 @@ export class UsersController {
 
   @Patch(':id')
   @ApiCreatedResponse({ type: UserEntity })
-  update(@Param('id') id: string, @Body() updateUserDto: UserUpdateDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UserUpdateDto) {
+    const user = await handleControllerMutation(
+      () => this.usersService.update(id, updateUserDto),
+      { id, objectName: this.objectName }
+    );
+    return user;
   }
 }

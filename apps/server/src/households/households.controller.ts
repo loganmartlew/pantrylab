@@ -14,11 +14,14 @@ import { HouseholdDto, HouseholdUpdateDto } from './dto/household.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { HouseholdEntity } from './entities/household.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
+import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('households')
 @ApiTags('households')
 @UseFilters(PrismaClientExceptionFilter)
 export class HouseholdsController {
+  private objectName = 'Household';
+
   constructor(private readonly householdsService: HouseholdsService) {}
 
   @Post()
@@ -47,16 +50,30 @@ export class HouseholdsController {
 
   @Patch(':id')
   @ApiCreatedResponse({ type: HouseholdEntity })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateHouseholdDto: HouseholdUpdateDto
   ) {
-    return this.householdsService.update(id, updateHouseholdDto);
+    const household = await handleControllerMutation(
+      () => this.householdsService.update(id, updateHouseholdDto),
+      {
+        id,
+        objectName: this.objectName,
+      }
+    );
+    return household;
   }
 
   @Delete(':id')
   @ApiCreatedResponse({ type: HouseholdEntity })
-  remove(@Param('id') id: string) {
-    return this.householdsService.remove(id);
+  async remove(@Param('id') id: string) {
+    const household = await handleControllerMutation(
+      () => this.householdsService.remove(id),
+      {
+        id,
+        objectName: this.objectName,
+      }
+    );
+    return household;
   }
 }
