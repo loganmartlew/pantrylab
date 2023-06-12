@@ -1,0 +1,18 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
+
+describe('<%= nameUpperPlural %>Service', () => {
+  let service: <%= nameUpperPlural %>Service;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [<%= nameUpperPlural %>Service],
+    }).compile();
+
+    service = module.get<<%= nameUpperPlural %>Service>(<%= nameUpperPlural %>Service);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});

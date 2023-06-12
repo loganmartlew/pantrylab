@@ -1,0 +1,62 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+  UseFilters,
+} from '@nestjs/common';
+import { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
+import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto/<%= nameLowerSingular %>.dto';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { <%= nameUpperSingular %>Entity } from './entities/<%= nameLowerSingular %>.entity';
+import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
+
+@Controller('<%= nameLowerPlural %>')
+@ApiTags('<%= nameLowerPlural %>')
+@UseFilters(PrismaClientExceptionFilter)
+export class <%= nameUpperPlural %>Controller {
+  constructor(private readonly <%= nameLowerPlural %>Service: <%= nameUpperPlural %>Service) {}
+
+  @Post()
+  @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
+  create(@Body() create<%= nameUpperSingular %>Dto: <%= nameUpperSingular %>Dto) {
+    return this.<%= nameLowerPlural %>Service.create(create<%= nameUpperSingular %>Dto);
+  }
+
+  @Get()
+  @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity, isArray: true })
+  findAll() {
+    return this.<%= nameLowerPlural %>Service.findAll();
+  }
+
+  @Get(':id')
+  @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
+  async findOne(@Param('id') id: string) {
+    const <%= nameLowerSingular %> = await this.<%= nameLowerPlural %>Service.findOne(id);
+
+    if (!<%= nameLowerSingular %>) {
+      throw new NotFoundException(`<%= nameUpperSingular %> with id: ${id} not found`);
+    }
+
+    return <%= nameLowerSingular %>;
+  }
+
+  @Patch(':id')
+  @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
+  update(
+    @Param('id') id: string,
+    @Body() update<%= nameUpperSingular %>Dto: <%= nameUpperSingular %>UpdateDto
+  ) {
+    return this.<%= nameLowerPlural %>Service.update(id, update<%= nameUpperSingular %>Dto);
+  }
+
+  @Delete(':id')
+  @ApiCreatedResponse({ type: <%= nameUpperSingular %>Entity })
+  remove(@Param('id') id: string) {
+    return this.<%= nameLowerPlural %>Service.remove(id);
+  }
+}

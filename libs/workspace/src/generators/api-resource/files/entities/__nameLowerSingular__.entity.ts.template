@@ -1,0 +1,9 @@
+import { <%= nameUpperSingular %> } from '@prisma/client';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'nestjs-zod/z';
+
+export const <%= nameUpperSingular %>Schema = z.object({});
+
+export class <%= nameUpperSingular %>Entity
+  extends createZodDto(<%= nameUpperSingular %>Schema)
+  implements <%= nameUpperSingular %> {}

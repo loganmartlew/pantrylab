@@ -1,0 +1,42 @@
+import { Injectable } from '@nestjs/common';
+import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto/<%= nameLowerSingular %>.dto';
+import { DbService } from '../db/db.service';
+
+@Injectable()
+export class <%= nameUpperPlural %>Service {
+  constructor(private db: DbService) {}
+
+  async create(<%= nameLowerSingular %>Dto: <%= nameUpperSingular %>Dto) {
+    const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.create({
+      data: <%= nameLowerSingular %>Dto,
+    });
+    return <%= nameLowerSingular %>;
+  }
+
+  async findAll() {
+    const <%= nameLowerPlural %> = await this.db.<%= nameLowerSingular %>.findMany();
+    return <%= nameLowerPlural %>;
+  }
+
+  async findOne(id: string) {
+    const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.findUnique({
+      where: { id },
+    });
+    return <%= nameLowerSingular %>;
+  }
+
+  async update(id: string, update<%= nameUpperSingular %>Dto: <%= nameUpperSingular %>UpdateDto) {
+    const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.update({
+      where: { id },
+      data: update<%= nameUpperSingular %>Dto,
+    });
+    return <%= nameLowerSingular %>;
+  }
+
+  async remove(id: string) {
+    const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.delete({
+      where: { id },
+    });
+    return <%= nameLowerSingular %>;
+  }
+}

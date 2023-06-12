@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "api-resource": {
+      "factory": "./src/generators/api-resource/generator",
+      "schema": "./src/generators/api-resource/schema.json",
+      "description": "api-resource generator"
+    }
+  }
+}
