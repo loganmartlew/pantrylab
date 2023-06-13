@@ -7,7 +7,7 @@ export async function apiResourceGenerator(
   options: ApiResourceGeneratorSchema
 ) {
   const name = options.name;
-  const nameLowerPlural = name.toLowerCase();
+  const nameLowerPlural = name.charAt(0).toLowerCase() + name.slice(1);
   const nameLowerSingular = nameLowerPlural.slice(0, -1);
   const nameUpperPlural = name.charAt(0).toUpperCase() + name.slice(1);
   const nameUpperSingular = nameUpperPlural.slice(0, -1);

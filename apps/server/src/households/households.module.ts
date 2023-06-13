@@ -6,6 +6,7 @@ import { DbModule } from '../db/db.module';
 @Module({
   controllers: [HouseholdsController],
   providers: [HouseholdsService],
+  exports: [HouseholdsService],
   imports: [DbModule],
 })
 export class HouseholdsModule {}

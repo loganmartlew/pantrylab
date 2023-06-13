@@ -7,6 +7,7 @@ export const UserDtoSchema = z.object({
   lastName: z.string().min(1).max(100),
 });
 
-export class UserDto extends createZodDto(UserDtoSchema) {}
+export const UserUpdateSchema = UserDtoSchema.partial();
 
-export class UserUpdateDto extends createZodDto(UserDtoSchema.partial()) {}
+export class UserDto extends createZodDto(UserDtoSchema) {}
+export class UserUpdateDto extends createZodDto(UserUpdateSchema) {}

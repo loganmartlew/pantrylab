@@ -6,6 +6,13 @@ import { DbService } from '../db/db.service';
 export class ItemsService {
   constructor(private db: DbService) {}
 
+  async checkExists(id: string) {
+    const item = await this.db.item.findUnique({
+      where: { id },
+    });
+    return !!item;
+  }
+
   async create(itemDto: ItemDto) {
     const item = await this.db.item.create({
       data: itemDto,

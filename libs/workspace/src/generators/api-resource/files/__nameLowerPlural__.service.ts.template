@@ -6,6 +6,13 @@ import { DbService } from '../db/db.service';
 export class <%= nameUpperPlural %>Service {
   constructor(private db: DbService) {}
 
+  async checkExists(id: string) {
+    const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.findUnique({
+      where: { id },
+    });
+    return !!<%= nameLowerSingular %>;
+  }
+
   async create(<%= nameLowerSingular %>Dto: <%= nameUpperSingular %>Dto) {
     const <%= nameLowerSingular %> = await this.db.<%= nameLowerSingular %>.create({
       data: <%= nameLowerSingular %>Dto,

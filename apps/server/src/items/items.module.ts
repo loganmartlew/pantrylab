@@ -6,6 +6,7 @@ import { DbModule } from '../db/db.module';
 @Module({
   controllers: [ItemsController],
   providers: [ItemsService],
+  exports: [ItemsService],
   imports: [DbModule],
 })
 export class ItemsModule {}

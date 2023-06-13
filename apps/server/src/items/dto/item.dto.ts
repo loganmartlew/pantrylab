@@ -6,6 +6,11 @@ export const ItemDtoSchema = z.object({
   householdId: z.string().uuid(),
 });
 
-export class ItemDto extends createZodDto(ItemDtoSchema) {}
+export const ItemUpdateSchema = z
+  .object({
+    name: z.string().min(3).max(255),
+  })
+  .partial();
 
-export class ItemUpdateDto extends createZodDto(ItemDtoSchema.partial()) {}
+export class ItemDto extends createZodDto(ItemDtoSchema) {}
+export class ItemUpdateDto extends createZodDto(ItemUpdateSchema) {}

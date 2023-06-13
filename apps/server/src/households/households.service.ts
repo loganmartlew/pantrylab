@@ -6,6 +6,13 @@ import { DbService } from '../db/db.service';
 export class HouseholdsService {
   constructor(private db: DbService) {}
 
+  async checkExists(id: string) {
+    const household = await this.db.household.findUnique({
+      where: { id },
+    });
+    return !!household;
+  }
+
   async create(householdDto: HouseholdDto) {
     const household = await this.db.household.create({
       data: householdDto,

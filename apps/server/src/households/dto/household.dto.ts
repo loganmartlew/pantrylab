@@ -5,8 +5,7 @@ export const HouseholdDtoSchema = z.object({
   name: z.string().min(1).max(50),
 });
 
-export class HouseholdDto extends createZodDto(HouseholdDtoSchema) {}
+export const HouseholdUpdateSchema = HouseholdDtoSchema.partial();
 
-export class HouseholdUpdateDto extends createZodDto(
-  HouseholdDtoSchema.partial()
-) {}
+export class HouseholdDto extends createZodDto(HouseholdDtoSchema) {}
+export class HouseholdUpdateDto extends createZodDto(HouseholdUpdateSchema) {}

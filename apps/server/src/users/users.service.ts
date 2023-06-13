@@ -6,6 +6,13 @@ import { DbService } from '../db/db.service';
 export class UsersService {
   constructor(private db: DbService) {}
 
+  async checkExists(id: string) {
+    const user = await this.db.user.findUnique({
+      where: { id },
+    });
+    return !!user;
+  }
+
   async create(userDto: UserDto) {
     const user = await this.db.user.create({
       data: userDto,

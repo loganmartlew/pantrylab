@@ -12,6 +12,7 @@ model Household {
   name      String
   users     HouseholdUser[]
   items     Item[]
+  listItems ListItem[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 }
@@ -39,8 +40,21 @@ model HouseholdUser {
 }
 
 model Item {
-  id          String    @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
+  household   Household  @relation(fields: [householdId], references: [id])
+  householdId String
+  listItems   ListItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model ListItem {
+  id          String    @id @default(uuid())
+  completedAt DateTime?
+  details     String
+  item        Item      @relation(fields: [itemId], references: [id])
+  itemId      String
   household   Household @relation(fields: [householdId], references: [id])
   householdId String
   createdAt   DateTime  @default(now())
