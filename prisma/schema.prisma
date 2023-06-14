@@ -38,6 +38,8 @@ model HouseholdUser {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
   role        HouseholdUserRole
+
+  @@unique([householdId, userId])
 }
 
 model Item {
@@ -70,6 +72,8 @@ model Invite {
   userId      String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@unique([householdId, userId])
 }
 
 enum HouseholdUserRole {

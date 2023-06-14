@@ -46,4 +46,15 @@ export class HouseholdsService {
     });
     return household;
   }
+
+  async removeUser(userId: string, householdId: string) {
+    await this.db.householdUser.delete({
+      where: {
+        householdId_userId: {
+          householdId,
+          userId,
+        },
+      },
+    });
+  }
 }

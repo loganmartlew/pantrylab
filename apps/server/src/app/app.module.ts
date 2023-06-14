@@ -8,9 +8,16 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { UsersModule } from '../users/users.module';
 import { ItemsModule } from '../items/items.module';
 import { ListItemsModule } from '../listItems/listItems.module';
+import { InvitesModule } from '../invites/invites.module';
 
 @Module({
-  imports: [HouseholdsModule, UsersModule, ItemsModule, ListItemsModule],
+  imports: [
+    HouseholdsModule,
+    UsersModule,
+    ItemsModule,
+    ListItemsModule,
+    InvitesModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

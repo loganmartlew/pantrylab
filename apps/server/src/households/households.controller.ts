@@ -78,4 +78,15 @@ export class HouseholdsController {
 
     return household;
   }
+
+  @Delete(':id/user/:userId')
+  async removeUser(@Param('id') id: string, @Param('userId') userId: string) {
+    await handleControllerMutation(
+      () => this.householdsService.removeUser(id, userId),
+      {
+        id,
+        objectName: this.objectName,
+      }
+    );
+  }
 }
