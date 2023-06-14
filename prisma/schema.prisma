@@ -14,6 +14,7 @@ model Household {
   items     Item[]
   listItems ListItem[]
   invites   Invite[]
+  meals     Meal[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 }
@@ -48,6 +49,7 @@ model Item {
   household   Household  @relation(fields: [householdId], references: [id])
   householdId String
   listItems   ListItem[]
+  meals       Meal[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
@@ -74,6 +76,17 @@ model Invite {
   updatedAt   DateTime  @updatedAt
 
   @@unique([householdId, userId])
+}
+
+model Meal {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  household   Household @relation(fields: [householdId], references: [id])
+  householdId String
+  items       Item[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum HouseholdUserRole {

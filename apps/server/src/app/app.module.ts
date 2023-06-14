@@ -9,6 +9,7 @@ import { UsersModule } from '../users/users.module';
 import { ItemsModule } from '../items/items.module';
 import { ListItemsModule } from '../listItems/listItems.module';
 import { InvitesModule } from '../invites/invites.module';
+import { MealsModule } from '../meals/meals.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { InvitesModule } from '../invites/invites.module';
     ItemsModule,
     ListItemsModule,
     InvitesModule,
+    MealsModule,
   ],
   controllers: [AppController],
   providers: [
