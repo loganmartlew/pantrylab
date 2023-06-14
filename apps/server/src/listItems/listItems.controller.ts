@@ -12,7 +12,10 @@ import {
 import { ListItemsService } from './listItems.service';
 import { ListItemDto, ListItemUpdateDto } from './dto/listItem.dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ListItemEntity } from './entities/listItem.entity';
+import {
+  ListItemEntity,
+  ListItemWithItemEntity,
+} from './entities/listItem.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
@@ -32,14 +35,14 @@ export class ListItemsController {
   }
 
   @Get()
-  @ApiCreatedResponse({ type: ListItemEntity, isArray: true })
+  @ApiCreatedResponse({ type: ListItemWithItemEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   findAll(@HouseholdId() householdId: string) {
     return this.listItemsService.findAllInHousehold(householdId);
   }
 
   @Get(':id')
-  @ApiCreatedResponse({ type: ListItemEntity })
+  @ApiCreatedResponse({ type: ListItemWithItemEntity })
   async findOne(@Param('id') id: string) {
     const listItem = await this.listItemsService.findOne(id);
 

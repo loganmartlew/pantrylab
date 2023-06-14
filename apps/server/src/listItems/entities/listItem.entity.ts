@@ -9,11 +9,18 @@ export const ListItemSchema = z.object({
   details: z.string().min(1).max(255),
   householdId: z.string().uuid(),
   itemId: z.string().uuid(),
-  item: ItemSchema,
   createdAt: z.date(),
   updatedAt: z.date(),
 });
 
+export const ListItemWithItemSchema = ListItemSchema.extend({
+  item: ItemSchema,
+});
+
 export class ListItemEntity
   extends createZodDto(ListItemSchema)
+  implements ListItem {}
+
+export class ListItemWithItemEntity
+  extends createZodDto(ListItemWithItemSchema)
   implements ListItem {}

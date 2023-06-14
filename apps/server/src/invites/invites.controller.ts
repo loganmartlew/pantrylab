@@ -11,7 +11,7 @@ import {
 import { InvitesService } from './invites.service';
 import { InviteDto } from './dto/invite.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { InviteEntity } from './entities/invite.entity';
+import { InviteEntity, InviteWithUserEntity } from './entities/invite.entity';
 import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
@@ -31,7 +31,7 @@ export class InvitesController {
   }
 
   @Get('householdinvites')
-  @ApiCreatedResponse({ type: InviteEntity, isArray: true })
+  @ApiCreatedResponse({ type: InviteWithUserEntity, isArray: true })
   findAllInHousehold(@HouseholdId() householdId: string) {
     return this.invitesService.findAllInHousehold(householdId);
   }
