@@ -3,8 +3,7 @@ import { z } from 'nestjs-zod/z';
 
 export const <%= nameUpperSingular %>DtoSchema = z.object({});
 
-export class <%= nameUpperSingular %>Dto extends createZodDto(<%= nameUpperSingular %>DtoSchema) {}
+export const <%= nameUpperSingular %>UpdateSchema = z.object({}).partial();
 
-export class <%= nameUpperSingular %>UpdateDto extends createZodDto(
-  <%= nameUpperSingular %>DtoSchema.partial()
-) {}
+export class <%= nameUpperSingular %>Dto extends createZodDto(<%= nameUpperSingular %>DtoSchema) {}
+export class <%= nameUpperSingular %>UpdateDto extends createZodDto(<%= nameUpperSingular %>UpdateSchema) {}

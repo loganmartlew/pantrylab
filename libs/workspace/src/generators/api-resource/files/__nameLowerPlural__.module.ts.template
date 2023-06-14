@@ -6,6 +6,7 @@ import { DbModule } from '../db/db.module';
 @Module({
   controllers: [<%= nameUpperPlural %>Controller],
   providers: [<%= nameUpperPlural %>Service],
+  exports: [<%= nameUpperPlural %>Service],
   imports: [DbModule],
 })
 export class <%= nameUpperPlural %>Module {}
