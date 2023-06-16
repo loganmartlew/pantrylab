@@ -10,6 +10,7 @@ import { ItemsModule } from '../items/items.module';
 import { ListItemsModule } from '../listItems/listItems.module';
 import { InvitesModule } from '../invites/invites.module';
 import { MealsModule } from '../meals/meals.module';
+import { PlannedMealsModule } from '../plannedMeals/plannedMeals.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MealsModule } from '../meals/meals.module';
     ListItemsModule,
     InvitesModule,
     MealsModule,
+    PlannedMealsModule,
   ],
   controllers: [AppController],
   providers: [

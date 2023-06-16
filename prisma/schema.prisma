@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Household {
-  id        String          @id @default(uuid())
-  name      String
-  users     HouseholdUser[]
-  items     Item[]
-  listItems ListItem[]
-  invites   Invite[]
-  meals     Meal[]
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  id           String          @id @default(uuid())
+  name         String
+  users        HouseholdUser[]
+  items        Item[]
+  listItems    ListItem[]
+  invites      Invite[]
+  meals        Meal[]
+  plannedMeals PlannedMeal[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
 }
 
 model User {
@@ -79,14 +80,28 @@ model Invite {
 }
 
 model Meal {
+  id           String        @id @default(uuid())
+  name         String
+  description  String
+  household    Household     @relation(fields: [householdId], references: [id])
+  householdId  String
+  items        Item[]
+  plannedMeals PlannedMeal[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model PlannedMeal {
   id          String    @id @default(uuid())
-  name        String
-  description String
+  meal        Meal      @relation(fields: [mealId], references: [id])
+  mealId      String
   household   Household @relation(fields: [householdId], references: [id])
   householdId String
-  items       Item[]
+  date        DateTime
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@unique([mealId, householdId, date])
 }
 
 enum HouseholdUserRole {
