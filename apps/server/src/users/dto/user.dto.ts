@@ -5,9 +5,14 @@ export const UserDtoSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1).max(100),
   lastName: z.string().min(1).max(100),
+  password: z.string().min(8).max(100),
 });
 
-export const UserUpdateSchema = UserDtoSchema.partial();
+export const UserUpdateSchema = z.object({
+  email: z.string().email(),
+  firstName: z.string().min(1).max(100),
+  lastName: z.string().min(1).max(100),
+});
 
 export class UserDto extends createZodDto(UserDtoSchema) {}
 export class UserUpdateDto extends createZodDto(UserUpdateSchema) {}
