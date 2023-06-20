@@ -14,15 +14,8 @@ export class UsersService {
   }
 
   async create(userDto: UserDto) {
-    const userData = {
-      email: userDto.email,
-      firstName: userDto.firstName,
-      lastName: userDto.lastName,
-      passwordHash: userDto.password,
-    };
-
     const user = await this.db.user.create({
-      data: userData,
+      data: userDto,
       select: {
         id: true,
         email: true,
