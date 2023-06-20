@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { InvitesService } from './invites.service';
 import { InvitesController } from './invites.controller';
-import { DbModule } from '../db/db.module';
 import { HouseholdsModule } from '../households/households.module';
 import { UsersModule } from '../users/users.module';
 
@@ -9,6 +8,6 @@ import { UsersModule } from '../users/users.module';
   controllers: [InvitesController],
   providers: [InvitesService],
   exports: [InvitesService],
-  imports: [DbModule, HouseholdsModule, UsersModule],
+  imports: [HouseholdsModule, UsersModule],
 })
 export class InvitesModule {}
