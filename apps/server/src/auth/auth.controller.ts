@@ -5,7 +5,6 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -13,10 +12,11 @@ import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
 import { LoginEntity } from './entities/login.entity';
 import { ApiCreatedResponse } from '@nestjs/swagger';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { Cookies } from '../decorators/cookies.decorator';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
+import { AccessTokenGuard, RefreshTokenGuard } from './guards';
+import { AuthUser } from './decorators';
 
 @Controller('auth')
 export class AuthController {
@@ -54,32 +54,26 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('access-token'))
+  @UseGuards(AccessTokenGuard)
   async logout(
     @Cookies('refreshToken') refreshToken: string,
-    @Req() req: Request,
+    @AuthUser('id') userId: string,
     @Res({ passthrough: true }) res: Response
   ) {
-    const user = req.user as any;
-
-    console.log(user);
-
     res.clearCookie('refreshToken');
-    await this.authService.logout(user!['id'], refreshToken);
+    await this.authService.logout(userId, refreshToken);
   }
 
   @Get('refresh')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('refresh-token'))
+  @UseGuards(RefreshTokenGuard)
   @ApiCreatedResponse({ type: LoginEntity, isArray: true })
   async refresh(
     @Cookies('refreshToken') refreshToken: string,
-    @Req() req: Request,
+    @AuthUser('id') userId: string,
     @Res({ passthrough: true }) res: Response
   ) {
-    const user = req.user as any;
-
-    const tokens = await this.authService.refresh(user!['id'], refreshToken);
+    const tokens = await this.authService.refresh(userId, refreshToken);
 
     res.cookie('refreshToken', tokens.refreshToken, {});
 
