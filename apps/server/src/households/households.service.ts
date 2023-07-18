@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HouseholdDto, HouseholdUpdateDto } from './dto/household.dto';
 import { DbService } from '../db/db.service';
+import { HouseholdUserRole } from '@prisma/client';
 
 @Injectable()
 export class HouseholdsService {
@@ -45,6 +46,33 @@ export class HouseholdsService {
       where: { id },
     });
     return household;
+  }
+
+  async checkUserInHousehold(
+    userId: string,
+    householdId: string,
+    role?: HouseholdUserRole
+  ) {
+    const householdUser = await this.db.householdUser.findUnique({
+      where: {
+        householdId_userId: {
+          householdId,
+          userId,
+        },
+      },
+    });
+
+    // User is not in the household
+    if (!householdUser) {
+      return false;
+    }
+
+    // User in household (ignore role)
+    if (!role) {
+      return true;
+    }
+
+    return householdUser.role === role;
   }
 
   async removeUser(userId: string, householdId: string) {

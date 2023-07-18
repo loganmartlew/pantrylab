@@ -7,9 +7,10 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { HouseholdsService } from '../households.service';
+import { householdIdMetadataKey } from '../meta';
 
 @Injectable()
-export class HouseholdGuard implements CanActivate {
+export class HouseholdQueryGuard implements CanActivate {
   constructor(private householdsService: HouseholdsService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -29,6 +30,12 @@ export class HouseholdGuard implements CanActivate {
     if (!householdExists) {
       throw new NotFoundException('Household does not exist');
     }
+
+    Reflect.defineMetadata(
+      householdIdMetadataKey,
+      householdId,
+      context.getHandler()
+    );
 
     return true;
   }

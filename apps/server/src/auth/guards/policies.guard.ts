@@ -33,6 +33,12 @@ export class PoliciesGuard implements CanActivate {
       this.moduleRef.get(policyType, { strict: false })
     );
 
-    return policies.every((handler) => handler.checkConditions(user));
+    const policyResults = await Promise.all(
+      policies.map(
+        async (policy) => await policy.checkConditions(user, context)
+      )
+    );
+
+    return policyResults.every((result) => result);
   }
 }
