@@ -11,7 +11,11 @@ import {
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
 import { LoginEntity } from './entities/login.entity';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCookieAuth,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import { Response } from 'express';
 import { Cookies } from '../decorators/cookies.decorator';
 import { AuthService } from './auth.service';
@@ -55,6 +59,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
   async logout(
     @Cookies('refreshToken') refreshToken: string,
     @AuthUser('id') userId: string,
@@ -67,6 +72,7 @@ export class AuthController {
   @Get('refresh')
   @HttpCode(HttpStatus.OK)
   @UseGuards(RefreshTokenGuard)
+  @ApiCookieAuth()
   @ApiCreatedResponse({ type: LoginEntity, isArray: true })
   async refresh(
     @Cookies('refreshToken') refreshToken: string,

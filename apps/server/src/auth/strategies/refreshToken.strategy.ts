@@ -4,10 +4,12 @@ import { Request } from 'express';
 import { UserEntity } from '../../users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 
+export const REFRESH_TOKEN_KEY = 'refresh-token';
+
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  'refresh-token'
+  REFRESH_TOKEN_KEY
 ) {
   constructor() {
     super({

@@ -3,10 +3,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserEntity } from '../../users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 
+export const ACCESS_TOKEN_KEY = 'access-token';
+
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(
   Strategy,
-  'access-token'
+  ACCESS_TOKEN_KEY
 ) {
   constructor() {
     super({

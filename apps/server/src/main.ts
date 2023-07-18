@@ -21,6 +21,8 @@ async function bootstrap() {
     .setTitle('PantryLab')
     .setDescription('The PantryLab API')
     .setVersion('0.1.0')
+    .addBearerAuth()
+    .addCookieAuth('refreshToken')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
