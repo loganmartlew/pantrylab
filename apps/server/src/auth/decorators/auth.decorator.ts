@@ -1,4 +1,4 @@
-import { Type, UseGuards, applyDecorators } from '@nestjs/common';
+import { CanActivate, Type, UseGuards, applyDecorators } from '@nestjs/common';
 import { Policy } from '../types';
 import { CheckPolicies } from './checkPolicies.decorator';
 import { AccessTokenGuard, PoliciesGuard } from '../guards';
@@ -8,10 +8,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-export function Auth(...handlers: Type<Policy>[]) {
+export function Auth(
+  guards?: Type<CanActivate>[],
+  ...handlers: Type<Policy>[]
+) {
   return applyDecorators(
     CheckPolicies(...handlers),
-    UseGuards(AccessTokenGuard, PoliciesGuard),
+    UseGuards(AccessTokenGuard, ...(guards || []), PoliciesGuard),
     ApiBearerAuth(),
     ApiUnauthorizedResponse({
       schema: {

@@ -16,6 +16,7 @@ import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 import { Search } from '../decorators/search.decorator';
 import { Auth } from '../auth/decorators/auth.decorator';
+import { HouseholdGuard } from '../households/guards/household.guard';
 
 @Controller('items')
 @ApiTags('items')
@@ -31,7 +32,7 @@ export class ItemsController {
   }
 
   @Get()
-  @Auth()
+  @Auth([HouseholdGuard])
   @ApiCreatedResponse({ type: ItemEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   @ApiQuery({ name: 'search', required: false, type: String })
