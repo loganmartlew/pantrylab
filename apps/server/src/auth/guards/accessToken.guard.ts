@@ -1,7 +1,7 @@
 import { AuthGuard } from '@nestjs/passport';
-import { REFRESH_TOKEN_KEY } from '../strategies';
+import { ACCESS_TOKEN_KEY } from '../strategies';
 
-export class AccessTokenGuard extends AuthGuard(REFRESH_TOKEN_KEY) {
+export class AccessTokenGuard extends AuthGuard(ACCESS_TOKEN_KEY) {
   constructor() {
     super();
   }

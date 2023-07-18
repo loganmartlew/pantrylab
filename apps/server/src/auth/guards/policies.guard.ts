@@ -3,11 +3,12 @@ import {
   ExecutionContext,
   Injectable,
   Type,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ModuleRef, Reflector } from '@nestjs/core';
 import { Policy } from '../types';
 import { CHECK_POLICIES_KEY } from '../decorators/checkPolicies.decorator';
-import { UserSchema } from '../../users/entities/user.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
@@ -20,8 +21,13 @@ export class PoliciesGuard implements CanActivate {
         context.getHandler()
       ) || [];
 
-    const req = context.switchToHttp().getRequest();
-    const user = UserSchema.parse(req.user);
+    const { user: reqUser } = context.switchToHttp().getRequest();
+
+    if (!reqUser) {
+      throw new UnauthorizedException();
+    }
+
+    const user: UserEntity = reqUser;
 
     const policies = policyTypes.map((policyType) =>
       this.moduleRef.get(policyType, { strict: false })
