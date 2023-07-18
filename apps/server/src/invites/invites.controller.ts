@@ -6,19 +6,16 @@ import {
   Patch,
   Param,
   Delete,
-  UseFilters,
 } from '@nestjs/common';
 import { InvitesService } from './invites.service';
 import { InviteDto } from './dto/invite.dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { InviteEntity, InviteWithUserEntity } from './entities/invite.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 
 @Controller('invites')
 @ApiTags('invites')
-@UseFilters(PrismaClientExceptionFilter)
 export class InvitesController {
   private objectName = 'Invite';
 

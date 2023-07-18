@@ -5,19 +5,16 @@ import {
   Patch,
   Param,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserUpdateDto } from './dto/user.dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 
 @Controller('users')
 @ApiTags('users')
-@UseFilters(PrismaClientExceptionFilter)
 export class UsersController {
   private objectName = 'User';
 

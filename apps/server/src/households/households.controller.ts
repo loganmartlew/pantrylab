@@ -7,18 +7,15 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
 import { HouseholdDto, HouseholdUpdateDto } from './dto/household.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { HouseholdEntity } from './entities/household.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('households')
 @ApiTags('households')
-@UseFilters(PrismaClientExceptionFilter)
 export class HouseholdsController {
   private objectName = 'Household';
 

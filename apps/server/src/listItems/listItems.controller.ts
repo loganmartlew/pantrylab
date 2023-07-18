@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { ListItemsService } from './listItems.service';
 import { ListItemDto, ListItemUpdateDto } from './dto/listItem.dto';
@@ -16,13 +15,11 @@ import {
   ListItemEntity,
   ListItemWithItemEntity,
 } from './entities/listItem.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 
 @Controller('listItems')
 @ApiTags('listItems')
-@UseFilters(PrismaClientExceptionFilter)
 export class ListItemsController {
   private objectName = 'ListItem';
 
