@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InviteDto } from './dto/invite.dto';
 import { DbService } from '../db/db.service';
 import { HouseholdsService } from '../households/households.service';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '@pantrylab/users';
 
 @Injectable()
 export class InvitesService {

@@ -1,7 +1,7 @@
 import { Invite } from '@prisma/client';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
-import { UserSchema } from '../../users/entities/user.entity';
+import { UserSchema } from '@pantrylab/users';
 
 export const InviteSchema = z.object({
   id: z.string().uuid(),

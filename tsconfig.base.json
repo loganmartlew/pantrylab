@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "workspace": ["libs/workspace/src/index.ts"]
+      "@pantrylab/users": ["libs/users/src/index.ts"],
+      "@pantrylab/workspace": ["libs/workspace/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

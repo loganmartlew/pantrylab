@@ -1,6 +1,6 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@pantrylab/users';
 import { Injectable } from '@nestjs/common';
 
 export const ACCESS_TOKEN_KEY = 'access-token';

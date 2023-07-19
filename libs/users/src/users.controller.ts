@@ -7,9 +7,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserUpdateDto } from './dto/user.dto';
+import { UserUpdateDto } from './dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { UserEntity } from './entities/user.entity';
+import { UserEntity } from './entities';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 import { Auth } from '../auth/decorators';

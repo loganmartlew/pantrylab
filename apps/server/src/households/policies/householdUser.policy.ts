@@ -1,6 +1,6 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Policy } from '../../auth/types';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@pantrylab/users';
 import { HouseholdsService } from '../households.service';
 import { Reflector } from '@nestjs/core';
 import { householdIdMetadataKey } from '../meta';

@@ -1,6 +1,6 @@
 import { ExecutionContext } from '@nestjs/common';
 import { Policy } from '../../auth/types';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from '../entities';
 
 export class UserSelfPolicy implements Policy {
   async checkConditions(user: UserEntity, context: ExecutionContext) {

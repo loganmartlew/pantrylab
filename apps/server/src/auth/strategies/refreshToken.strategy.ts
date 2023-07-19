@@ -1,7 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
-import { UserEntity } from '../../users/entities/user.entity';
+import { UserEntity } from '@pantrylab/users';
 import { Injectable } from '@nestjs/common';
 
 export const REFRESH_TOKEN_KEY = 'refresh-token';
