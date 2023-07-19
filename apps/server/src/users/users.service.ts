@@ -16,12 +16,31 @@ export class UsersService {
   async create(userDto: UserDto) {
     const user = await this.db.user.create({
       data: userDto,
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
     });
     return user;
   }
 
   async findAll() {
-    const users = await this.db.user.findMany();
+    const users = await this.db.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
+    });
     return users;
   }
 
@@ -34,6 +53,15 @@ export class UsersService {
           },
         },
       },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
     });
     return users;
   }
@@ -41,6 +69,15 @@ export class UsersService {
   async findOne(id: string) {
     const user = await this.db.user.findUnique({
       where: { id },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
     });
     return user;
   }
@@ -49,6 +86,15 @@ export class UsersService {
     const user = await this.db.user.update({
       where: { id },
       data: updateUserDto,
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
     });
     return user;
   }
@@ -56,6 +102,15 @@ export class UsersService {
   async remove(id: string) {
     const user = await this.db.user.delete({
       where: { id },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+        updatedAt: true,
+        passwordHash: false,
+      },
     });
     return user;
   }

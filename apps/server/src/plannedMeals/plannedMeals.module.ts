@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PlannedMealsService } from './plannedMeals.service';
 import { PlannedMealsController } from './plannedMeals.controller';
-import { DbModule } from '../db/db.module';
+import { PlannedMealHouseholdUserPolicy } from './policies';
+import { HouseholdsModule } from '../households/households.module';
 
 @Module({
   controllers: [PlannedMealsController],
-  providers: [PlannedMealsService],
+  providers: [PlannedMealsService, PlannedMealHouseholdUserPolicy],
   exports: [PlannedMealsService],
-  imports: [DbModule],
+  imports: [HouseholdsModule],
 })
 export class PlannedMealsModule {}

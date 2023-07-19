@@ -6,31 +6,37 @@ import {
   Patch,
   Param,
   Delete,
-  UseFilters,
 } from '@nestjs/common';
 import { InvitesService } from './invites.service';
 import { InviteDto } from './dto/invite.dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { InviteEntity, InviteWithUserEntity } from './entities/invite.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
+import { Auth } from '../auth/decorators';
+import { HouseholdBodyGuard } from '../households/guards';
+import {
+  HouseholdOwnerPolicy,
+  HouseholdUserPolicy,
+} from '../households/policies';
+import { InviteUserPolicy } from './policies';
 
 @Controller('invites')
 @ApiTags('invites')
-@UseFilters(PrismaClientExceptionFilter)
 export class InvitesController {
   private objectName = 'Invite';
 
   constructor(private readonly invitesService: InvitesService) {}
 
   @Post()
+  @Auth([HouseholdBodyGuard], HouseholdOwnerPolicy)
   @ApiCreatedResponse({ type: InviteEntity })
   create(@Body() createInviteDto: InviteDto) {
     return this.invitesService.create(createInviteDto);
   }
 
   @Get('householdinvites')
+  @Auth([HouseholdBodyGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: InviteWithUserEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   findAllInHousehold(@HouseholdId() householdId: string) {
@@ -38,6 +44,7 @@ export class InvitesController {
   }
 
   @Patch(':id/accept')
+  @Auth([], InviteUserPolicy)
   @ApiCreatedResponse({ type: InviteEntity })
   async accept(@Param('id') id: string) {
     const invite = await handleControllerMutation(
@@ -49,6 +56,7 @@ export class InvitesController {
   }
 
   @Delete(':id')
+  @Auth([], InviteUserPolicy)
   @ApiCreatedResponse({ type: InviteEntity })
   async remove(@Param('id') id: string) {
     const invite = await handleControllerMutation(

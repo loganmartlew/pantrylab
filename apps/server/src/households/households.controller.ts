@@ -7,36 +7,40 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
 import { HouseholdDto, HouseholdUpdateDto } from './dto/household.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { HouseholdEntity } from './entities/household.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
+import { Auth } from '../auth/decorators';
+import { AuthUser } from '../auth/decorators';
+import { HouseholdParamGuard } from './guards';
+import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
 
 @Controller('households')
 @ApiTags('households')
-@UseFilters(PrismaClientExceptionFilter)
 export class HouseholdsController {
   private objectName = 'Household';
 
   constructor(private readonly householdsService: HouseholdsService) {}
 
   @Post()
+  @Auth()
   @ApiCreatedResponse({ type: HouseholdEntity })
   create(@Body() createHouseholdDto: HouseholdDto) {
     return this.householdsService.create(createHouseholdDto);
   }
 
   @Get()
+  @Auth()
   @ApiCreatedResponse({ type: HouseholdEntity, isArray: true })
-  findAll() {
-    return this.householdsService.findAll();
+  findAll(@AuthUser('id') userId: string) {
+    return this.householdsService.findAllByUserId(userId);
   }
 
   @Get(':id')
+  @Auth([HouseholdParamGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: HouseholdEntity })
   async findOne(@Param('id') id: string) {
     const household = await this.householdsService.findOne(id);
@@ -49,6 +53,7 @@ export class HouseholdsController {
   }
 
   @Patch(':id')
+  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
   @ApiCreatedResponse({ type: HouseholdEntity })
   async update(
     @Param('id') id: string,
@@ -66,6 +71,7 @@ export class HouseholdsController {
   }
 
   @Delete(':id')
+  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
   @ApiCreatedResponse({ type: HouseholdEntity })
   async remove(@Param('id') id: string) {
     const household = await handleControllerMutation(
@@ -80,6 +86,7 @@ export class HouseholdsController {
   }
 
   @Delete(':id/user/:userId')
+  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
   async removeUser(@Param('id') id: string, @Param('userId') userId: string) {
     await handleControllerMutation(
       () => this.householdsService.removeUser(id, userId),

@@ -6,7 +6,6 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { PlannedMealsService } from './plannedMeals.service';
 import { PlannedMealDto } from './dto/plannedMeal.dto';
@@ -15,25 +14,29 @@ import {
   PlannedMealEntity,
   PlannedMealWithMealEntity,
 } from './entities/plannedMeal.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
+import { HouseholdUserPolicy } from '../households/policies';
+import { HouseholdBodyGuard, HouseholdQueryGuard } from '../households/guards';
+import { Auth } from '../auth/decorators';
+import { PlannedMealHouseholdUserPolicy } from './policies';
 
 @Controller('plannedMeals')
 @ApiTags('plannedMeals')
-@UseFilters(PrismaClientExceptionFilter)
 export class PlannedMealsController {
   private objectName = 'PlannedMeal';
 
   constructor(private readonly plannedMealsService: PlannedMealsService) {}
 
   @Post()
+  @Auth([HouseholdBodyGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: PlannedMealEntity })
   create(@Body() createPlannedMealDto: PlannedMealDto) {
     return this.plannedMealsService.create(createPlannedMealDto);
   }
 
   @Get()
+  @Auth([HouseholdQueryGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: PlannedMealWithMealEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   findAll(@HouseholdId() householdId: string) {
@@ -41,6 +44,7 @@ export class PlannedMealsController {
   }
 
   @Get(':id')
+  @Auth([], PlannedMealHouseholdUserPolicy)
   @ApiCreatedResponse({ type: PlannedMealWithMealEntity })
   async findOne(@Param('id') id: string) {
     const plannedMeal = await this.plannedMealsService.findOne(id);
@@ -53,6 +57,7 @@ export class PlannedMealsController {
   }
 
   @Delete(':id')
+  @Auth([], PlannedMealHouseholdUserPolicy)
   @ApiCreatedResponse({ type: PlannedMealEntity })
   async remove(@Param('id') id: string) {
     const plannedMeal = await handleControllerMutation(

@@ -7,18 +7,15 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
 import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto/<%= nameLowerSingular %>.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { <%= nameUpperSingular %>Entity } from './entities/<%= nameLowerSingular %>.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('<%= nameLowerPlural %>')
 @ApiTags('<%= nameLowerPlural %>')
-@UseFilters(PrismaClientExceptionFilter)
 export class <%= nameUpperPlural %>Controller {
   private objectName = '<%= nameUpperSingular %>';
 

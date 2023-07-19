@@ -21,14 +21,26 @@ model Household {
 }
 
 model User {
-  id         String          @id @default(uuid())
-  email      String          @unique
-  firstName  String
-  lastName   String
-  households HouseholdUser[]
-  invites    Invite[]
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
+  id            String          @id @default(uuid())
+  email         String          @unique
+  firstName     String
+  lastName      String
+  passwordHash  String
+  households    HouseholdUser[]
+  invites       Invite[]
+  refreshTokens RefreshToken[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  tokenHash String    @unique
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model HouseholdUser {

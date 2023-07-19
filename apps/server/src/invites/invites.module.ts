@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { InvitesService } from './invites.service';
 import { InvitesController } from './invites.controller';
-import { DbModule } from '../db/db.module';
 import { HouseholdsModule } from '../households/households.module';
 import { UsersModule } from '../users/users.module';
+import { InviteUserPolicy } from './policies';
 
 @Module({
   controllers: [InvitesController],
-  providers: [InvitesService],
+  providers: [InvitesService, InviteUserPolicy],
   exports: [InvitesService],
-  imports: [DbModule, HouseholdsModule, UsersModule],
+  imports: [HouseholdsModule, UsersModule],
 })
 export class InvitesModule {}

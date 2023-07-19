@@ -7,32 +7,35 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseFilters,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ItemDto, ItemUpdateDto } from './dto/item.dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ItemEntity } from './entities/item.entity';
-import { PrismaClientExceptionFilter } from '../filters/prisma-client-exception.filter';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 import { Search } from '../decorators/search.decorator';
+import { Auth } from '../auth/decorators';
+import { HouseholdBodyGuard, HouseholdQueryGuard } from '../households/guards';
+import { HouseholdUserPolicy } from '../households/policies';
+import { ItemHouseholdUserPolicy } from './policies';
 
 @Controller('items')
 @ApiTags('items')
-@UseFilters(PrismaClientExceptionFilter)
 export class ItemsController {
   private objectName = 'Item';
 
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
+  @Auth([HouseholdBodyGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: ItemEntity })
   create(@Body() createItemDto: ItemDto) {
     return this.itemsService.create(createItemDto);
   }
 
   @Get()
+  @Auth([HouseholdQueryGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: ItemEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   @ApiQuery({ name: 'search', required: false, type: String })
@@ -41,6 +44,7 @@ export class ItemsController {
   }
 
   @Get(':id')
+  @Auth([], ItemHouseholdUserPolicy)
   @ApiCreatedResponse({ type: ItemEntity })
   async findOne(@Param('id') id: string) {
     const item = await this.itemsService.findOne(id);
@@ -53,6 +57,7 @@ export class ItemsController {
   }
 
   @Patch(':id')
+  @Auth([], ItemHouseholdUserPolicy)
   @ApiCreatedResponse({ type: ItemEntity })
   async update(@Param('id') id: string, @Body() updateItemDto: ItemUpdateDto) {
     const item = await handleControllerMutation(
@@ -64,6 +69,7 @@ export class ItemsController {
   }
 
   @Delete(':id')
+  @Auth([], ItemHouseholdUserPolicy)
   @ApiCreatedResponse({ type: ItemEntity })
   async remove(@Param('id') id: string) {
     const item = await handleControllerMutation(

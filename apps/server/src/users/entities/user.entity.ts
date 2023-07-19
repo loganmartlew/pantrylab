@@ -11,4 +11,6 @@ export const UserSchema = z.object({
   updatedAt: z.date(),
 });
 
-export class UserEntity extends createZodDto(UserSchema) implements User {}
+export class UserEntity
+  extends createZodDto(UserSchema)
+  implements Omit<User, 'passwordHash'> {}
