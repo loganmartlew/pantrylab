@@ -1,4 +1,4 @@
-import { formatFiles, generateFiles, Tree } from '@nx/devkit';
+import { formatFiles, generateFiles, Tree, updateJson } from '@nx/devkit';
 import * as path from 'path';
 import { ApiResourceGeneratorSchema } from './schema';
 
@@ -12,7 +12,7 @@ export async function apiResourceGenerator(
   const nameUpperPlural = name.charAt(0).toUpperCase() + name.slice(1);
   const nameUpperSingular = nameUpperPlural.slice(0, -1);
 
-  const projectRoot = `apps/${options.project}/src/${nameLowerPlural}`;
+  const projectRoot = `libs/${nameLowerPlural}`;
 
   const templateOptions = {
     ...options,
@@ -29,6 +29,17 @@ export async function apiResourceGenerator(
     templateOptions
   );
   await formatFiles(tree);
+
+  updateJson(tree, 'tsconfig.base.json', (json) => {
+    json.compilerOptions.paths = {
+      ...json.compilerOptions.paths,
+      [`@pantrylab/${nameLowerPlural}`]: [
+        `libs/${nameLowerPlural}/src/index.ts`,
+      ],
+    };
+
+    return json;
+  });
 }
 
 export default apiResourceGenerator;

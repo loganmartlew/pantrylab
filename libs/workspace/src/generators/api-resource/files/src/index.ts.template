@@ -1,0 +1,5 @@
+export * from './dto';
+export * from './entities';
+export * from './<%= nameLowerPlural %>.controller';
+export * from './<%= nameLowerPlural %>.module';
+export * from './<%= nameLowerPlural %>.service';
