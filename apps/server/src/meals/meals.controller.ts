@@ -14,6 +14,10 @@ import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MealEntity, MealWithItemsEntity } from './entities/meal.entity';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
+import { Auth } from '../auth/decorators';
+import { HouseholdBodyGuard, HouseholdQueryGuard } from '../households/guards';
+import { HouseholdUserPolicy } from '../households/policies';
+import { MealHouseholdUserPolicy } from './policies';
 
 @Controller('meals')
 @ApiTags('meals')
@@ -23,12 +27,14 @@ export class MealsController {
   constructor(private readonly mealsService: MealsService) {}
 
   @Post()
+  @Auth([HouseholdBodyGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: MealEntity })
   create(@Body() createMealDto: MealDto) {
     return this.mealsService.create(createMealDto);
   }
 
   @Get()
+  @Auth([HouseholdQueryGuard], HouseholdUserPolicy)
   @ApiCreatedResponse({ type: MealEntity, isArray: true })
   @ApiQuery({ name: 'householdId', required: true, type: String })
   findAll(@HouseholdId() householdId: string) {
@@ -36,6 +42,7 @@ export class MealsController {
   }
 
   @Get(':id')
+  @Auth()
   @ApiCreatedResponse({ type: MealWithItemsEntity })
   async findOne(@Param('id') id: string) {
     const meal = await this.mealsService.findOne(id);
@@ -48,6 +55,7 @@ export class MealsController {
   }
 
   @Patch(':id')
+  @Auth([], MealHouseholdUserPolicy)
   @ApiCreatedResponse({ type: MealEntity })
   async update(@Param('id') id: string, @Body() updateMealDto: MealUpdateDto) {
     const meal = await handleControllerMutation(
@@ -59,6 +67,7 @@ export class MealsController {
   }
 
   @Delete(':id')
+  @Auth([], MealHouseholdUserPolicy)
   @ApiCreatedResponse({ type: MealEntity })
   async remove(@Param('id') id: string) {
     const meal = await handleControllerMutation(

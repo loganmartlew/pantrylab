@@ -26,6 +26,19 @@ export class HouseholdsService {
     return households;
   }
 
+  async findAllByUserId(userId: string) {
+    const households = await this.db.household.findMany({
+      where: {
+        users: {
+          some: {
+            userId,
+          },
+        },
+      },
+    });
+    return households;
+  }
+
   async findOne(id: string) {
     const household = await this.db.household.findUnique({
       where: { id },

@@ -15,7 +15,7 @@ import { ItemEntity } from './entities/item.entity';
 import handleControllerMutation from '../util/handleControllerMutation';
 import { HouseholdId } from '../decorators/householdId.decorator';
 import { Search } from '../decorators/search.decorator';
-import { Auth } from '../auth/decorators/auth.decorator';
+import { Auth } from '../auth/decorators';
 import { HouseholdBodyGuard, HouseholdQueryGuard } from '../households/guards';
 import { HouseholdUserPolicy } from '../households/policies';
 import { ItemHouseholdUserPolicy } from './policies';

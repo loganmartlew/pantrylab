@@ -26,9 +26,17 @@ export class ListItemsService {
       );
     }
 
-    if (!(await this.itemsService.checkExists(listItemDto.itemId))) {
+    const item = await this.itemsService.findOne(listItemDto.itemId);
+
+    if (!item) {
       throw new NotFoundException(
         `Item with id: ${listItemDto.itemId} not found`
+      );
+    }
+
+    if (item.householdId !== listItemDto.householdId) {
+      throw new NotFoundException(
+        `Item with id: ${listItemDto.itemId} not found in household with id: ${listItemDto.householdId}`
       );
     }
 
