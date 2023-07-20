@@ -1,5 +1,4 @@
-export * from './dto';
-export * from './entities';
-export * from './<%= nameLowerPlural %>.controller';
-export * from './<%= nameLowerPlural %>.module';
-export * from './<%= nameLowerPlural %>.service';
+export { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>DtoSchema, <%= nameUpperSingular %>UpdateDto, <%= nameUpperSingular %>UpdateSchema } from './dto';
+export { <%= nameUpperSingular %>Entity, <%= nameUpperSingular %>Schema } from './entities';
+export { <%= nameUpperPlural %>Module } from './<%= nameLowerPlural %>.module';
+export { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
