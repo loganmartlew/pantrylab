@@ -10,6 +10,7 @@ import { UserEntity } from '@pantrylab/users';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'crypto';
 import { LoginDto } from './dto';
+import { serverConfig as config } from '@pantrylab/config';
 
 @Injectable()
 export class AuthService {
@@ -154,11 +155,11 @@ export class AuthService {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(user, {
         expiresIn: 60 * 60, // 1 hour
-        secret: process.env.ACCESS_TOKEN_SECRET,
+        secret: config.accessTokenSecret,
       }),
       this.jwtService.signAsync(user, {
         expiresIn: 60 * 60 * 24 * 7, // 1 week
-        secret: process.env.REFRESH_TOKEN_SECRET,
+        secret: config.accessTokenSecret,
       }),
     ]);
 

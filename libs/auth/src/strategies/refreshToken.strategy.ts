@@ -3,6 +3,7 @@ import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { UserEntity } from '@pantrylab/users';
 import { Injectable } from '@nestjs/common';
+import { serverConfig as config } from '@pantrylab/config';
 
 export const REFRESH_TOKEN_KEY = 'refresh-token';
 
@@ -14,7 +15,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
   constructor() {
     super({
       jwtFromRequest: (req: Request) => req.cookies?.refreshToken || null,
-      secretOrKey: process.env.REFRESH_TOKEN_SECRET,
+      secretOrKey: config.refreshTokenSecret,
       passReqToCallback: true,
     });
   }
