@@ -1,5 +1,5 @@
 import { ExecutionContext } from '@nestjs/common';
-import { Policy } from '../../auth/types';
+import { Policy } from '@pantrylab/auth';
 import { UserEntity } from '../entities';
 
 export class UserSelfPolicy implements Policy {

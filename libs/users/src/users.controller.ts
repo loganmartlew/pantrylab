@@ -10,11 +10,11 @@ import { UsersService } from './users.service';
 import { UserUpdateDto } from './dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities';
-import handleControllerMutation from '../util/handleControllerMutation';
-import { HouseholdId } from '../decorators/householdId.decorator';
-import { Auth } from '../auth/decorators';
-import { HouseholdQueryGuard } from '../households/guards';
-import { HouseholdUserPolicy } from '../households/policies';
+import { handleControllerMutation } from '@pantrylab/shared/util';
+import { HouseholdId } from '@pantrylab/households';
+import { Auth } from '@pantrylab/auth';
+import { HouseholdQueryGuard } from '@pantrylab/households';
+import { HouseholdUserPolicy } from '@pantrylab/households';
 import { UserSelfPolicy } from './policies';
 
 @Controller('users')

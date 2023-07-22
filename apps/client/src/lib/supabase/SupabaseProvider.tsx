@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
-import type { SupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 
 type SupabaseContext = {

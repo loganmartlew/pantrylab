@@ -9,9 +9,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
-import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto/<%= nameLowerSingular %>.dto';
+import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { <%= nameUpperSingular %>Entity } from './entities/<%= nameLowerSingular %>.entity';
+import { <%= nameUpperSingular %>Entity } from './entities';
 import handleControllerMutation from '../util/handleControllerMutation';
 
 @Controller('<%= nameLowerPlural %>')

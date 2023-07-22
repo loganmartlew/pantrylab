@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { <%= nameUpperPlural %>Service } from './<%= nameLowerPlural %>.service';
 import { <%= nameUpperPlural %>Controller } from './<%= nameLowerPlural %>.controller';
-import { DbModule } from '../db/db.module';
+import { DbModule } from '@pantrylab/db';
 
 @Module({
   controllers: [<%= nameUpperPlural %>Controller],

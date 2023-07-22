@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto/<%= nameLowerSingular %>.dto';
-import { DbService } from '../db/db.service';
+import { <%= nameUpperSingular %>Dto, <%= nameUpperSingular %>UpdateDto } from './dto';
+import { DbService } from '@pantrylab/db';
 
 @Injectable()
 export class <%= nameUpperPlural %>Service {

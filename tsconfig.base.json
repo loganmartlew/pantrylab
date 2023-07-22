@@ -15,6 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@pantrylab/auth": ["libs/auth/src/index.ts"],
+      "@pantrylab/db": ["libs/db/src/index.ts"],
+      "@pantrylab/households": ["libs/households/src/index.ts"],
+      "@pantrylab/invites": ["libs/invites/src/index.ts"],
+      "@pantrylab/items": ["libs/items/src/index.ts"],
+      "@pantrylab/listItems": ["libs/listItems/src/index.ts"],
+      "@pantrylab/meals": ["libs/meals/src/index.ts"],
+      "@pantrylab/plannedMeals": ["libs/plannedMeals/src/index.ts"],
+      "@pantrylab/shared/decorators": ["libs/shared/src/decorators/index.ts"],
+      "@pantrylab/shared/types": ["libs/shared/src/types/index.ts"],
+      "@pantrylab/shared/util": ["libs/shared/src/util/index.ts"],
       "@pantrylab/users": ["libs/users/src/index.ts"],
       "@pantrylab/workspace": ["libs/workspace/src/index.ts"]
     }
