@@ -13,10 +13,13 @@ import { MealDto, MealUpdateDto } from './dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MealEntity, MealWithItemsEntity } from './entities';
 import { handleControllerMutation } from '@pantrylab/shared/util';
-import { HouseholdId } from '@pantrylab/households';
+import {
+  HouseholdId,
+  HouseholdBodyGuard,
+  HouseholdQueryGuard,
+  HouseholdUserPolicy,
+} from '@pantrylab/households/server';
 import { Auth } from '@pantrylab/auth';
-import { HouseholdBodyGuard, HouseholdQueryGuard } from '@pantrylab/households';
-import { HouseholdUserPolicy } from '@pantrylab/households';
 import { MealHouseholdUserPolicy } from './policies';
 
 @Controller('meals')

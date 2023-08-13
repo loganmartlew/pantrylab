@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { HouseholdsModule } from '@pantrylab/households';
+import { HouseholdsModule } from '@pantrylab/households/server';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { UsersModule } from '@pantrylab/users';

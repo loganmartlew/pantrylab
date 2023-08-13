@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ListItemDto, ListItemUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
-import { HouseholdsService } from '@pantrylab/households';
+import { HouseholdsService } from '@pantrylab/households/server';
 import { ItemsService } from '@pantrylab/items';
 
 @Injectable()

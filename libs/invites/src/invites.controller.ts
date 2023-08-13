@@ -12,13 +12,13 @@ import { InviteDto } from './dto';
 import { ApiCreatedResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { InviteEntity, InviteWithUserEntity } from './entities';
 import { handleControllerMutation } from '@pantrylab/shared/util';
-import { HouseholdId } from '@pantrylab/households';
-import { Auth } from '@pantrylab/auth';
-import { HouseholdBodyGuard } from '@pantrylab/households';
 import {
+  HouseholdId,
+  HouseholdBodyGuard,
   HouseholdOwnerPolicy,
   HouseholdUserPolicy,
-} from '@pantrylab/households';
+} from '@pantrylab/households/server';
+import { Auth } from '@pantrylab/auth';
 import { InviteUserPolicy } from './policies';
 
 @Controller('invites')

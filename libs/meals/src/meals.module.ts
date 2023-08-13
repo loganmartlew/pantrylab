@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MealsService } from './meals.service';
 import { MealsController } from './meals.controller';
 import { MealHouseholdUserPolicy } from './policies';
-import { HouseholdsModule } from '@pantrylab/households';
+import { HouseholdsModule } from '@pantrylab/households/server';
 
 @Module({
   controllers: [MealsController],

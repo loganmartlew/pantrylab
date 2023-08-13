@@ -7,7 +7,7 @@ import {
 import { Policy } from '@pantrylab/auth';
 import { UserEntity } from '@pantrylab/users';
 import { MealsService } from '../meals.service';
-import { HouseholdsService } from '@pantrylab/households';
+import { HouseholdsService } from '@pantrylab/households/server';
 
 @Injectable()
 export class MealHouseholdUserPolicy implements Policy {

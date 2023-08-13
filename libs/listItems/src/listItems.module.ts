@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ListItemsService } from './listItems.service';
 import { ListItemsController } from './listItems.controller';
-import { HouseholdsModule } from '@pantrylab/households';
+import { HouseholdsModule } from '@pantrylab/households/server';
 import { ItemsModule } from '@pantrylab/items';
 import { ListItemHouseholdUserPolicy } from './policies';
 
