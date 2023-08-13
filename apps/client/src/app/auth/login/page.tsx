@@ -4,11 +4,11 @@ import { FC } from 'react';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 import { Button, Center, Stack, Text, TextInput, Title } from '@mantine/core';
-import Logo from '~/components/Logo';
-import TextLink from '~/components/TextLink';
-import { useAuth } from '~/features/auth/useAuth';
+import Logo from '../../../components/Logo';
+import TextLink from '../../../components/TextLink';
+import { useAuth } from '../../../features/auth/useAuth';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import { getUrlWithRedirected } from '../../../util/getUrlWithRedirected';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),

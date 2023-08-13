@@ -8,7 +8,7 @@ import {
 import { FC, MouseEvent, ReactNode } from 'react';
 import { MdDelete, MdPlaylistAddCheck } from 'react-icons/md';
 import Link from 'next/link';
-import { Meal } from '~/types';
+import { Meal } from '../../types';
 
 interface Props {
   meal: Meal;

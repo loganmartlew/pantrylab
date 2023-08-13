@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Meal, Item } from '~/types';
-import { useHousehold } from '~/features/household/useHousehold';
+import { Meal, Item } from '../../types';
+import { useHousehold } from '../../features/household/useHousehold';
 import { createMeal, getHouseholdMeals } from './mealApi';
-import { useSupabase } from '~/lib/supabase';
+import { useSupabase } from '../../lib/supabase';
 
 const sortMeals = (items: Meal[]) => {
   return [...items].sort((a, b) => {
@@ -31,7 +31,7 @@ export const useMeal = () => {
       return;
     }
 
-    getHouseholdMeals(supabase, currentHousehold.id).then(meals => {
+    getHouseholdMeals(supabase, currentHousehold.id).then((meals) => {
       setMeals(meals);
     });
   }, [currentHousehold, supabase]);
@@ -49,7 +49,7 @@ export const useMeal = () => {
     };
 
     const oldMeals = [...meals];
-    setMeals(meals => [...meals, newMeal]);
+    setMeals((meals) => [...meals, newMeal]);
 
     const meal = await createMeal(
       supabase,
@@ -63,7 +63,7 @@ export const useMeal = () => {
       setMeals(oldMeals);
     }
 
-    getHouseholdMeals(supabase, currentHousehold.id).then(meals => {
+    getHouseholdMeals(supabase, currentHousehold.id).then((meals) => {
       setMeals(meals);
     });
   };

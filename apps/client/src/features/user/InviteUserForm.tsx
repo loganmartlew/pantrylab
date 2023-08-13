@@ -3,8 +3,8 @@ import { FC, FormEvent, useState } from 'react';
 import {
   DebouncedTextSearch,
   useDebouncedTextSearch,
-} from '~/components/DebouncedTextSearch';
-import { User } from '~/types';
+} from '../../components/DebouncedTextSearch';
+import { User } from '../../types';
 import UserInviteCard from './UserInviteCard';
 
 interface Props {
@@ -23,7 +23,7 @@ const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
   };
 
   const removeUser = (id: string) => {
-    setUsers((prevUsers: User[]) => prevUsers.filter(user => user.id !== id));
+    setUsers((prevUsers: User[]) => prevUsers.filter((user) => user.id !== id));
   };
 
   const submit = async (e: FormEvent) => {
@@ -55,7 +55,7 @@ const InviteUserForm: FC<Props> = ({ onClose, searchUsers, onSubmit }) => {
           {...searchProps}
         />
         <Stack>
-          {users.map(user => (
+          {users.map((user) => (
             <UserInviteCard
               key={user.id}
               user={user}

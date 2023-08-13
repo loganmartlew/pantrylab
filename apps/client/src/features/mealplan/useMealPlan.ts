@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useMemo } from 'react';
-import { endOfWeek, startOfWeek } from '~/lib/dates/date';
-import { useSupabase } from '~/lib/supabase';
-import { useHousehold } from '~/features/household/useHousehold';
-import { Meal, PlannedMeal } from '~/types';
+import { endOfWeek, startOfWeek } from '../../lib/dates/date';
+import { useSupabase } from '../../lib/supabase';
+import { useHousehold } from '../../features/household/useHousehold';
+import { Meal, PlannedMeal } from '../../types';
 import {
   addMealToHouseholdMealPlan,
   addRangeToHouseholdList,
@@ -36,18 +36,18 @@ export const useMealPlan = () => {
   });
 
   const prevWeek = () => {
-    setWeekDate(prev => {
+    setWeekDate((prev) => {
       return dayjs(prev).subtract(1, 'week').toDate();
     });
   };
 
   const nextWeek = () => {
-    setWeekDate(prev => {
+    setWeekDate((prev) => {
       return dayjs(prev).add(1, 'week').toDate();
     });
   };
 
-  const weekDates = [0, 1, 2, 3, 4, 5, 6].map(day =>
+  const weekDates = [0, 1, 2, 3, 4, 5, 6].map((day) =>
     dayjs(weekStartDate).add(day, 'day').toDate()
   );
 
@@ -64,7 +64,7 @@ export const useMealPlan = () => {
       currentHousehold.id,
       weekStartDate,
       weekEndDate
-    ).then(plannedMeals => {
+    ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
   }, [currentHousehold, weekStartDate, weekEndDate, supabase]);
@@ -73,7 +73,7 @@ export const useMealPlan = () => {
     if (!currentHousehold) return;
 
     const oldPlannedMeals = [...plannedMeals];
-    setPlannedMeals(plannedMeals => [
+    setPlannedMeals((plannedMeals) => [
       ...plannedMeals,
       {
         id: uuidv4(),
@@ -102,7 +102,7 @@ export const useMealPlan = () => {
       currentHousehold.id,
       weekStartDate,
       weekEndDate
-    ).then(plannedMeals => {
+    ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
   };
@@ -111,8 +111,8 @@ export const useMealPlan = () => {
     if (!currentHousehold) return;
 
     const oldPlannedMeals = [...plannedMeals];
-    setPlannedMeals(plannedMeals =>
-      plannedMeals.filter(plannedMeal => plannedMeal.id !== plannedMealId)
+    setPlannedMeals((plannedMeals) =>
+      plannedMeals.filter((plannedMeal) => plannedMeal.id !== plannedMealId)
     );
 
     const error = await removeMealFromHouseholdMealPlan(
@@ -130,7 +130,7 @@ export const useMealPlan = () => {
       currentHousehold.id,
       weekStartDate,
       weekEndDate
-    ).then(plannedMeals => {
+    ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
   };
@@ -150,7 +150,7 @@ export const useMealPlan = () => {
       currentHousehold.id,
       weekStartDate,
       weekEndDate
-    ).then(plannedMeals => {
+    ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
   };

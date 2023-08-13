@@ -10,8 +10,8 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd, MdCheck, MdDelete } from 'react-icons/md';
-import ConfirmDeleteModal from '~/components/ConfirmDeleteModal';
-import { Item } from '~/types';
+import ConfirmDeleteModal from '../../components/ConfirmDeleteModal';
+import { Item } from '../../types';
 
 interface Props {
   item: Item;

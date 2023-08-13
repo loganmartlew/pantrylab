@@ -1,6 +1,6 @@
 import { Box, Burger, Group } from '@mantine/core';
 import { FC } from 'react';
-import Logo from '~/components/Logo';
+import Logo from '../../components/Logo';
 
 interface Props {
   isMenuOpen: boolean;

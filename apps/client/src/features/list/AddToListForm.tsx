@@ -3,12 +3,12 @@ import { FC, FormEvent, useState } from 'react';
 import {
   DebouncedTextSearch,
   useDebouncedTextSearch,
-} from '~/components/DebouncedTextSearch';
-import { Item } from '~/types';
-import { getHouseholdItems } from '~/features/item/itemApi';
+} from '../../components/DebouncedTextSearch';
+import { Item } from '../../types';
+import { getHouseholdItems } from '../../features/item/itemApi';
 import ListItemDisplayCard from './ListItemDisplayCard';
-import { useHousehold } from '~/features/household/useHousehold';
-import { useSupabase } from '~/lib/supabase';
+import { useHousehold } from '../../features/household/useHousehold';
+import { useSupabase } from '../../lib/supabase';
 
 interface Props {
   searchFn: (searchTerm: string) => Promise<Item[]>;
@@ -53,7 +53,7 @@ const AddToListForm: FC<Props> = ({
     );
 
     const existingItem = householdItems.find(
-      item =>
+      (item) =>
         item.name.toLowerCase() === searchTerm.toLowerCase() ||
         item.name.trim().toLowerCase() === searchTerm.toLowerCase()
     );

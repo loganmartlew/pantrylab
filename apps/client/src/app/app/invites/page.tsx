@@ -2,9 +2,9 @@
 
 import { Stack, Text } from '@mantine/core';
 import { FC } from 'react';
-import PageWrapper from '~/components/PageWrapper';
-import HouseholdInvite from '~/features/invite/HouseholdInvite';
-import { useInvite } from '~/features/invite/useInvite';
+import PageWrapper from '../../../components/PageWrapper';
+import HouseholdInvite from '../../../features/invite/HouseholdInvite';
+import { useInvite } from '../../../features/invite/useInvite';
 
 const InvitesPage: FC = () => {
   const { sortedInvites, acceptInvite, declineInvite } = useInvite();
@@ -14,7 +14,7 @@ const InvitesPage: FC = () => {
       <Stack>
         {sortedInvites.length < 1 && <Text>You have no pending invites.</Text>}
         {sortedInvites.length >= 1 &&
-          sortedInvites.map(invite => (
+          sortedInvites.map((invite) => (
             <HouseholdInvite
               invite={invite}
               key={invite.id}

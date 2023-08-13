@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Paper, Title } from '@mantine/core';
 import { FC } from 'react';
 import { MdDelete } from 'react-icons/md';
-import { Item } from '~/types';
+import { Item } from '../../types';
 
 interface Props {
   item: Item;

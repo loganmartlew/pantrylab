@@ -12,14 +12,14 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd } from 'react-icons/md';
-import PageWrapper from '~/components/PageWrapper';
-import { useHousehold } from '~/features/household/useHousehold';
-import AddToListForm from '~/features/list/AddToListForm';
-import ListItemCard from '~/features/list/ListItemCard';
-import ListItemDisplayCard from '~/features/list/ListItemDisplayCard';
-import { useList } from '~/features/list/useList';
-import { dateToTextString } from '~/lib/dates/date';
-import { Item } from '~/types';
+import PageWrapper from '../../../components/PageWrapper';
+import { useHousehold } from '../../../features/household/useHousehold';
+import AddToListForm from '../../../features/list/AddToListForm';
+import ListItemCard from '../../../features/list/ListItemCard';
+import ListItemDisplayCard from '../../../features/list/ListItemDisplayCard';
+import { useList } from '../../../features/list/useList';
+import { dateToTextString } from '../../../lib/dates/date';
+import { Item } from '../../../types';
 
 const ListPage: FC = () => {
   const [isAddItemModalOpen, addItemModalHandlers] = useDisclosure(false);
@@ -72,14 +72,14 @@ const ListPage: FC = () => {
           <Text>No items in this shopping list...</Text>
         )}
         {currentItems.length >= 1 &&
-          currentItems.map(item => (
+          currentItems.map((item) => (
             <ListItemCard
               key={item.id}
               item={item.item}
               details={item.details}
               completeItem={() => completeItem(item.id)}
               removeItem={() => removeItem(item.id)}
-              editItemDetails={details => editItemDetails(item.id, details)}
+              editItemDetails={(details) => editItemDetails(item.id, details)}
             />
           ))}
       </Stack>
@@ -88,13 +88,13 @@ const ListPage: FC = () => {
         <Title order={2}>Completed Items ({historicItems.length})</Title>
         {historicItems.length < 1 && <Text>No items in this list...</Text>}
         {historicItems.length >= 1 &&
-          historicItems.map(dateSection => (
+          historicItems.map((dateSection) => (
             <Stack key={dateToTextString(dateSection.date)}>
               <Divider
                 label={dateToTextString(dateSection.date)}
                 labelPosition='center'
               />
-              {dateSection.items.map(item => (
+              {dateSection.items.map((item) => (
                 <ListItemDisplayCard
                   item={item.item}
                   details={item.details}

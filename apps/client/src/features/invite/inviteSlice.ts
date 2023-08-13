@@ -1,5 +1,5 @@
-import { Invite } from '~/types';
-import { StoreCreator } from '~/features/store';
+import { Invite } from '../../types';
+import { StoreCreator } from '../../features/store';
 
 export interface InviteSlice {
   invites: Invite[];
@@ -15,13 +15,13 @@ export const createInviteSlice: StoreCreator<InviteSlice> = (set, get) => ({
     set({ invites });
   },
   addInvite: (invite: Invite) => {
-    set(state => ({
+    set((state) => ({
       invites: [...state.invites, invite],
     }));
   },
   updateInvite: (invite: Invite) => {
-    set(state => ({
-      invites: state.invites.map(i => {
+    set((state) => ({
+      invites: state.invites.map((i) => {
         if (i.id === invite.id) {
           return invite;
         }
@@ -30,8 +30,8 @@ export const createInviteSlice: StoreCreator<InviteSlice> = (set, get) => ({
     }));
   },
   deleteInvite: (inviteId: string) => {
-    set(state => ({
-      invites: state.invites.filter(i => i.id !== inviteId),
+    set((state) => ({
+      invites: state.invites.filter((i) => i.id !== inviteId),
     }));
   },
 });

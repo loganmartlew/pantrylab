@@ -11,8 +11,8 @@ import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FC } from 'react';
 import { MdCheck, MdClose } from 'react-icons/md';
-import ConfirmationModal from '~/components/ConfirmationModal';
-import { Invite } from '~/types';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import { Invite } from '../../types';
 
 interface Props {
   invite: Invite;

@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { useAuth } from '~/features/auth/useAuth';
+import { useAuth } from '../../features/auth/useAuth';
 
 const AppPage: FC = () => {
   const { user, logout } = useAuth();
@@ -9,7 +9,7 @@ const AppPage: FC = () => {
   return (
     <div>
       <h1>{'Home'}</h1>
-      <p>Welcome {user?.first_name}</p>
+      <p>Welcome {user?.firstName}</p>
       <button onClick={logout}>logout</button>
     </div>
   );

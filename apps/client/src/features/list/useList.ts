@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useHousehold } from '~/features/household/useHousehold';
-import { Item, ListItem } from '~/types';
-import { createItem, searchItems } from '~/features/item/itemApi';
+import { useHousehold } from '../../features/household/useHousehold';
+import { Item, ListItem } from '../../types';
+import { createItem, searchItems } from '../../features/item/itemApi';
 import getHistoricItems from './getHistoricItems';
 import {
   addItemToHouseholdList,
@@ -11,7 +11,7 @@ import {
   openHouseholdListChannel,
   updateItem,
 } from './listApi';
-import { useSupabase } from '~/lib/supabase';
+import { useSupabase } from '../../lib/supabase';
 
 export const useList = () => {
   const { supabase } = useSupabase();

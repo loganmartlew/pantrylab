@@ -1,6 +1,6 @@
 import { Paper, Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
-import { Item } from '~/types';
+import { Item } from '../../types';
 
 interface Props {
   item: Item;

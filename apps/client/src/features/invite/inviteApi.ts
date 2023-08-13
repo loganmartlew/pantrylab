@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { Invite } from '~/types';
+import { Invite } from '../../types';
 
 export const getUserInvites = async (
   supabase: SupabaseClient,
@@ -23,7 +23,7 @@ export const getUserInvites = async (
     return [];
   }
 
-  const invites = data.map(invite => ({
+  const invites = data.map((invite) => ({
     id: invite.id,
     created_at: dayjs(invite.created_at).toDate(),
     household_id: invite.household_id,

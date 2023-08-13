@@ -1,6 +1,6 @@
 import { Group, Text, useMantineTheme } from '@mantine/core';
 import { FC } from 'react';
-import TextLink from '~/components/TextLink';
+import TextLink from '../../../components/TextLink';
 
 const Footer: FC = () => {
   const theme = useMantineTheme();

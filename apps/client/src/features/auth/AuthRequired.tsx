@@ -1,10 +1,10 @@
 'use client';
 
 import { FC, ReactNode, useEffect } from 'react';
-import LoadingScreen from '~/components/LoadingScreen';
+import LoadingScreen from '../../components/LoadingScreen';
 import { useAuth } from './useAuth';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import { getUrlWithRedirected } from '../../util/getUrlWithRedirected';
 
 interface Props {
   children: ReactNode;

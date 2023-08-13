@@ -14,8 +14,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { FaCrown } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
-import ConfirmationModal from '~/components/ConfirmationModal';
-import { User } from '~/types';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import { User } from '../../types';
 
 const removeUserMessage = 'Are you sure you want to remove this user?';
 const removePendingUserMessage = 'Are you sure you want to cancel this invite?';

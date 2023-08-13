@@ -2,7 +2,7 @@ import { Stack } from '@mantine/core';
 import { FC } from 'react';
 import { useMeal } from './useMeal';
 import MealCard from './MealCard';
-import { Meal } from '~/types';
+import { Meal } from '../../types';
 
 interface Props {
   onSelectMeal: (meal: Meal) => void;
@@ -13,7 +13,7 @@ const MealSelector: FC<Props> = ({ onSelectMeal }) => {
 
   return (
     <Stack>
-      {sortedMeals.map(meal => (
+      {sortedMeals.map((meal) => (
         <MealCard
           key={meal.id}
           meal={meal}

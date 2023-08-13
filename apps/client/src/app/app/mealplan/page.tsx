@@ -7,12 +7,12 @@ import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from 'react-icons/md';
-import PageWrapper from '~/components/PageWrapper';
-import MealSelector from '~/features/meal/MealSelector';
-import MealPlanDay from '~/features/mealplan/MealPlanDay';
-import { useMealPlan } from '~/features/mealplan/useMealPlan';
-import { dateToTextString } from '~/lib/dates/date';
-import { Meal, PlannedMeal } from '~/types';
+import PageWrapper from '../../../components/PageWrapper';
+import MealSelector from '../../../features/meal/MealSelector';
+import MealPlanDay from '../../../features/mealplan/MealPlanDay';
+import { useMealPlan } from '../../../features/mealplan/useMealPlan';
+import { dateToTextString } from '../../../lib/dates/date';
+import { Meal, PlannedMeal } from '../../../types';
 
 const MealPlanPage: FC = () => {
   const [isModalOpen, modalHandlers] = useDisclosure(false);

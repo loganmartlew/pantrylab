@@ -1,6 +1,6 @@
 import { Box, Button, TextInput } from '@mantine/core';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { Item } from '~/types';
+import { Item } from '../../types';
 
 interface Props {
   onSubmit: (name: string) => void;
@@ -27,7 +27,7 @@ const NewItemForm: FC<Props> = ({ onSubmit, items }) => {
     }
 
     const existingItem = items.find(
-      item =>
+      (item) =>
         item.name.toLowerCase() === itemName.toLowerCase() ||
         item.name.trim().toLowerCase() === itemName.toLowerCase()
     );

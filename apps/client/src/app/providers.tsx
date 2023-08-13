@@ -6,6 +6,7 @@ import RootStyleRegistry from './style-provider';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relative from 'dayjs/plugin/relativeTime';
+import { SessionProvider } from 'next-auth/react';
 
 interface Props {
   children: ReactNode;
@@ -17,7 +18,9 @@ dayjs.extend(customParseFormat);
 const Providers: FC<Props> = ({ children }) => {
   return (
     <RootStyleRegistry>
-      <JotaiProvider>{children}</JotaiProvider>
+      <JotaiProvider>
+        <SessionProvider>{children}</SessionProvider>
+      </JotaiProvider>
     </RootStyleRegistry>
   );
 };

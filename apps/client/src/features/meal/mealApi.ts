@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { Item, Meal } from '~/types';
+import { Item, Meal } from '../../types';
 
 export const getHouseholdMeals = async (
   supabase: SupabaseClient,
@@ -23,7 +23,7 @@ export const getHouseholdMeals = async (
     return [];
   }
 
-  const meals = data.map(meal => ({
+  const meals = data.map((meal) => ({
     id: meal.id,
     created_at: dayjs(meal.created_at).toDate(),
     name: meal.name,
@@ -65,7 +65,7 @@ export const getMeal = async (supabase: SupabaseClient, mealId: string) => {
 
   const itemsDataArr = itemsData || [];
 
-  const items = itemsDataArr.map(item => ({
+  const items = itemsDataArr.map((item) => ({
     id: item.items.id,
     created_at: dayjs(item.items.created_at).toDate(),
     name: item.items.name,
@@ -114,7 +114,7 @@ export const createMeal = async (
   };
 
   const { error: itemsError } = await supabase.from('meal_items').insert(
-    items.map(item => ({
+    items.map((item) => ({
       meal_id: data?.id,
       item_id: item.id,
     }))

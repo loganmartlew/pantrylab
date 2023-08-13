@@ -1,18 +1,13 @@
 import { Metadata } from 'next';
 import { FC, ReactNode } from 'react';
-import AuthRequired from '~/features/auth/AuthRequired';
-import AppLayoutWrapper from '~/features/layout/AppLayout';
+import AppLayoutWrapper from '../../features/layout/AppLayout';
 
 interface Props {
   children: ReactNode;
 }
 
 const AppLayout: FC<Props> = ({ children }) => {
-  return (
-    <AuthRequired>
-      <AppLayoutWrapper>{children}</AppLayoutWrapper>
-    </AuthRequired>
-  );
+  return <AppLayoutWrapper>{children}</AppLayoutWrapper>;
 };
 
 export default AppLayout;

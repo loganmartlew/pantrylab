@@ -17,7 +17,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { FC, FormEvent, useRef } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { MdDelete, MdEdit } from 'react-icons/md';
-import { Item } from '~/types';
+import { Item } from '../../types';
 
 interface Props {
   item: Item;

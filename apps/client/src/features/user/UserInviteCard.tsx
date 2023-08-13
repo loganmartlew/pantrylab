@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { FC } from 'react';
 import { MdRemoveCircleOutline } from 'react-icons/md';
-import { User } from '~/types';
+import { User } from '../../types';
 
 interface Props {
   user: User;

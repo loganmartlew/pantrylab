@@ -13,8 +13,8 @@ import { z } from 'zod';
 import {
   DebouncedTextSearch,
   useDebouncedTextSearch,
-} from '~/components/DebouncedTextSearch';
-import { Item } from '~/types';
+} from '../../components/DebouncedTextSearch';
+import { Item } from '../../types';
 import MealItemCard from './MealItemCard';
 
 const mealSchema = z.object({

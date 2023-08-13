@@ -2,11 +2,11 @@
 
 import { FC } from 'react';
 import { Button, Center, Stack, Text } from '@mantine/core';
-import Logo from '~/components/Logo';
+import Logo from '../../components/Logo';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useTempCredentials } from '~/features/auth/tempCredentialsAtom';
-import { useAuth } from '~/features/auth/useAuth';
-import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import { useTempCredentials } from '../../features/auth/tempCredentialsAtom';
+import { useAuth } from '../../features/auth/useAuth';
+import { getUrlWithRedirected } from '../../util/getUrlWithRedirected';
 
 const ConfirmEmailPage: FC = () => {
   const router = useRouter();

@@ -16,18 +16,7 @@
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ],
-    "paths": {
-      "~/public/*": [
-        "./apps/client/public/*"
-      ],
-      "~/*": [
-        "./apps/client/src/*"
-      ]
-    }
+    "types": ["jest", "node"]
   },
   "include": [
     "**/*.ts",
@@ -39,7 +28,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "../../dist/dist/apps/client/.next/types/**/*.ts",
-    "../../dist/apps/dist/apps/client/.next/types/**/*.ts"
+    "../../dist/apps/dist/apps/client/.next/types/**/*.ts",
+    "../../types/next-auth.d.ts"
   ],
   "exclude": [
     "node_modules",

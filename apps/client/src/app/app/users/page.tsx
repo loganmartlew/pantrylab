@@ -4,13 +4,13 @@ import { FC } from 'react';
 import { Button, Modal, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MdPersonAdd } from 'react-icons/md';
-import { useAuth } from '~/features/auth/useAuth';
-import { useHousehold } from '~/features/household/useHousehold';
-import UserCard from '~/features/user/UserCard';
-import InviteUserForm from '~/features/user/InviteUserForm';
-import { useHouseholdUsers } from '~/features/user/useHouseholdUsers';
-import { User } from '~/types';
-import PageWrapper from '~/components/PageWrapper';
+import { useAuth } from '../../../features/auth/useAuth';
+import { useHousehold } from '../../../features/household/useHousehold';
+import UserCard from '../../../features/user/UserCard';
+import InviteUserForm from '../../../features/user/InviteUserForm';
+import { useHouseholdUsers } from '../../../features/user/useHouseholdUsers';
+import { User } from '../../../types';
+import PageWrapper from '../../../components/PageWrapper';
 
 const UsersPage: FC = () => {
   const [isInviteModelOpen, inviteModalHandlers] = useDisclosure(false);

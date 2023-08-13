@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Invite, User } from '~/types';
-import { useAuth } from '~/features/auth/useAuth';
+import { Invite, User } from '../../types';
+import { useAuth } from '../../features/auth/useAuth';
 import {
   deletePendingUserFromHousehold,
   deleteUserFromHousehold,
@@ -10,8 +10,8 @@ import {
   openHouseholdUserInvitesChannel,
   openHouseholdUsersChannel,
 } from './userApi';
-import { useHousehold } from '~/features/household/useHousehold';
-import { useSupabase } from '~/lib/supabase';
+import { useHousehold } from '../../features/household/useHousehold';
+import { useSupabase } from '../../lib/supabase';
 
 type HouseholdUsersPayload =
   | {

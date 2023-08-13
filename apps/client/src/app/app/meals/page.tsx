@@ -4,12 +4,12 @@ import { Button, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd } from 'react-icons/md';
-import PageWrapper from '~/components/PageWrapper';
-import { useHousehold } from '~/features/household/useHousehold';
-import { useList } from '~/features/list/useList';
-import MealForm, { MealFormValues } from '~/features/meal/MealForm';
-import { useMeal } from '~/features/meal/useMeal';
-import MealCard from '~/features/meal/MealCard';
+import PageWrapper from '../../../components/PageWrapper';
+import { useHousehold } from '../../../features/household/useHousehold';
+import { useList } from '../../../features/list/useList';
+import MealForm, { MealFormValues } from '../../../features/meal/MealForm';
+import { useMeal } from '../../../features/meal/useMeal';
+import MealCard from '../../../features/meal/MealCard';
 
 const MealsPage: FC = () => {
   const [isMealModalOpen, mealModalHandlers] = useDisclosure(false);
@@ -36,7 +36,7 @@ const MealsPage: FC = () => {
         </Button>
         {sortedMeals.length < 1 && <Text>No meals in this household...</Text>}
         {sortedMeals.length >= 1 &&
-          sortedMeals.map(meal => (
+          sortedMeals.map((meal) => (
             <MealCard key={meal.id} meal={meal} deleteable linkToMeal />
           ))}
       </Stack>

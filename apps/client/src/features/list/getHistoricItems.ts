@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { dateToString, stringToDate } from '~/lib/dates/date';
-import { ListItem } from '~/types';
+import { dateToString, stringToDate } from '../../lib/dates/date';
+import { ListItem } from '../../types';
 
 const getHistoricItems = (items: ListItem[]) => {
   const sortedItems = [...items].sort((a, b) => {

@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Item } from '~/types';
-import { useHousehold } from '~/features/household/useHousehold';
+import { Item } from '../../types';
+import { useHousehold } from '../../features/household/useHousehold';
 import { createItem, deleteItem, getHouseholdItems } from './itemApi';
-import { useSupabase } from '~/lib/supabase';
+import { useSupabase } from '../../lib/supabase';
 
 const sortItems = (items: Item[]) => {
   return [...items].sort((a, b) => {
@@ -30,7 +30,7 @@ export const useItem = () => {
       return sortedItems;
     }
 
-    return sortedItems.filter(item =>
+    return sortedItems.filter((item) =>
       item.name.toLowerCase().includes(itemSearchTerm.toLowerCase())
     );
   }, [sortedItems, itemSearchTerm]);
@@ -43,7 +43,7 @@ export const useItem = () => {
       return;
     }
 
-    getHouseholdItems(supabase, currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then((items) => {
       setItems(items);
     });
   }, [currentHousehold, supabase]);
@@ -59,7 +59,7 @@ export const useItem = () => {
     };
 
     const oldItems = [...items];
-    setItems(items => [...items, newItem]);
+    setItems((items) => [...items, newItem]);
 
     const item = await createItem(supabase, name, currentHousehold.id || '');
 
@@ -67,7 +67,7 @@ export const useItem = () => {
       setItems(oldItems);
     }
 
-    getHouseholdItems(supabase, currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then((items) => {
       setItems(items);
     });
   };
@@ -76,7 +76,7 @@ export const useItem = () => {
     if (!currentHousehold) return;
 
     const oldItems = [...items];
-    setItems(items => items.filter(item => item.id !== itemId));
+    setItems((items) => items.filter((item) => item.id !== itemId));
 
     const error = await deleteItem(supabase, itemId);
 
@@ -84,7 +84,7 @@ export const useItem = () => {
       setItems(oldItems);
     }
 
-    getHouseholdItems(supabase, currentHousehold.id).then(items => {
+    getHouseholdItems(supabase, currentHousehold.id).then((items) => {
       setItems(items);
     });
   };

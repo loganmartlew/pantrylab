@@ -2,9 +2,9 @@
 
 import { Stack, Text, Title } from '@mantine/core';
 import { FC } from 'react';
-import PageWrapper from '~/components/PageWrapper';
-import MealItemCard from '~/features/meal/MealItemCard';
-import { useMealDetails } from '~/features/meal/useMealDetails';
+import PageWrapper from '../../../../components/PageWrapper';
+import MealItemCard from '../../../../features/meal/MealItemCard';
+import { useMealDetails } from '../../../../features/meal/useMealDetails';
 
 interface Props {
   params: { mealId: string };
@@ -28,7 +28,9 @@ const MealDetailsPage: FC<Props> = ({ params }) => {
           <Title order={3}>Meal Items</Title>
           {meal.items.length < 1 && <Text>No Items...</Text>}
           {meal.items.length >= 0 &&
-            meal.items.map(item => <MealItemCard item={item} key={item.id} />)}
+            meal.items.map((item) => (
+              <MealItemCard item={item} key={item.id} />
+            ))}
         </Stack>
       </Stack>
     </PageWrapper>

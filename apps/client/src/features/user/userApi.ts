@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { User } from '~/types';
+import { User } from '../../types';
 
 export const getUser = async (supabase: SupabaseClient, userId: string) => {
   if (!userId) {

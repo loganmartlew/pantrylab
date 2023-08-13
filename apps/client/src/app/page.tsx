@@ -3,9 +3,9 @@
 import { Button, Center, Stack, Text, useMantineTheme } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import Logo from '~/components/Logo';
-import { useAuth } from '~/features/auth/useAuth';
-import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import Logo from '../components/Logo';
+import { useAuth } from '../features/auth/useAuth';
+import { getUrlWithRedirected } from '../util/getUrlWithRedirected';
 
 export default function Page() {
   const params = useSearchParams();
@@ -17,7 +17,7 @@ export default function Page() {
 
   const loggedIn = (
     <>
-      <Text color='white'>You are logged in as {user?.first_name}</Text>
+      <Text color='white'>You are logged in as {user?.firstName}</Text>
       <Button component={Link} href='/app' variant='white'>
         Go To App
       </Button>

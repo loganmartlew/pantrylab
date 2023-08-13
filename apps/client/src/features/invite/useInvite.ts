@@ -1,13 +1,13 @@
 import { useEffect, useCallback, useMemo } from 'react';
-import { useStore } from '~/features/store';
-import { useAuth } from '~/features/auth/useAuth';
+import { useStore } from '../../features/store';
+import { useAuth } from '../../features/auth/useAuth';
 import {
   getUserInvites,
   openUserInvitesChannel,
   updateInviteStatus,
 } from './inviteApi';
-import { Invite } from '~/types';
-import { useSupabase } from '~/lib/supabase';
+import { Invite } from '../../types';
+import { useSupabase } from '../../lib/supabase';
 
 export const useInvite = () => {
   const { supabase } = useSupabase();

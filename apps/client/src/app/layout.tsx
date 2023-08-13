@@ -1,5 +1,5 @@
 import 'server-only';
-import SupabaseProvider from '~/lib/supabase/SupabaseProvider';
+import SupabaseProvider from '../lib/supabase/SupabaseProvider';
 
 import Providers from './providers';
 

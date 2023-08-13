@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { dateToIsoString, isoStringToDate } from '~/lib/dates/date';
-import { PlannedMeal } from '~/types';
+import { dateToIsoString, isoStringToDate } from '../../lib/dates/date';
+import { PlannedMeal } from '../../types';
 
 export const getHouseholdMealPlan = async (
   supabase: SupabaseClient,
@@ -28,7 +28,7 @@ export const getHouseholdMealPlan = async (
     return [];
   }
 
-  const plannedMeals = data.map(plannedMeal => ({
+  const plannedMeals = data.map((plannedMeal) => ({
     id: plannedMeal.id,
     date: isoStringToDate(plannedMeal.date),
     created_at: dayjs(plannedMeal.created_at).toDate(),

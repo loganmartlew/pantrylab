@@ -4,13 +4,13 @@ import { Box, Button, Modal, Stack, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { FC } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
-import PageWrapper from '~/components/PageWrapper';
-import { useHousehold } from '~/features/household/useHousehold';
-import ItemCard from '~/features/item/ItemCard';
-import NewItemForm from '~/features/item/NewItemForm';
-import { useItem } from '~/features/item/useItem';
-import { useList } from '~/features/list/useList';
-import { Item } from '~/types';
+import PageWrapper from '../../../components/PageWrapper';
+import { useHousehold } from '../../../features/household/useHousehold';
+import ItemCard from '../../../features/item/ItemCard';
+import NewItemForm from '../../../features/item/NewItemForm';
+import { useItem } from '../../../features/item/useItem';
+import { useList } from '../../../features/list/useList';
+import { Item } from '../../../types';
 
 const ItemsPage: FC = () => {
   const [isItemModalOpen, itemModalHandlers] = useDisclosure(false);
@@ -26,7 +26,7 @@ const ItemsPage: FC = () => {
   } = useItem();
   const { currentItems, addItemToList, removeListItem } = useList();
 
-  const currentItemIds = currentItems.map(item => item.item.id);
+  const currentItemIds = currentItems.map((item) => item.item.id);
 
   const addNewItem = (name: string) => {
     addItem(name);
@@ -42,7 +42,7 @@ const ItemsPage: FC = () => {
   };
 
   const removeFromList = async (itemId: string) => {
-    const id = currentItems.find(item => item.item.id === itemId)?.id;
+    const id = currentItems.find((item) => item.item.id === itemId)?.id;
     removeListItem(id ?? '');
   };
 
@@ -64,7 +64,7 @@ const ItemsPage: FC = () => {
         />
         {filteredItems.length < 1 && <Text>No items in this household...</Text>}
         {filteredItems.length >= 1 &&
-          filteredItems.map(item => (
+          filteredItems.map((item) => (
             <ItemCard
               key={item.id}
               item={item}

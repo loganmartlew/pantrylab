@@ -1,7 +1,7 @@
 import { Box, Title } from '@mantine/core';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import LoadingScreen from '~/components/LoadingScreen';
+import LoadingScreen from '../../components/LoadingScreen';
 import NewHouseholdForm from './NewHouseholdForm';
 import { useHousehold } from './useHousehold';
 

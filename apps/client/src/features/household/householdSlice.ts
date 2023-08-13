@@ -1,5 +1,5 @@
-import { Household } from '~/types';
-import { StoreCreator } from '~/features/store';
+import { Household } from '../../types';
+import { StoreCreator } from '../../features/store';
 
 export interface HouseholdSlice {
   households: Household[];
@@ -25,13 +25,13 @@ export const createHouseholdSlice: StoreCreator<HouseholdSlice> = (
     set({ isLoading: false });
   },
   addHousehold: (household: Household) => {
-    set(state => ({
+    set((state) => ({
       households: [...state.households, household],
     }));
   },
   updateHousehold: (household: Household) => {
-    set(state => ({
-      households: state.households.map(h => {
+    set((state) => ({
+      households: state.households.map((h) => {
         if (h.id === household.id) {
           return household;
         }
@@ -40,8 +40,8 @@ export const createHouseholdSlice: StoreCreator<HouseholdSlice> = (
     }));
   },
   deleteHousehold: (householdId: string) => {
-    set(state => ({
-      households: state.households.filter(h => h.id !== householdId),
+    set((state) => ({
+      households: state.households.filter((h) => h.id !== householdId),
     }));
   },
   setCurrentHouseholdId: (householdId: string) => {

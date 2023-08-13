@@ -4,11 +4,11 @@ import { FC } from 'react';
 import { Center, Stack, Title, TextInput, Text, Button } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
-import TextLink from '~/components/TextLink';
-import { useAuth } from '~/features/auth/useAuth';
-import Logo from '~/components/Logo';
+import TextLink from '../../../components/TextLink';
+import { useAuth } from '../../../features/auth/useAuth';
+import Logo from '../../../components/Logo';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { getUrlWithRedirected } from '~/util/getUrlWithRedirected';
+import { getUrlWithRedirected } from '../../../util/getUrlWithRedirected';
 
 const signupSchema = z.object({
   firstName: z

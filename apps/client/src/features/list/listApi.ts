@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { ListItem } from '~/types';
+import { ListItem } from '../../types';
 
 export const getHouseholdList = async (
   supabase: SupabaseClient,

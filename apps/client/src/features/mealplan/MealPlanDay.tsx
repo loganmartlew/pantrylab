@@ -11,9 +11,9 @@ import {
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { MdAdd, MdAddShoppingCart, MdToday } from 'react-icons/md';
-import { PlannedMeal } from '~/types';
+import { PlannedMeal } from '../../types';
 import MealCard from '../meal/MealCard';
-import ConfirmationModal from '~/components/ConfirmationModal';
+import ConfirmationModal from '../../components/ConfirmationModal';
 import { useDisclosure } from '@mantine/hooks';
 
 interface Props {
@@ -37,7 +37,7 @@ const MealPlanDay: FC<Props> = ({
   const theme = useMantineTheme();
 
   const isToday = dayjs(date).isSame(dayjs(), 'date');
-  const daysPlannedMeals = plannedMeals.filter(meal => {
+  const daysPlannedMeals = plannedMeals.filter((meal) => {
     return dayjs(meal.date).isSame(date, 'date');
   });
 
@@ -79,7 +79,7 @@ const MealPlanDay: FC<Props> = ({
           {dayjs(date).format('dddd')}
         </Title>
       </Group>
-      {daysPlannedMeals.map(plannedMeal => (
+      {daysPlannedMeals.map((plannedMeal) => (
         <MealCard
           key={plannedMeal.id}
           meal={plannedMeal.meal}

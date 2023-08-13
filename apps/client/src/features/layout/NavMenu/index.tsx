@@ -30,11 +30,11 @@ import {
   MdMarkEmailUnread,
 } from 'react-icons/md';
 import { useDisclosure } from '@mantine/hooks';
-import { useAuth } from '~/features/auth/useAuth';
-import { useHousehold } from '~/features/household/useHousehold';
+import { useAuth } from '../../../features/auth/useAuth';
+import { useHousehold } from '../../../features/household/useHousehold';
 import Footer from './Footer';
-import NewHouseholdForm from '~/features/household/NewHouseholdForm';
-import { useInvite } from '~/features/invite/useInvite';
+import NewHouseholdForm from '../../../features/household/NewHouseholdForm';
+import { useInvite } from '../../../features/invite/useInvite';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -53,8 +53,8 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     useHousehold();
   const { hasPendingInvites } = useInvite();
 
-  const initials = user ? user.first_name[0] + user.last_name[0] : '??';
-  const name = user ? user.first_name + ' ' + user.last_name : 'Unknown User';
+  const initials = user ? user.firstName[0] + user.lastName[0] : '??';
+  const name = user ? user.firstName + ' ' + user.lastName : 'Unknown User';
 
   const getNavLinkProps = useCallback(
     (path: string) => ({
@@ -65,7 +65,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
     [pathname]
   );
 
-  const householdData = households.map(household => ({
+  const householdData = households.map((household) => ({
     label: household.name,
     value: household.id,
   }));
