@@ -56,18 +56,18 @@ export const householdsContract = c.router({
       ...authErrors,
       ...notFoundErrors,
     },
-    body: z.null(),
+    body: z.object({}),
     summary: 'Delete a household',
   },
   removeHouseholdUser: {
     method: 'DELETE',
-    path: '/households/:householdId/user/:userId',
+    path: '/households/:householdId/users/:userId',
     responses: {
       200: z.null(),
       ...authErrors,
       ...notFoundErrors,
     },
-    body: z.null(),
+    body: z.object({}),
     summary: 'Remove a user from a household',
   },
 });

@@ -20,10 +20,10 @@
       "@pantrylab/config": ["libs/config/src/index.ts"],
       "@pantrylab/contract": ["libs/contract/src/index.ts"],
       "@pantrylab/db": ["libs/db/src/index.ts"],
-      "@pantrylab/households/server": ["libs/households/server/src/index.ts"],
       "@pantrylab/households/interface": [
         "libs/households/interface/src/index.ts"
       ],
+      "@pantrylab/households/server": ["libs/households/server/src/index.ts"],
       "@pantrylab/invites": ["libs/invites/src/index.ts"],
       "@pantrylab/items": ["libs/items/src/index.ts"],
       "@pantrylab/listItems": ["libs/listItems/src/index.ts"],
@@ -34,10 +34,7 @@
       "@pantrylab/shared/types": ["libs/shared/src/types/index.ts"],
       "@pantrylab/shared/util": ["libs/shared/src/util/index.ts"],
       "@pantrylab/users": ["libs/users/src/index.ts"],
-      "@pantrylab/workspace": ["libs/workspace/src/index.ts"],
-      "households/households-interface": [
-        "libs/households/households-interface/src/index.ts"
-      ]
+      "@pantrylab/workspace": ["libs/workspace/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"],

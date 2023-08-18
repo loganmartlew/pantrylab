@@ -10,6 +10,7 @@ import {
 } from '@pantrylab/households/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { HouseholdParamGuard } from './guards';
+import { UserParamGuard } from '@pantrylab/users';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -85,7 +86,7 @@ export class HouseholdsController {
   }
 
   @TsRestHandler(c.removeHouseholdUser)
-  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
+  @Auth([HouseholdParamGuard, UserParamGuard], HouseholdOwnerPolicy)
   async removeHouseholdUser() {
     return tsRestHandler(
       c.removeHouseholdUser,
