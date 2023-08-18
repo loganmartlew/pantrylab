@@ -88,6 +88,16 @@ export class HouseholdsService {
     return householdUser.role === role;
   }
 
+  async addUser(userId: string, householdId: string) {
+    await this.db.householdUser.create({
+      data: {
+        role: 'OWNER',
+        userId,
+        householdId,
+      },
+    });
+  }
+
   async removeUser(userId: string, householdId: string) {
     await this.db.householdUser.delete({
       where: {

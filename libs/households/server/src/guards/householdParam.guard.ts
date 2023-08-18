@@ -1,7 +1,6 @@
 import {
   ExecutionContext,
   CanActivate,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,11 +14,7 @@ export class HouseholdParamGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const householdId = request.params.id;
-
-    if (!householdId || typeof householdId !== 'string') {
-      throw new ForbiddenException('A valid householdId url param is required');
-    }
+    const householdId = request.params.householdId;
 
     const householdExists = await this.householdsService.checkExists(
       householdId

@@ -1,21 +1,21 @@
 {
-  "name": "households-server",
+  "name": "households-interface",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/households/server/src",
+  "sourceRoot": "libs/households/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/households/server/**/*.ts"]
+        "lintFilePatterns": ["libs/households/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/households/server/jest.config.ts",
+        "jestConfig": "libs/households/interface/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

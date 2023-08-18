@@ -1,1 +1,1 @@
-export * from './useHttp.ts';
+export * from './useHttp';

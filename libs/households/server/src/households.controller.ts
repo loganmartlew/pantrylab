@@ -1,98 +1,98 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  NotFoundException,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
-import { HouseholdDto, HouseholdUpdateDto } from './dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { HouseholdEntity } from './entities';
-import { handleControllerMutation } from '@pantrylab/shared/util';
+import { createTsRestErrorResponse } from '@pantrylab/shared/util';
 import { Auth } from '@pantrylab/auth';
 import { AuthUser } from '@pantrylab/auth';
-import { HouseholdParamGuard } from './guards';
 import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
+import {
+  Household,
+  householdsContract as c,
+} from '@pantrylab/households/interface';
+import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
+import { HouseholdParamGuard } from './guards';
 
-@Controller('households')
-@ApiTags('households')
+@Controller()
+@TsRest({ validateResponses: true })
 export class HouseholdsController {
-  private objectName = 'Household';
-
   constructor(private readonly householdsService: HouseholdsService) {}
 
-  @Post()
+  @TsRestHandler(c.createHousehold)
   @Auth()
-  @ApiCreatedResponse({ type: HouseholdEntity })
-  create(@Body() createHouseholdDto: HouseholdDto) {
-    return this.householdsService.create(createHouseholdDto);
+  createHousehold(@AuthUser('id') userId: string) {
+    return tsRestHandler(c.createHousehold, async ({ body }) => {
+      const household: Household = await this.householdsService.create(body);
+      await this.householdsService.addUser(userId, household.id);
+      return { status: 201 as const, body: household };
+    });
   }
 
-  @Get()
+  @TsRestHandler(c.findHouseholdsByUser)
   @Auth()
-  @ApiCreatedResponse({ type: HouseholdEntity, isArray: true })
-  findAll(@AuthUser('id') userId: string) {
-    return this.householdsService.findAllByUserId(userId);
+  findHouseholdsByUser(@AuthUser('id') userId: string) {
+    return tsRestHandler(c.findHouseholdsByUser, async () => {
+      const households = await this.householdsService.findAllByUserId(userId);
+      return { status: 200 as const, body: households };
+    });
   }
 
-  @Get(':id')
+  @TsRestHandler(c.findHouseholdById)
   @Auth([HouseholdParamGuard], HouseholdUserPolicy)
-  @ApiCreatedResponse({ type: HouseholdEntity })
-  async findOne(@Param('id') id: string) {
-    const household = await this.householdsService.findOne(id);
+  async findHouseholdById() {
+    return tsRestHandler(
+      c.findHouseholdById,
+      async ({ params: { householdId } }) => {
+        const household = await this.householdsService.findOne(householdId);
 
-    if (!household) {
-      throw new NotFoundException(`Household with id: ${id} not found`);
-    }
+        if (!household) {
+          return createTsRestErrorResponse<404>(
+            404,
+            `Household with id: ${householdId} not found`
+          );
+        }
 
-    return household;
-  }
-
-  @Patch(':id')
-  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
-  @ApiCreatedResponse({ type: HouseholdEntity })
-  async update(
-    @Param('id') id: string,
-    @Body() updateHouseholdDto: HouseholdUpdateDto
-  ) {
-    const household = await handleControllerMutation(
-      () => this.householdsService.update(id, updateHouseholdDto),
-      {
-        id,
-        objectName: this.objectName,
+        return { status: 200 as const, body: household };
       }
     );
-
-    return household;
   }
 
-  @Delete(':id')
+  @TsRestHandler(c.updateHousehold)
   @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
-  @ApiCreatedResponse({ type: HouseholdEntity })
-  async remove(@Param('id') id: string) {
-    const household = await handleControllerMutation(
-      () => this.householdsService.remove(id),
-      {
-        id,
-        objectName: this.objectName,
+  async updateHousehold() {
+    return tsRestHandler(
+      c.updateHousehold,
+      async ({ params: { householdId }, body }) => {
+        const household = await this.householdsService.update(
+          householdId,
+          body
+        );
+
+        return { status: 200 as const, body: household };
       }
     );
-
-    return household;
   }
 
-  @Delete(':id/user/:userId')
+  @TsRestHandler(c.deleteHousehold)
   @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
-  async removeUser(@Param('id') id: string, @Param('userId') userId: string) {
-    await handleControllerMutation(
-      () => this.householdsService.removeUser(id, userId),
-      {
-        id,
-        objectName: this.objectName,
+  async deleteHousehold() {
+    return tsRestHandler(
+      c.deleteHousehold,
+      async ({ params: { householdId } }) => {
+        const household = await this.householdsService.remove(householdId);
+
+        return { status: 200 as const, body: household };
+      }
+    );
+  }
+
+  @TsRestHandler(c.removeHouseholdUser)
+  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
+  async removeHouseholdUser() {
+    return tsRestHandler(
+      c.removeHouseholdUser,
+      async ({ params: { householdId, userId } }) => {
+        await this.householdsService.removeUser(userId, householdId);
+
+        return { status: 200 as const, body: null };
       }
     );
   }

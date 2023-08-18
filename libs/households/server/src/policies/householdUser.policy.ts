@@ -1,27 +1,40 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Policy } from '@pantrylab/auth';
 import { UserEntity } from '@pantrylab/users';
 import { HouseholdsService } from '../households.service';
-import { Reflector } from '@nestjs/core';
-import { householdIdMetadataKey } from '../meta';
+import { Request } from 'express';
 
 @Injectable()
 export class HouseholdUserPolicy implements Policy {
-  constructor(
-    private householdsService: HouseholdsService,
-    private reflector: Reflector
-  ) {}
+  constructor(private householdsService: HouseholdsService) {}
 
   async checkConditions(user: UserEntity, context: ExecutionContext) {
-    const householdId = this.reflector.get<string>(
-      householdIdMetadataKey,
-      context.getHandler()
+    const request = context.switchToHttp().getRequest<Request>();
+    const householdId = request.params.householdId;
+
+    const householdExists = await this.householdsService.checkExists(
+      householdId
     );
+
+    if (!householdExists) {
+      throw new NotFoundException('Household does not exist');
+    }
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(
       user.id,
       householdId
     );
+
+    if (!userInHousehold) {
+      throw new ForbiddenException(
+        `Only a user in this household can perform this action`
+      );
+    }
 
     return userInHousehold;
   }
