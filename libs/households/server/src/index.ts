@@ -1,11 +1,4 @@
 export {
-  HouseholdDto,
-  HouseholdDtoSchema,
-  HouseholdUpdateDto,
-  HouseholdUpdateSchema,
-} from './dto';
-export { HouseholdEntity, HouseholdSchema } from './entities';
-export {
   HouseholdBodyGuard,
   HouseholdParamGuard,
   HouseholdQueryGuard,

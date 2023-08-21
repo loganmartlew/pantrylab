@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { HouseholdDto, HouseholdUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
+import {
+  HouseholdCreate,
+  HouseholdUpdate,
+} from '@pantrylab/households/interface';
 import { HouseholdUserRole } from '@prisma/client';
 
 @Injectable()
@@ -14,7 +17,7 @@ export class HouseholdsService {
     return !!household;
   }
 
-  async create(householdDto: HouseholdDto) {
+  async create(householdDto: HouseholdCreate) {
     const household = await this.db.household.create({
       data: householdDto,
     });
@@ -46,7 +49,7 @@ export class HouseholdsService {
     return household;
   }
 
-  async update(id: string, updateHouseholdDto: HouseholdUpdateDto) {
+  async update(id: string, updateHouseholdDto: HouseholdUpdate) {
     const household = await this.db.household.update({
       where: { id },
       data: updateHouseholdDto,

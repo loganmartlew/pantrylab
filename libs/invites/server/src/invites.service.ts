@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InviteDto } from './dto';
 import { DbService } from '@pantrylab/db';
 import { HouseholdsService } from '@pantrylab/households/server';
+import { InviteCreate } from '@pantrylab/invites/interface';
 import { UsersService } from '@pantrylab/users';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class InvitesService {
     return !!invite;
   }
 
-  async create(inviteDto: InviteDto) {
+  async create(inviteDto: InviteCreate) {
     const invite = await this.db.invite.create({
       data: inviteDto,
     });
@@ -35,6 +35,14 @@ export class InvitesService {
     const invites = await this.db.invite.findMany({
       where: { householdId },
       include: { user: true },
+    });
+    return invites;
+  }
+
+  async findAllForUser(userId: string) {
+    const invites = await this.db.invite.findMany({
+      where: { userId },
+      include: { household: true },
     });
     return invites;
   }

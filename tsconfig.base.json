@@ -24,7 +24,8 @@
         "libs/households/interface/src/index.ts"
       ],
       "@pantrylab/households/server": ["libs/households/server/src/index.ts"],
-      "@pantrylab/invites": ["libs/invites/src/index.ts"],
+      "@pantrylab/invites/interface": ["libs/invites/interface/src/index.ts"],
+      "@pantrylab/invites/server": ["libs/invites/server/src/index.ts"],
       "@pantrylab/items": ["libs/items/src/index.ts"],
       "@pantrylab/listItems": ["libs/listItems/src/index.ts"],
       "@pantrylab/meals": ["libs/meals/src/index.ts"],

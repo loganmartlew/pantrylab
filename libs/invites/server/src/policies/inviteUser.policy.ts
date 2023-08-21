@@ -1,6 +1,6 @@
 import {
-  BadRequestException,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,19 +14,19 @@ export class InviteUserPolicy implements Policy {
 
   async checkConditions(user: UserEntity, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
-    const inviteId = req.params.id;
-
-    if (!inviteId || typeof inviteId !== 'string') {
-      throw new BadRequestException('Invite id is required');
-    }
+    const inviteId = req.params.inviteId;
 
     const invite = await this.invitesService.findOne(inviteId);
 
     if (!invite) {
-      throw new NotFoundException(`Invite with id: ${inviteId} not found`);
+      throw new NotFoundException(`Invite does not exist`);
     }
 
     const inviteForUser = invite.userId === user.id;
+
+    if (!inviteForUser) {
+      throw new ForbiddenException(`Invite is not for this user`);
+    }
 
     return inviteForUser;
   }

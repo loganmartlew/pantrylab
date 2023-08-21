@@ -1,4 +1,9 @@
-import { authErrors, c, notFoundErrors } from '@pantrylab/contract';
+import {
+  authErrors,
+  c,
+  notFoundErrors,
+  defaultResponses,
+} from '@pantrylab/contract';
 import {
   householdCreateSchema,
   householdSchema,
@@ -12,6 +17,7 @@ export const householdsContract = c.router({
     path: '/households',
     responses: {
       201: householdSchema,
+      ...defaultResponses,
       ...authErrors,
     },
     body: householdCreateSchema,
@@ -22,6 +28,7 @@ export const householdsContract = c.router({
     path: '/households',
     responses: {
       200: z.array(householdSchema),
+      ...defaultResponses,
       ...authErrors,
     },
     summary: 'Find all households for a user',
@@ -29,9 +36,9 @@ export const householdsContract = c.router({
   findHouseholdById: {
     method: 'GET',
     path: '/households/:householdId',
-    //pathParams: z.object({ householdId: z.string().uuid() }),
     responses: {
       200: householdSchema,
+      ...defaultResponses,
       ...authErrors,
       ...notFoundErrors,
     },
@@ -42,6 +49,7 @@ export const householdsContract = c.router({
     path: '/households/:householdId',
     responses: {
       200: householdSchema,
+      ...defaultResponses,
       ...authErrors,
       ...notFoundErrors,
     },
@@ -53,6 +61,7 @@ export const householdsContract = c.router({
     path: '/households/:householdId',
     responses: {
       200: householdSchema,
+      ...defaultResponses,
       ...authErrors,
       ...notFoundErrors,
     },
@@ -64,6 +73,7 @@ export const householdsContract = c.router({
     path: '/households/:householdId/users/:userId',
     responses: {
       200: z.null(),
+      ...defaultResponses,
       ...authErrors,
       ...notFoundErrors,
     },
