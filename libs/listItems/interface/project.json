@@ -1,21 +1,21 @@
 {
-  "name": "listItems",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/listItems/src",
+  "name": "listItems-interface",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/listItems/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/listItems/**/*.ts"]
+        "lintFilePatterns": ["libs/listItems/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/listItems/jest.config.ts",
+        "jestConfig": "libs/listItems/interface/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

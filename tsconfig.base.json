@@ -28,7 +28,10 @@
       "@pantrylab/invites/server": ["libs/invites/server/src/index.ts"],
       "@pantrylab/items/interface": ["libs/items/interface/src/index.ts"],
       "@pantrylab/items/server": ["libs/items/server/src/index.ts"],
-      "@pantrylab/listItems": ["libs/listItems/src/index.ts"],
+      "@pantrylab/listItems/interface": [
+        "libs/listItems/interface/src/index.ts"
+      ],
+      "@pantrylab/listItems/server": ["libs/listItems/server/src/index.ts"],
       "@pantrylab/meals": ["libs/meals/src/index.ts"],
       "@pantrylab/plannedMeals": ["libs/plannedMeals/src/index.ts"],
       "@pantrylab/shared/decorators": ["libs/shared/src/decorators/index.ts"],

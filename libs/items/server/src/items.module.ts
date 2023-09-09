@@ -3,10 +3,11 @@ import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { HouseholdsModule } from '@pantrylab/households/server';
 import { ItemHouseholdUserPolicy } from './policies';
+import { ItemHouseholdPolicy } from './policies/itemHousehold.policy';
 
 @Module({
   controllers: [ItemsController],
-  providers: [ItemsService, ItemHouseholdUserPolicy],
+  providers: [ItemsService, ItemHouseholdUserPolicy, ItemHouseholdPolicy],
   exports: [ItemsService],
   imports: [HouseholdsModule],
 })

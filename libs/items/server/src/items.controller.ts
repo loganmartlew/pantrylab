@@ -48,13 +48,13 @@ export class ItemsController {
   async findHouseholdItem() {
     return tsRestHandler(
       c.findHouseholdItem,
-      async ({ params: { householdId, itemId } }) => {
+      async ({ params: { itemId } }) => {
         const item = await this.itemsService.findOne(itemId);
 
         if (!item) {
           return createTsRestErrorResponse<404>(
             404,
-            `Household with id: ${householdId} not found`
+            `Item with id: ${itemId} not found`
           );
         }
 

@@ -5,7 +5,7 @@ import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { UsersModule } from '@pantrylab/users';
 import { ItemsModule } from '@pantrylab/items/server';
-import { ListItemsModule } from '@pantrylab/listItems';
+import { ListItemsModule } from '@pantrylab/listItems/server';
 import { InvitesModule } from '@pantrylab/invites/server';
 import { MealsModule } from '@pantrylab/meals';
 import { PlannedMealsModule } from '@pantrylab/plannedMeals';
