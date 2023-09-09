@@ -7,7 +7,7 @@ import { UsersModule } from '@pantrylab/users';
 import { ItemsModule } from '@pantrylab/items/server';
 import { ListItemsModule } from '@pantrylab/listItems/server';
 import { InvitesModule } from '@pantrylab/invites/server';
-import { MealsModule } from '@pantrylab/meals';
+import { MealsModule } from '@pantrylab/meals/server';
 import { PlannedMealsModule } from '@pantrylab/plannedMeals';
 import { DbModule } from '@pantrylab/db';
 import { AuthModule } from '@pantrylab/auth';

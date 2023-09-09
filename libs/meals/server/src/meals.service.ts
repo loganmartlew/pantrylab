@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { MealDto, MealUpdateDto } from './dto';
+import { MealUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
+import { MealCreate } from '@pantrylab/meals/interface';
 
 @Injectable()
 export class MealsService {
@@ -13,14 +14,14 @@ export class MealsService {
     return !!meal;
   }
 
-  async create(mealDto: MealDto) {
+  async create(mealDto: MealCreate) {
     const { itemIds, ...omittedDto } = mealDto;
 
     const meal = await this.db.meal.create({
       data: {
         ...omittedDto,
         items: {
-          connect: itemIds.map((item) => ({ id: item })),
+          connect: itemIds?.map((item) => ({ id: item })) || [],
         },
       },
     });

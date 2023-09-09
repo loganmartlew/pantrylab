@@ -53,4 +53,11 @@ export class ItemsService {
     });
     return item;
   }
+
+  async itemInHousehold(householdId: string, itemId: string) {
+    const item = await this.db.item.findFirst({
+      where: { id: itemId, householdId },
+    });
+    return !!item;
+  }
 }

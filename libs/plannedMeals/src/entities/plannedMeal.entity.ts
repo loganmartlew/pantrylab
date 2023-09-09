@@ -1,7 +1,7 @@
 import { PlannedMeal } from '@prisma/client';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
-import { MealSchema } from '@pantrylab/meals';
+import { MealSchema } from '@pantrylab/meals/server';
 
 export const PlannedMealSchema = z.object({
   id: z.string().uuid(),

@@ -32,7 +32,8 @@
         "libs/listItems/interface/src/index.ts"
       ],
       "@pantrylab/listItems/server": ["libs/listItems/server/src/index.ts"],
-      "@pantrylab/meals": ["libs/meals/src/index.ts"],
+      "@pantrylab/meals/interface": ["libs/meals/interface/src/index.ts"],
+      "@pantrylab/meals/server": ["libs/meals/server/src/index.ts"],
       "@pantrylab/plannedMeals": ["libs/plannedMeals/src/index.ts"],
       "@pantrylab/shared/decorators": ["libs/shared/src/decorators/index.ts"],
       "@pantrylab/shared/filters": ["libs/shared/src/filters/index.ts"],

@@ -18,16 +18,18 @@ export class MealHouseholdUserPolicy implements Policy {
 
   async checkConditions(user: UserEntity, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
-    const mealId = req.params.id;
-
-    if (!mealId || typeof mealId !== 'string') {
-      throw new BadRequestException('Meal id is required');
-    }
+    const { mealId, householdId } = req.params;
 
     const meal = await this.mealsService.findOne(mealId);
 
     if (!meal) {
       throw new NotFoundException(`Meal with id: ${mealId} not found`);
+    }
+
+    if (meal.householdId !== householdId) {
+      throw new BadRequestException(
+        `Meal with id: ${meal} does not belong to household with id: ${householdId}`
+      );
     }
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(
