@@ -57,13 +57,14 @@ export const invitesContract = c.router({
     body: inviteCreateSchema,
     summary: 'Create a new invite',
   },
-  findHouseholdnvites: {
+  findHouseholdInvites: {
     method: 'GET',
     path: '/households/:householdId/invites',
     responses: {
       200: z.array(inviteSchema),
       ...defaultResponses,
       ...authErrors,
+      ...notFoundErrors,
     },
     summary: 'Find a households pending invites',
   },

@@ -18,16 +18,18 @@ export class ItemHouseholdUserPolicy implements Policy {
 
   async checkConditions(user: UserEntity, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
-    const itemId = req.params.id;
-
-    if (!itemId || typeof itemId !== 'string') {
-      throw new BadRequestException('Item id is required');
-    }
+    const { itemId, householdId } = req.params;
 
     const item = await this.itemsService.findOne(itemId);
 
     if (!item) {
       throw new NotFoundException(`Item with id: ${itemId} not found`);
+    }
+
+    if (item.householdId !== householdId) {
+      throw new BadRequestException(
+        `Item with id: ${itemId} does not belong to household with id: ${householdId}`
+      );
     }
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(

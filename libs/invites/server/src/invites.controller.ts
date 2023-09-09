@@ -5,6 +5,7 @@ import {
   HouseholdUserPolicy,
   HouseholdParamGuard,
   HouseholdsService,
+  HouseholdBodyMatchParamGuard,
 } from '@pantrylab/households/server';
 import { Auth, AuthUser } from '@pantrylab/auth';
 import { InviteUserPolicy } from './policies';
@@ -53,18 +54,14 @@ export class InvitesController {
   }
 
   @TsRestHandler(c.createInvite)
-  @Auth([HouseholdParamGuard], HouseholdOwnerPolicy)
+  @Auth(
+    [HouseholdParamGuard, HouseholdBodyMatchParamGuard],
+    HouseholdOwnerPolicy
+  )
   createInvite() {
     return tsRestHandler(
       c.createInvite,
       async ({ body, params: { householdId } }) => {
-        if (body.householdId !== householdId) {
-          return createTsRestErrorResponse<400>(
-            400,
-            `Invite householdId must match route param`
-          );
-        }
-
         const userExists = await this.usersService.checkExists(body.userId);
         if (!userExists) {
           return createTsRestErrorResponse<404>(
@@ -91,11 +88,11 @@ export class InvitesController {
     );
   }
 
-  @TsRestHandler(c.findHouseholdnvites)
+  @TsRestHandler(c.findHouseholdInvites)
   @Auth([HouseholdParamGuard], HouseholdUserPolicy)
-  findHouseholdnvites() {
+  findHouseholdInvites() {
     return tsRestHandler(
-      c.findHouseholdnvites,
+      c.findHouseholdInvites,
       async ({ params: { householdId } }) => {
         const invites: Invite[] = await this.invitesService.findAllInHousehold(
           householdId
