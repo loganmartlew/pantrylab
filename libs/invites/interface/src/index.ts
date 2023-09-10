@@ -1,7 +1,3 @@
 export { invitesContract } from './contract';
-export {
-  Invite,
-  InviteCreate,
-  inviteCreateSchema,
-  inviteSchema,
-} from './schemas';
+export type { Invite, InviteCreate } from './schemas';
+export { inviteCreateSchema, inviteSchema } from './schemas';

@@ -1,4 +1,4 @@
-import { Signup } from '@pantrylab/auth/interface';
+import { Login, Signup } from '@pantrylab/auth/interface';
 import { serverConfig as config } from '@pantrylab/config';
 import { DbService } from '@pantrylab/db';
 import { User } from '@pantrylab/users/interface';
@@ -10,7 +10,6 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { createHash } from 'crypto';
-import { LoginDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -63,7 +62,7 @@ export class AuthService {
     return tokens;
   }
 
-  async login(loginDto: LoginDto, refreshToken: string) {
+  async login(loginDto: Login, refreshToken: string) {
     const user = await this.db.user.findUnique({
       where: {
         email: loginDto.email,

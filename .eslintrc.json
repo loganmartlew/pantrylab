@@ -6,6 +6,9 @@
   "parserOptions": {
     "emitDecoratorMetadata": true
   },
+  "rules": {
+    "@typescript-eslint/consistent-type-exports": "error"
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],

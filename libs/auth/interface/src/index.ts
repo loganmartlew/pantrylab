@@ -1,9 +1,3 @@
 export { authContract } from './contract';
-export {
-  Login,
-  Signup,
-  Credentials,
-  loginSchema,
-  signupSchema,
-  credentialsSchema,
-} from './schemas';
+export type { Login, Signup, Credentials } from './schemas';
+export { loginSchema, signupSchema, credentialsSchema } from './schemas';

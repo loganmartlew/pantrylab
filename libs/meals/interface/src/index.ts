@@ -1,9 +1,3 @@
 export { mealsContract } from './contract';
-export {
-  Meal,
-  MealCreate,
-  MealUpdate,
-  mealSchema,
-  mealCreateSchema,
-  mealUpdateSchema,
-} from './schemas';
+export type { Meal, MealCreate, MealUpdate } from './schemas';
+export { mealSchema, mealCreateSchema, mealUpdateSchema } from './schemas';

@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginEntity } from '@pantrylab/auth/server';
+import { Credentials } from '@pantrylab/auth/interface';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { httpAuthClient } from '../httpClient';
@@ -28,7 +28,7 @@ export const useHttp = () => {
         if (err.response?.status === 401 && !prevReq.sent) {
           prevReq.sent = true;
 
-          const res = await httpAuthClient.get<LoginEntity>('/auth/refresh');
+          const res = await httpAuthClient.get<Credentials>('/auth/refresh');
 
           if (session) {
             session.accessToken = res.data.accessToken;

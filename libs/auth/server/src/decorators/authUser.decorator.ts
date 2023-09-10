@@ -1,16 +1,16 @@
-import { UserEntity } from '@pantrylab/users/server';
+import { User } from '@pantrylab/users/interface';
 import {
   createParamDecorator,
   ExecutionContext,
   ForbiddenException,
 } from '@nestjs/common';
 
-type UserKey = keyof UserEntity;
+type UserKey = keyof User;
 
 export const AuthUser = createParamDecorator(
   (data: UserKey | null, context: ExecutionContext) => {
     const req = context.switchToHttp().getRequest();
-    const user: UserEntity = req.user;
+    const user: User = req.user;
 
     if (!user) {
       throw new ForbiddenException('User not found');

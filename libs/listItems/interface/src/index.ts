@@ -1,9 +1,3 @@
 export { listItemsContract } from './contract';
-export {
-  ListItem,
-  ListItemCreate,
-  ListItemUpdate,
-  listItemSchema,
-  listItemCreateSchema,
-  listItemUpdateSchema,
-} from './schemas';
+export type { ListItem, ListItemCreate, ListItemUpdate } from './schemas';
+export { listItemSchema, listItemCreateSchema, listItemUpdateSchema } from './schemas';

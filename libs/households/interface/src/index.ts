@@ -1,9 +1,3 @@
 export { householdsContract } from './contract';
-export {
-  Household,
-  HouseholdCreate,
-  HouseholdUpdate,
-  householdCreateSchema,
-  householdSchema,
-  householdUpdateSchema,
-} from './schemas';
+export type { Household, HouseholdCreate, HouseholdUpdate } from './schemas';
+export { householdCreateSchema, householdSchema, householdUpdateSchema } from './schemas';
