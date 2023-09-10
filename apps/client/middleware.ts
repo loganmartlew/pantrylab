@@ -6,7 +6,7 @@ global.Buffer = Buffer as unknown as BufferConstructor;
 
 const unauthenticated = (req: NextRequest) => {
   const redirectUrl = req.nextUrl.clone();
-  redirectUrl.pathname = '/';
+  // redirectUrl.pathname = '/';
   redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname);
   return NextResponse.redirect(redirectUrl);
 };
