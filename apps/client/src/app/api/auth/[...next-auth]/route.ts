@@ -10,12 +10,12 @@ const handler = NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {},
-      async authorize(credentials: unknown) {
-        const cred = loginSchema.parse(credentials);
+      async authorize(cred: unknown) {
+        const credentials = loginSchema.parse(cred);
 
         const res = await httpClient.post<Credentials>('/auth/login', {
-          email: cred.email,
-          password: cred.password,
+          email: credentials.email,
+          password: credentials.password,
         });
 
         const user = jwtDecode<User>(res.data.accessToken);
