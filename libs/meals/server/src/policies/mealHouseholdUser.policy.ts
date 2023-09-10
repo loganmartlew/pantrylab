@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth';
+import { Policy } from '@pantrylab/auth/server';
 import { UserEntity } from '@pantrylab/users/server';
 import { MealsService } from '../meals.service';
 import { HouseholdsService } from '@pantrylab/households/server';

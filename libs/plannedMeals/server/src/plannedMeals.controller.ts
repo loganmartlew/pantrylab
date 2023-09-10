@@ -6,7 +6,7 @@ import {
   HouseholdParamGuard,
   HouseholdBodyMatchParamGuard,
 } from '@pantrylab/households/server';
-import { Auth } from '@pantrylab/auth';
+import { Auth } from '@pantrylab/auth/server';
 import { PlannedMealHouseholdUserPolicy } from './policies';
 import {
   PlannedMeal,

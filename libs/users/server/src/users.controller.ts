@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { createTsRestErrorResponse } from '@pantrylab/shared/util';
-import { Auth, AuthUser } from '@pantrylab/auth';
+import { Auth, AuthUser } from '@pantrylab/auth/server';
 import { UserSelfPolicy } from './policies';
 import { usersContract as c } from '@pantrylab/users/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';

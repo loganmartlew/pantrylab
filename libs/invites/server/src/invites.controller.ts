@@ -7,7 +7,7 @@ import {
   HouseholdsService,
   HouseholdBodyMatchParamGuard,
 } from '@pantrylab/households/server';
-import { Auth, AuthUser } from '@pantrylab/auth';
+import { Auth, AuthUser } from '@pantrylab/auth/server';
 import { InviteUserPolicy } from './policies';
 import { Invite, invitesContract as c } from '@pantrylab/invites/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';

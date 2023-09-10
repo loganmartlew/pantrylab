@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@pantrylab/api": ["libs/api/src/index.ts"],
-      "@pantrylab/auth": ["libs/auth/src/index.ts"],
+      "@pantrylab/auth/interface": ["libs/auth/interface/src/index.ts"],
+      "@pantrylab/auth/server": ["libs/auth/server/src/index.ts"],
       "@pantrylab/config": ["libs/config/src/index.ts"],
       "@pantrylab/contract": ["libs/contract/src/index.ts"],
       "@pantrylab/db": ["libs/db/src/index.ts"],

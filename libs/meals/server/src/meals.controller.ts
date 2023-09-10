@@ -6,7 +6,7 @@ import {
   HouseholdUserPolicy,
   HouseholdParamGuard,
 } from '@pantrylab/households/server';
-import { Auth } from '@pantrylab/auth';
+import { Auth } from '@pantrylab/auth/server';
 import { MealHouseholdUserPolicy } from './policies';
 import { Meal, mealsContract as c } from '@pantrylab/meals/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';

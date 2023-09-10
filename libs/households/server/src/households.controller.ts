@@ -1,8 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
 import { createTsRestErrorResponse } from '@pantrylab/shared/util';
-import { Auth } from '@pantrylab/auth';
-import { AuthUser } from '@pantrylab/auth';
+import { Auth, AuthUser } from '@pantrylab/auth/server';
 import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
 import {
   Household,

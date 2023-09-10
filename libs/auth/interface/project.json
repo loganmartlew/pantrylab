@@ -1,21 +1,21 @@
 {
-  "name": "users-interface",
+  "name": "auth-interface",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/users/interface/src",
+  "sourceRoot": "libs/auth/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/users/interface/**/*.ts"]
+        "lintFilePatterns": ["libs/auth/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/users/interface/jest.config.ts",
+        "jestConfig": "libs/auth/interface/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

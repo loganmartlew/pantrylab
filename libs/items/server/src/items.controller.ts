@@ -6,7 +6,7 @@ import {
   HouseholdParamGuard,
   HouseholdBodyMatchParamGuard,
 } from '@pantrylab/households/server';
-import { Auth } from '@pantrylab/auth';
+import { Auth } from '@pantrylab/auth/server';
 import { ItemHouseholdUserPolicy } from './policies';
 import { Item, itemsContract as c } from '@pantrylab/items/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';

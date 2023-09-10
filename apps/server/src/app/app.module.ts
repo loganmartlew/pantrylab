@@ -10,7 +10,7 @@ import { InvitesModule } from '@pantrylab/invites/server';
 import { MealsModule } from '@pantrylab/meals/server';
 import { PlannedMealsModule } from '@pantrylab/plannedMeals/server';
 import { DbModule } from '@pantrylab/db';
-import { AuthModule } from '@pantrylab/auth';
+import { AuthModule } from '@pantrylab/auth/server';
 import { RequestValidationErrorFilter } from '@pantrylab/shared/filters';
 
 @Module({

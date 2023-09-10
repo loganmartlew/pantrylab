@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { httpAuthClient } from '../httpClient';
-import { LoginEntity } from '@pantrylab/auth';
+import { LoginEntity } from '@pantrylab/auth/server';
 
 export const useHttp = () => {
   const { data: session } = useSession();
