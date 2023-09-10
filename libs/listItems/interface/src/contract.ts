@@ -57,6 +57,7 @@ export const listItemsContract = c.router({
       ...notFoundErrors,
     },
     body: listItemUpdateSchema,
+    summary: 'Update a listItem in a household',
   },
   completeHouseholdListItem: {
     method: 'PATCH',

@@ -8,7 +8,7 @@ import { ItemsModule } from '@pantrylab/items/server';
 import { ListItemsModule } from '@pantrylab/listItems/server';
 import { InvitesModule } from '@pantrylab/invites/server';
 import { MealsModule } from '@pantrylab/meals/server';
-import { PlannedMealsModule } from '@pantrylab/plannedMeals';
+import { PlannedMealsModule } from '@pantrylab/plannedMeals/server';
 import { DbModule } from '@pantrylab/db';
 import { AuthModule } from '@pantrylab/auth';
 import { RequestValidationErrorFilter } from '@pantrylab/shared/filters';

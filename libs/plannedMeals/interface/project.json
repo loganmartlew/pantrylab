@@ -1,21 +1,21 @@
 {
-  "name": "plannedMeals",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/plannedMeals/src",
+  "name": "plannedMeals-interface",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/plannedMeals/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/plannedMeals/**/*.ts"]
+        "lintFilePatterns": ["libs/plannedMeals/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/plannedMeals/jest.config.ts",
+        "jestConfig": "libs/plannedMeals/interface/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
