@@ -1,15 +1,15 @@
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { serverConfig as config } from '@pantrylab/config';
 import { User } from '@pantrylab/users/interface';
 import { Injectable } from '@nestjs/common';
-import { serverConfig as config } from '@pantrylab/config';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const ACCESS_TOKEN_KEY = 'access-token';
 
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(
   Strategy,
-  ACCESS_TOKEN_KEY
+  ACCESS_TOKEN_KEY,
 ) {
   constructor() {
     super({

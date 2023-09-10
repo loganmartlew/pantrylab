@@ -4,7 +4,7 @@ import { ApiResourceGeneratorSchema } from './schema';
 
 export async function apiResourceGenerator(
   tree: Tree,
-  options: ApiResourceGeneratorSchema
+  options: ApiResourceGeneratorSchema,
 ) {
   const name = options.name;
   const nameLowerPlural = name.charAt(0).toLowerCase() + name.slice(1);
@@ -26,7 +26,7 @@ export async function apiResourceGenerator(
     tree,
     path.join(__dirname, 'files'),
     projectRoot,
-    templateOptions
+    templateOptions,
   );
   await formatFiles(tree);
 

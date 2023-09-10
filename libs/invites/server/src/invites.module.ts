@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { InvitesService } from './invites.service';
-import { InvitesController } from './invites.controller';
 import { HouseholdsModule } from '@pantrylab/households/server';
 import { UsersModule } from '@pantrylab/users/server';
+import { Module } from '@nestjs/common';
+import { InvitesController } from './invites.controller';
+import { InvitesService } from './invites.service';
 import { InviteUserPolicy } from './policies';
 
 @Module({

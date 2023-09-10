@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { ListItem as ListItemPrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 export const listItemSchema: toZod<ListItemPrisma> = z.object({
   id: z.string().uuid(),

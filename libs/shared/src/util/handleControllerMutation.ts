@@ -8,7 +8,7 @@ interface HandleControllerMutationOptions {
 
 export default async function handleControllerMutation<T>(
   mutateFn: () => Promise<T>,
-  { id, objectName }: HandleControllerMutationOptions
+  { id, objectName }: HandleControllerMutationOptions,
 ) {
   try {
     const result = await mutateFn();

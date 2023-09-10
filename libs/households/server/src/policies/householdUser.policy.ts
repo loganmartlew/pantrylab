@@ -1,13 +1,13 @@
+import { Policy } from '@pantrylab/auth/server';
+import { User } from '@pantrylab/users/interface';
 import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth/server';
-import { User } from '@pantrylab/users/interface';
-import { HouseholdsService } from '../households.service';
 import { Request } from 'express';
+import { HouseholdsService } from '../households.service';
 
 @Injectable()
 export class HouseholdUserPolicy implements Policy {
@@ -17,9 +17,8 @@ export class HouseholdUserPolicy implements Policy {
     const request = context.switchToHttp().getRequest<Request>();
     const householdId = request.params.householdId;
 
-    const householdExists = await this.householdsService.checkExists(
-      householdId
-    );
+    const householdExists =
+      await this.householdsService.checkExists(householdId);
 
     if (!householdExists) {
       throw new NotFoundException('Household does not exist');
@@ -27,12 +26,12 @@ export class HouseholdUserPolicy implements Policy {
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(
       user.id,
-      householdId
+      householdId,
     );
 
     if (!userInHousehold) {
       throw new ForbiddenException(
-        `Only a user in this household can perform this action`
+        `Only a user in this household can perform this action`,
       );
     }
 

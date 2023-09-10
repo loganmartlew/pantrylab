@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth/next';
-import CredentialsProvider from 'next-auth/providers/credentials';
 import { httpClient } from '@pantrylab/api';
 import { LoginDtoSchema, LoginEntity } from '@pantrylab/auth';
-import jwtDecode from 'jwt-decode';
 import { UserEntity } from '@pantrylab/users';
+import jwtDecode from 'jwt-decode';
+import NextAuth from 'next-auth/next';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const handler = NextAuth({
   providers: [

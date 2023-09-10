@@ -1,19 +1,19 @@
+import { Policy } from '@pantrylab/auth/server';
+import { HouseholdsService } from '@pantrylab/households/server';
+import { User } from '@pantrylab/users/interface';
 import {
   BadRequestException,
   ExecutionContext,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth/server';
-import { User } from '@pantrylab/users/interface';
 import { ListItemsService } from '../listItems.service';
-import { HouseholdsService } from '@pantrylab/households/server';
 
 @Injectable()
 export class ListItemHouseholdUserPolicy implements Policy {
   constructor(
     private listItemsService: ListItemsService,
-    private householdsService: HouseholdsService
+    private householdsService: HouseholdsService,
   ) {}
 
   async checkConditions(user: User, context: ExecutionContext) {
@@ -28,13 +28,13 @@ export class ListItemHouseholdUserPolicy implements Policy {
 
     if (listItem.householdId !== householdId) {
       throw new BadRequestException(
-        `List item with id: ${listItem} does not belong to household with id: ${householdId}`
+        `List item with id: ${listItem} does not belong to household with id: ${householdId}`,
       );
     }
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(
       user.id,
-      listItem.householdId
+      listItem.householdId,
     );
 
     return userInHousehold;

@@ -5,9 +5,9 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
+import Link from 'next/link';
 import { FC, MouseEvent, ReactNode } from 'react';
 import { MdDelete, MdPlaylistAddCheck } from 'react-icons/md';
-import Link from 'next/link';
 import { Meal } from '../../types';
 
 interface Props {

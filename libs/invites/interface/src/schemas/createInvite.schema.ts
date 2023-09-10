@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { Invite as InvitePrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 type InviteCreatePrisma = Omit<InvitePrisma, 'id' | 'createdAt' | 'updatedAt'>;
 

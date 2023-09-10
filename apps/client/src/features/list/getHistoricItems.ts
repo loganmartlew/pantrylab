@@ -15,14 +15,17 @@ const getHistoricItems = (items: ListItem[]) => {
     return 0;
   });
 
-  const historicItemsObj = sortedItems.reduce((historic, item) => {
-    const date = dateToString(item.completed_at!);
+  const historicItemsObj = sortedItems.reduce(
+    (historic, item) => {
+      const date = dateToString(item.completed_at!);
 
-    return {
-      ...historic,
-      [date]: [...(historic[date] || []), item],
-    };
-  }, {} as { [key: string]: ListItem[] });
+      return {
+        ...historic,
+        [date]: [...(historic[date] || []), item],
+      };
+    },
+    {} as { [key: string]: ListItem[] },
+  );
 
   const historicItems = Object.keys(historicItemsObj).map((key) => ({
     date: stringToDate(key),

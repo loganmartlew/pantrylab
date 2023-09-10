@@ -1,6 +1,6 @@
 import {
-  ExecutionContext,
   CanActivate,
+  ExecutionContext,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -19,13 +19,12 @@ export class HouseholdBodyGuard implements CanActivate {
 
     if (!householdId || typeof householdId !== 'string') {
       throw new ForbiddenException(
-        'A valid householdId in the request body is required'
+        'A valid householdId in the request body is required',
       );
     }
 
-    const householdExists = await this.householdsService.checkExists(
-      householdId
-    );
+    const householdExists =
+      await this.householdsService.checkExists(householdId);
 
     if (!householdExists) {
       throw new NotFoundException('Household does not exist');
@@ -34,7 +33,7 @@ export class HouseholdBodyGuard implements CanActivate {
     Reflect.defineMetadata(
       householdIdMetadataKey,
       householdId,
-      context.getHandler()
+      context.getHandler(),
     );
 
     return true;

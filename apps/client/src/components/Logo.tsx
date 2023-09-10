@@ -1,16 +1,16 @@
 import { Box, Sx } from '@mantine/core';
-import { FC, useMemo } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import textLogoWhite from '../../public/logo/PantryLab_TextLogo_White.svg';
+import Link from 'next/link';
+import { FC, useMemo } from 'react';
+import logoBlack from '../../public/logo/PantryLab_Logo_Black.svg';
+import logoWhite from '../../public/logo/PantryLab_Logo_Primary.svg';
+import logoPrimary from '../../public/logo/PantryLab_Logo_Primary.svg';
+import textBlack from '../../public/logo/PantryLab_Text_Black.svg';
+import textWhite from '../../public/logo/PantryLab_Text_White.svg';
+import textPrimary from '../../public/logo/PantryLab_Text_White.svg';
 import textLogoBlack from '../../public/logo/PantryLab_TextLogo_Black.svg';
 import textLogoPrimary from '../../public/logo/PantryLab_TextLogo_Primary.svg';
-import textWhite from '../../public/logo/PantryLab_Text_White.svg';
-import textBlack from '../../public/logo/PantryLab_Text_Black.svg';
-import textPrimary from '../../public/logo/PantryLab_Text_White.svg';
-import logoWhite from '../../public/logo/PantryLab_Logo_Primary.svg';
-import logoBlack from '../../public/logo/PantryLab_Logo_Black.svg';
-import logoPrimary from '../../public/logo/PantryLab_Logo_Primary.svg';
+import textLogoWhite from '../../public/logo/PantryLab_TextLogo_White.svg';
 
 interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -35,7 +35,7 @@ const Logo: FC<Props> = ({
       lg: '4em',
       xl: '5em',
     }),
-    []
+    [],
   );
 
   const logoVector = useMemo(() => {

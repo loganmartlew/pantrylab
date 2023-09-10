@@ -7,9 +7,9 @@ import { MdAdd } from 'react-icons/md';
 import PageWrapper from '../../../components/PageWrapper';
 import { useHousehold } from '../../../features/household/useHousehold';
 import { useList } from '../../../features/list/useList';
+import MealCard from '../../../features/meal/MealCard';
 import MealForm, { MealFormValues } from '../../../features/meal/MealForm';
 import { useMeal } from '../../../features/meal/useMeal';
-import MealCard from '../../../features/meal/MealCard';
 
 const MealsPage: FC = () => {
   const [isMealModalOpen, mealModalHandlers] = useDisclosure(false);

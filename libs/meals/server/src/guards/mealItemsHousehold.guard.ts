@@ -1,10 +1,10 @@
+import { ItemsService } from '@pantrylab/items/server';
 import {
   BadRequestException,
   CanActivate,
   ExecutionContext,
   Injectable,
 } from '@nestjs/common';
-import { ItemsService } from '@pantrylab/items/server';
 import { Request } from 'express';
 import { z } from 'zod';
 
@@ -34,8 +34,8 @@ export class MealItemsHouseholdGuard implements CanActivate {
 
     const itemsInHousehold = await Promise.all(
       itemIds.map((itemId) =>
-        this.itemsService.itemInHousehold(householdId, itemId)
-      )
+        this.itemsService.itemInHousehold(householdId, itemId),
+      ),
     );
 
     const allItemsInHousehold = itemsInHousehold.every((item) => item);

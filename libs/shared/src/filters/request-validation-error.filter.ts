@@ -1,6 +1,6 @@
+import { sendErrorResponse } from '@pantrylab/shared/util';
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { RequestValidationError } from '@ts-rest/nest';
-import { sendErrorResponse } from '@pantrylab/shared/util';
 
 @Catch(RequestValidationError)
 export class RequestValidationErrorFilter implements ExceptionFilter {
@@ -12,7 +12,7 @@ export class RequestValidationErrorFilter implements ExceptionFilter {
       400,
       exception.message,
       response,
-      exception.body?.errors
+      exception.body?.errors,
     );
   }
 }

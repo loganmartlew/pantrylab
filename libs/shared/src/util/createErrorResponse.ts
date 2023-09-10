@@ -1,7 +1,7 @@
 export default function <S extends number>(
   status: S,
   message: string,
-  errors?: unknown
+  errors?: unknown,
 ) {
   return {
     status,

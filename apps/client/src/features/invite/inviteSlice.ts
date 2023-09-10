@@ -1,5 +1,5 @@
-import { Invite } from '../../types';
 import { StoreCreator } from '../../features/store';
+import { Invite } from '../../types';
 
 export interface InviteSlice {
   invites: Invite[];

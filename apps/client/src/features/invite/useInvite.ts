@@ -1,13 +1,13 @@
-import { useEffect, useCallback, useMemo } from 'react';
-import { useStore } from '../../features/store';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useAuth } from '../../features/auth/useAuth';
+import { useStore } from '../../features/store';
+import { useSupabase } from '../../lib/supabase';
+import { Invite } from '../../types';
 import {
   getUserInvites,
   openUserInvitesChannel,
   updateInviteStatus,
 } from './inviteApi';
-import { Invite } from '../../types';
-import { useSupabase } from '../../lib/supabase';
 
 export const useInvite = () => {
   const { supabase } = useSupabase();
@@ -29,7 +29,7 @@ export const useInvite = () => {
   }, [invites]);
 
   const hasPendingInvites = invites.some(
-    (invite) => invite.status === 'pending'
+    (invite) => invite.status === 'pending',
   );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const useInvite = () => {
         setInvites(oldInvites);
       }
     },
-    [invites, setInvites, updateInvite, supabase]
+    [invites, setInvites, updateInvite, supabase],
   );
 
   const declineInvite = useCallback(
@@ -78,7 +78,7 @@ export const useInvite = () => {
         setInvites(oldInvites);
       }
     },
-    [invites, setInvites, updateInvite, supabase]
+    [invites, setInvites, updateInvite, supabase],
   );
 
   return {

@@ -1,8 +1,8 @@
-import { useEffect, useCallback } from 'react';
-import { useStore } from '../../features/store';
+import { useCallback, useEffect } from 'react';
 import { useAuth } from '../../features/auth/useAuth';
-import { getUserHouseholds, openUserHouseholdsChannel } from './householdApi';
+import { useStore } from '../../features/store';
 import { useSupabase } from '../../lib/supabase';
+import { getUserHouseholds, openUserHouseholdsChannel } from './householdApi';
 
 export const useHousehold = () => {
   const { supabase } = useSupabase();
@@ -27,7 +27,7 @@ export const useHousehold = () => {
         setHouseholds(households);
       });
     },
-    [setCurrentHouseholdIdAction, supabase, user, setHouseholds]
+    [setCurrentHouseholdIdAction, supabase, user, setHouseholds],
   );
 
   useEffect(() => {

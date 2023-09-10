@@ -1,7 +1,7 @@
 import { MantineThemeOverride } from '@mantine/core';
 
 const theme: MantineThemeOverride = {
-  globalStyles: theme => ({
+  globalStyles: (theme) => ({
     '*, *::before, *::after': {
       boxSizing: 'border-box',
     },

@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '@pantrylab/db';
 import { HouseholdsService } from '@pantrylab/households/server';
 import { ItemsService } from '@pantrylab/items/server';
 import { ListItemCreate, ListItemUpdate } from '@pantrylab/listItems/interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class ListItemsService {
   constructor(
     private db: DbService,
     private householdsService: HouseholdsService,
-    private itemsService: ItemsService
+    private itemsService: ItemsService,
   ) {}
 
   async checkExists(id: string) {
@@ -22,7 +22,7 @@ export class ListItemsService {
   async create(listItemDto: ListItemCreate) {
     if (!(await this.householdsService.checkExists(listItemDto.householdId))) {
       throw new NotFoundException(
-        `Household with id: ${listItemDto.householdId} not found`
+        `Household with id: ${listItemDto.householdId} not found`,
       );
     }
 
@@ -30,13 +30,13 @@ export class ListItemsService {
 
     if (!item) {
       throw new NotFoundException(
-        `Item with id: ${listItemDto.itemId} not found`
+        `Item with id: ${listItemDto.itemId} not found`,
       );
     }
 
     if (item.householdId !== listItemDto.householdId) {
       throw new NotFoundException(
-        `Item with id: ${listItemDto.itemId} not found in household with id: ${listItemDto.householdId}`
+        `Item with id: ${listItemDto.itemId} not found in household with id: ${listItemDto.householdId}`,
       );
     }
 

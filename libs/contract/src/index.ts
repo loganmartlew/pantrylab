@@ -1,5 +1,5 @@
-import { initContract } from '@ts-rest/core';
 import { ErrorResponse } from '@pantrylab/shared/types';
+import { initContract } from '@ts-rest/core';
 
 export const c: ReturnType<typeof initContract> = initContract();
 

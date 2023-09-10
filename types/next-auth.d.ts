@@ -1,5 +1,5 @@
-import { UserEntity } from '@pantrylab/users';
 import 'next-auth';
+import { UserEntity } from '@pantrylab/users';
 
 declare module 'next-auth' {
   export interface Session {

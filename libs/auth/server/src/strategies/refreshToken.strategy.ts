@@ -1,16 +1,16 @@
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-jwt';
-import { Request } from 'express';
+import { serverConfig as config } from '@pantrylab/config';
 import { User } from '@pantrylab/users/interface';
 import { Injectable } from '@nestjs/common';
-import { serverConfig as config } from '@pantrylab/config';
+import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
+import { Strategy } from 'passport-jwt';
 
 export const REFRESH_TOKEN_KEY = 'refresh-token';
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  REFRESH_TOKEN_KEY
+  REFRESH_TOKEN_KEY,
 ) {
   constructor() {
     super({

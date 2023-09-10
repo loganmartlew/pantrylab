@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '@pantrylab/db';
 import { HouseholdsService } from '@pantrylab/households/server';
 import { InviteCreate } from '@pantrylab/invites/interface';
 import { UsersService } from '@pantrylab/users/server';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class InvitesService {
   constructor(
     private db: DbService,
     private householdsService: HouseholdsService,
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {}
 
   async checkExists(id: string) {
@@ -63,7 +63,7 @@ export class InvitesService {
 
     if (!(await this.householdsService.checkExists(invite.householdId))) {
       throw new NotFoundException(
-        `Household with id: ${invite.householdId} not found`
+        `Household with id: ${invite.householdId} not found`,
       );
     }
 

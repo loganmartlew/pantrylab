@@ -1,12 +1,12 @@
-import { CanActivate, Type, UseGuards, applyDecorators } from '@nestjs/common';
-import { Policy } from '../types';
-import { CheckPolicies } from './checkPolicies.decorator';
-import { AccessTokenGuard, PoliciesGuard } from '../guards';
+import { applyDecorators, CanActivate, Type, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AccessTokenGuard, PoliciesGuard } from '../guards';
+import { Policy } from '../types';
+import { CheckPolicies } from './checkPolicies.decorator';
 
 export function Auth(
   guards?: Type<CanActivate>[],
@@ -39,6 +39,6 @@ export function Auth(
       content: {
         'application/json': {},
       },
-    })
+    }),
   );
 }

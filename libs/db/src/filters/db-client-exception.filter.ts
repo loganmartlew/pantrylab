@@ -15,7 +15,7 @@ export class DbClientExceptionFilter extends BaseExceptionFilter {
           HttpStatus.BAD_REQUEST,
           "The provided value for the column is too long for the column's type",
           'Bad Input',
-          response
+          response,
         );
         break;
       case 'P2001':
@@ -23,7 +23,7 @@ export class DbClientExceptionFilter extends BaseExceptionFilter {
           HttpStatus.NOT_FOUND,
           'Not Found',
           'The record searched for in the where condition does not exist',
-          response
+          response,
         );
         break;
       case 'P2002':
@@ -31,7 +31,7 @@ export class DbClientExceptionFilter extends BaseExceptionFilter {
           HttpStatus.BAD_REQUEST,
           'Unique constraint failed',
           'Bad Input',
-          response
+          response,
         );
         break;
       case 'P2025':
@@ -39,7 +39,7 @@ export class DbClientExceptionFilter extends BaseExceptionFilter {
           HttpStatus.NOT_FOUND,
           'An operation failed because it depends on one or more records that were required but not found',
           'Not Found',
-          response
+          response,
         );
         break;
       default:
@@ -52,7 +52,7 @@ function setupResponse(
   status: number,
   message: string,
   error: string,
-  response: Response
+  response: Response,
 ) {
   response.status(status).json({
     statusCode: status,

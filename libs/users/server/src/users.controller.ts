@@ -1,10 +1,10 @@
-import { Controller } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { createTsRestErrorResponse } from '@pantrylab/shared/util';
 import { Auth, AuthUser } from '@pantrylab/auth/server';
-import { UserSelfPolicy } from './policies';
+import { createTsRestErrorResponse } from '@pantrylab/shared/util';
 import { usersContract as c } from '@pantrylab/users/interface';
+import { Controller } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
+import { UserSelfPolicy } from './policies';
+import { UsersService } from './users.service';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -20,7 +20,7 @@ export class UsersController {
       if (!user) {
         return createTsRestErrorResponse<404>(
           404,
-          `User with id: ${userId} not found`
+          `User with id: ${userId} not found`,
         );
       }
 
@@ -37,7 +37,7 @@ export class UsersController {
       if (!user) {
         return createTsRestErrorResponse<404>(
           404,
-          `User with id: ${userId} not found`
+          `User with id: ${userId} not found`,
         );
       }
 

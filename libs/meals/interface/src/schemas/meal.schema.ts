@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { Meal as MealPrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 export const mealSchema: toZod<MealPrisma> = z.object({
   id: z.string().uuid(),

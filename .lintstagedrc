@@ -1,0 +1,3 @@
+{
+  "*.{json,md,html,yml,css,scss,ts,tsx,js,jsx}": "npm run format"
+}

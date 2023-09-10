@@ -7,7 +7,7 @@ export const getHouseholdMealPlan = async (
   supabase: SupabaseClient,
   householdId: string,
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ) => {
   if (!householdId) {
     return [];
@@ -51,7 +51,7 @@ export const addMealToHouseholdMealPlan = async (
   supabase: SupabaseClient,
   mealId: string,
   householdId: string,
-  date: Date
+  date: Date,
 ) => {
   if (!mealId || !householdId) {
     return new Error('No meal id or household id provided');
@@ -73,7 +73,7 @@ export const addMealToHouseholdMealPlan = async (
 export const removeMealFromHouseholdMealPlan = async (
   supabase: SupabaseClient,
   plannedMealId: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!plannedMealId) {
     return new Error('No planned meal id provided');
@@ -100,7 +100,7 @@ export const addRangeToHouseholdList = async (
   supabase: SupabaseClient,
   householdId: string,
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ) => {
   if (!householdId) {
     return new Error('No household id provided');

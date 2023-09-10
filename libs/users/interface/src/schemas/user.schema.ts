@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { User as UserPrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 export const userSchema: toZod<Omit<UserPrisma, 'passwordHash'>> = z.object({
   id: z.string().uuid(),

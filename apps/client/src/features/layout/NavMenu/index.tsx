@@ -16,6 +16,9 @@ import {
   Tooltip,
   useMantineTheme,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FC, useCallback } from 'react';
 import {
   MdBookmarkBorder,
@@ -23,20 +26,17 @@ import {
   MdDashboard,
   MdFormatListBulleted,
   MdLogout,
-  MdOutlineShoppingCart,
-  MdSettings,
-  MdPeopleOutline,
   MdMail,
   MdMarkEmailUnread,
+  MdOutlineShoppingCart,
+  MdPeopleOutline,
+  MdSettings,
 } from 'react-icons/md';
-import { useDisclosure } from '@mantine/hooks';
 import { useAuth } from '../../../features/auth/useAuth';
-import { useHousehold } from '../../../features/household/useHousehold';
-import Footer from './Footer';
 import NewHouseholdForm from '../../../features/household/NewHouseholdForm';
+import { useHousehold } from '../../../features/household/useHousehold';
 import { useInvite } from '../../../features/invite/useInvite';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Footer from './Footer';
 
 interface Props {
   isMenuOpen: boolean;
@@ -62,7 +62,7 @@ const NavMenu: FC<Props> = ({ isMenuOpen, closeMenu }) => {
       href: path,
       active: pathname === path,
     }),
-    [pathname]
+    [pathname],
   );
 
   const householdData = households.map((household) => ({

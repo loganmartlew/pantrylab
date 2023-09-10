@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { Invite as InvitePrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 export const inviteSchema: toZod<InvitePrisma> = z.object({
   id: z.string().uuid(),

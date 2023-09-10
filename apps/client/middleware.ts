@@ -1,6 +1,6 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse, NextRequest } from 'next/server';
 import { Buffer } from 'buffer/';
+import { NextRequest, NextResponse } from 'next/server';
 
 global.Buffer = Buffer as unknown as BufferConstructor;
 

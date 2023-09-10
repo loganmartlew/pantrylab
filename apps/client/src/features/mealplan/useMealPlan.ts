@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
+import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useEffect, useMemo } from 'react';
+import { useHousehold } from '../../features/household/useHousehold';
 import { endOfWeek, startOfWeek } from '../../lib/dates/date';
 import { useSupabase } from '../../lib/supabase';
-import { useHousehold } from '../../features/household/useHousehold';
 import { Meal, PlannedMeal } from '../../types';
 import {
   addMealToHouseholdMealPlan,
@@ -48,7 +48,7 @@ export const useMealPlan = () => {
   };
 
   const weekDates = [0, 1, 2, 3, 4, 5, 6].map((day) =>
-    dayjs(weekStartDate).add(day, 'day').toDate()
+    dayjs(weekStartDate).add(day, 'day').toDate(),
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const useMealPlan = () => {
       supabase,
       currentHousehold.id,
       weekStartDate,
-      weekEndDate
+      weekEndDate,
     ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
@@ -90,7 +90,7 @@ export const useMealPlan = () => {
       supabase,
       meal.id,
       currentHousehold.id,
-      date
+      date,
     );
 
     if (error) {
@@ -101,7 +101,7 @@ export const useMealPlan = () => {
       supabase,
       currentHousehold.id,
       weekStartDate,
-      weekEndDate
+      weekEndDate,
     ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
@@ -112,13 +112,13 @@ export const useMealPlan = () => {
 
     const oldPlannedMeals = [...plannedMeals];
     setPlannedMeals((plannedMeals) =>
-      plannedMeals.filter((plannedMeal) => plannedMeal.id !== plannedMealId)
+      plannedMeals.filter((plannedMeal) => plannedMeal.id !== plannedMealId),
     );
 
     const error = await removeMealFromHouseholdMealPlan(
       supabase,
       plannedMealId,
-      currentHousehold.id
+      currentHousehold.id,
     );
 
     if (error) {
@@ -129,7 +129,7 @@ export const useMealPlan = () => {
       supabase,
       currentHousehold.id,
       weekStartDate,
-      weekEndDate
+      weekEndDate,
     ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });
@@ -142,14 +142,14 @@ export const useMealPlan = () => {
       supabase,
       currentHousehold.id,
       startDate,
-      endDate
+      endDate,
     );
 
     getHouseholdMealPlan(
       supabase,
       currentHousehold.id,
       weekStartDate,
-      weekEndDate
+      weekEndDate,
     ).then((plannedMeals) => {
       setPlannedMeals(plannedMeals);
     });

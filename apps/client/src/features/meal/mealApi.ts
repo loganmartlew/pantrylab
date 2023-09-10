@@ -4,7 +4,7 @@ import { Item, Meal } from '../../types';
 
 export const getHouseholdMeals = async (
   supabase: SupabaseClient,
-  householdId: string
+  householdId: string,
 ) => {
   if (!householdId) {
     return [];
@@ -89,7 +89,7 @@ export const createMeal = async (
   name: string,
   description: string,
   items: Item[],
-  householdId: string
+  householdId: string,
 ) => {
   if (!name || !householdId) {
     return null;
@@ -117,7 +117,7 @@ export const createMeal = async (
     items.map((item) => ({
       meal_id: data?.id,
       item_id: item.id,
-    }))
+    })),
   );
 
   if (itemsError) {

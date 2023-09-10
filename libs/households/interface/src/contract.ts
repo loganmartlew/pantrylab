@@ -1,15 +1,15 @@
 import {
   authErrors,
   c,
-  notFoundErrors,
   defaultResponses,
+  notFoundErrors,
 } from '@pantrylab/contract';
+import { z } from 'zod';
 import {
   householdCreateSchema,
   householdSchema,
   householdUpdateSchema,
 } from './schemas';
-import { z } from 'zod';
 
 export const householdsContract = c.router({
   createHousehold: {

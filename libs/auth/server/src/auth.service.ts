@@ -1,20 +1,23 @@
+import { Signup } from '@pantrylab/auth/interface';
+import { serverConfig as config } from '@pantrylab/config';
+import { DbService } from '@pantrylab/db';
+import { User } from '@pantrylab/users/interface';
 import {
   ConflictException,
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { DbService } from '@pantrylab/db';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { createHash } from 'crypto';
-import { serverConfig as config } from '@pantrylab/config';
-import { Signup } from '@pantrylab/auth/interface';
 import { LoginDto } from './dto';
-import { User } from '@pantrylab/users/interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private db: DbService, private jwtService: JwtService) {}
+  constructor(
+    private db: DbService,
+    private jwtService: JwtService,
+  ) {}
 
   async checkEmailExists(email: string) {
     const user = await this.db.user.findUnique({
@@ -26,7 +29,7 @@ export class AuthService {
   async signup(signupDto: Signup, refreshToken: string) {
     if (await this.checkEmailExists(signupDto.email))
       throw new ConflictException(
-        `User with email: ${signupDto.email} already exists`
+        `User with email: ${signupDto.email} already exists`,
       );
 
     const passwordHash = await this.hashPassword(signupDto.password);
@@ -71,7 +74,7 @@ export class AuthService {
 
     const passwordMatches = await bcrypt.compare(
       loginDto.password,
-      user.passwordHash
+      user.passwordHash,
     );
     if (!passwordMatches) throw new ForbiddenException('Invalid credentials');
 

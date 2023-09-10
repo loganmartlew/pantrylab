@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { DbService } from '@pantrylab/db';
 import {
   HouseholdCreate,
   HouseholdUpdate,
 } from '@pantrylab/households/interface';
+import { Injectable } from '@nestjs/common';
 import { HouseholdUserRole } from '@prisma/client';
 
 @Injectable()
@@ -67,7 +67,7 @@ export class HouseholdsService {
   async checkUserInHousehold(
     userId: string,
     householdId: string,
-    role?: HouseholdUserRole
+    role?: HouseholdUserRole,
   ) {
     const householdUser = await this.db.householdUser.findUnique({
       where: {

@@ -1,19 +1,19 @@
-import { Controller } from '@nestjs/common';
-import { ListItemsService } from './listItems.service';
-import { createTsRestErrorResponse } from '@pantrylab/shared/util';
+import { Auth } from '@pantrylab/auth/server';
 import {
-  HouseholdUserPolicy,
   HouseholdBodyMatchParamGuard,
   HouseholdParamGuard,
+  HouseholdUserPolicy,
 } from '@pantrylab/households/server';
-import { Auth } from '@pantrylab/auth/server';
-import { ListItemHouseholdUserPolicy } from './policies';
 import {
-  ListItem,
   listItemsContract as c,
+  ListItem,
 } from '@pantrylab/listItems/interface';
+import { createTsRestErrorResponse } from '@pantrylab/shared/util';
+import { Controller } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { ItemHouseholdPolicy } from 'libs/items/server/src/policies/itemHousehold.policy';
+import { ListItemsService } from './listItems.service';
+import { ListItemHouseholdUserPolicy } from './policies';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -24,7 +24,7 @@ export class ListItemsController {
   @Auth(
     [HouseholdParamGuard, HouseholdBodyMatchParamGuard],
     ItemHouseholdPolicy,
-    HouseholdUserPolicy
+    HouseholdUserPolicy,
   )
   createListItem() {
     return tsRestHandler(c.createListItem, async ({ body }) => {
@@ -42,7 +42,7 @@ export class ListItemsController {
         const listItems: ListItem[] =
           await this.listItemsService.findAllInHousehold(householdId);
         return { status: 200 as const, body: listItems };
-      }
+      },
     );
   }
 
@@ -57,12 +57,12 @@ export class ListItemsController {
         if (!listItem) {
           return createTsRestErrorResponse<404>(
             404,
-            `ListItem with id: ${listItemId} not found`
+            `ListItem with id: ${listItemId} not found`,
           );
         }
 
         return { status: 200 as const, body: listItem };
-      }
+      },
     );
   }
 
@@ -77,12 +77,12 @@ export class ListItemsController {
         if (!listItem) {
           return createTsRestErrorResponse<404>(
             404,
-            `List item with id: ${listItemId} not found`
+            `List item with id: ${listItemId} not found`,
           );
         }
 
         return { status: 200 as const, body: listItem };
-      }
+      },
     );
   }
 
@@ -99,12 +99,12 @@ export class ListItemsController {
         if (!listItem) {
           return createTsRestErrorResponse<404>(
             404,
-            `List item with id: ${listItemId} not found`
+            `List item with id: ${listItemId} not found`,
           );
         }
 
         return { status: 200 as const, body: listItem };
-      }
+      },
     );
   }
 
@@ -119,12 +119,12 @@ export class ListItemsController {
         if (!listItem) {
           return createTsRestErrorResponse<404>(
             404,
-            `List item with id: ${listItemId} not found`
+            `List item with id: ${listItemId} not found`,
           );
         }
 
         return { status: 200 as const, body: listItem };
-      }
+      },
     );
   }
 }

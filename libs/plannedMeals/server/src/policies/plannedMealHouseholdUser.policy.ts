@@ -1,19 +1,19 @@
+import { Policy } from '@pantrylab/auth/server';
+import { HouseholdsService } from '@pantrylab/households/server';
+import { User } from '@pantrylab/users/interface';
 import {
   BadRequestException,
   ExecutionContext,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth/server';
-import { User } from '@pantrylab/users/interface';
 import { PlannedMealsService } from '../plannedMeals.service';
-import { HouseholdsService } from '@pantrylab/households/server';
 
 @Injectable()
 export class PlannedMealHouseholdUserPolicy implements Policy {
   constructor(
     private plannedMealsService: PlannedMealsService,
-    private householdsService: HouseholdsService
+    private householdsService: HouseholdsService,
   ) {}
 
   async checkConditions(user: User, context: ExecutionContext) {
@@ -28,13 +28,13 @@ export class PlannedMealHouseholdUserPolicy implements Policy {
 
     if (!plannedMeal) {
       throw new NotFoundException(
-        `Planned meal with id: ${plannedMealId} not found`
+        `Planned meal with id: ${plannedMealId} not found`,
       );
     }
 
     const userInHousehold = await this.householdsService.checkUserInHousehold(
       user.id,
-      plannedMeal.householdId
+      plannedMeal.householdId,
     );
 
     return userInHousehold;

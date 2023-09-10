@@ -1,6 +1,6 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { LoginCredentials, SignupCredentials } from '../../types';
 import { useHttp } from '@pantrylab/api';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { LoginCredentials, SignupCredentials } from '../../types';
 
 export const useAuth = () => {
   const { data: session } = useSession();

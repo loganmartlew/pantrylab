@@ -30,7 +30,7 @@ function DebouncedTextSearch<T>({
       placeholder={placeholder}
       value={searchTerm}
       name='search'
-      onChange={e => setSearchTerm(e.target.value)}
+      onChange={(e) => setSearchTerm(e.target.value)}
       error={error}
     />
   );
@@ -40,7 +40,7 @@ function DebouncedTextSearch<T>({
       {!results || results.length < 1 ? (
         <Text>No results</Text>
       ) : (
-        results.map(result => render(result, () => setSearchTerm('')))
+        results.map((result) => render(result, () => setSearchTerm('')))
       )}
     </Stack>
   );

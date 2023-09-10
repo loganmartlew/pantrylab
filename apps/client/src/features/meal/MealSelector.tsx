@@ -1,8 +1,8 @@
 import { Stack } from '@mantine/core';
 import { FC } from 'react';
-import { useMeal } from './useMeal';
-import MealCard from './MealCard';
 import { Meal } from '../../types';
+import MealCard from './MealCard';
+import { useMeal } from './useMeal';
 
 interface Props {
   onSelectMeal: (meal: Meal) => void;

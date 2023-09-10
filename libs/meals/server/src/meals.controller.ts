@@ -1,16 +1,16 @@
-import { Controller } from '@nestjs/common';
-import { MealsService } from './meals.service';
-import { createTsRestErrorResponse } from '@pantrylab/shared/util';
+import { Auth } from '@pantrylab/auth/server';
 import {
   HouseholdId,
-  HouseholdUserPolicy,
   HouseholdParamGuard,
+  HouseholdUserPolicy,
 } from '@pantrylab/households/server';
-import { Auth } from '@pantrylab/auth/server';
-import { MealHouseholdUserPolicy } from './policies';
-import { Meal, mealsContract as c } from '@pantrylab/meals/interface';
+import { mealsContract as c, Meal } from '@pantrylab/meals/interface';
+import { createTsRestErrorResponse } from '@pantrylab/shared/util';
+import { Controller } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { MealItemsHouseholdGuard } from './guards';
+import { MealsService } from './meals.service';
+import { MealHouseholdUserPolicy } from './policies';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -30,9 +30,8 @@ export class MealsController {
   @Auth([HouseholdParamGuard], HouseholdUserPolicy)
   findHouseholdMeals(@HouseholdId() householdId: string) {
     return tsRestHandler(c.findHouseholdMeals, async () => {
-      const meals: Meal[] = await this.mealsService.findAllInHousehold(
-        householdId
-      );
+      const meals: Meal[] =
+        await this.mealsService.findAllInHousehold(householdId);
       return { status: 200 as const, body: meals };
     });
   }
@@ -48,12 +47,12 @@ export class MealsController {
         if (!meal) {
           return createTsRestErrorResponse<404>(
             404,
-            `Meal with id: ${mealId} not found`
+            `Meal with id: ${mealId} not found`,
           );
         }
 
         return { status: 200 as const, body: meal };
-      }
+      },
     );
   }
 
@@ -68,12 +67,12 @@ export class MealsController {
         if (!meal) {
           return createTsRestErrorResponse<404>(
             404,
-            `Meal with id: ${mealId} not found`
+            `Meal with id: ${mealId} not found`,
           );
         }
 
         return { status: 200 as const, body: meal };
-      }
+      },
     );
   }
 
@@ -88,12 +87,12 @@ export class MealsController {
         if (!meal) {
           return createTsRestErrorResponse<404>(
             404,
-            `Meal with id: ${mealId} not found`
+            `Meal with id: ${mealId} not found`,
           );
         }
 
         return { status: 200 as const, body: meal };
-      }
+      },
     );
   }
 }

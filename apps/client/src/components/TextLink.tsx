@@ -1,6 +1,6 @@
-import { FC, ReactNode } from 'react';
 import { Box, Sx, Text, useMantineTheme } from '@mantine/core';
 import Link from 'next/link';
+import { FC, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface Props {
   href: string;
 }
 
-const RouterLink: FC<Props> = props => {
+const RouterLink: FC<Props> = (props) => {
   return (
     <Text component={Link} {...props}>
       {props.children}
@@ -18,7 +18,7 @@ const RouterLink: FC<Props> = props => {
   );
 };
 
-const HyperLink: FC<Props> = props => {
+const HyperLink: FC<Props> = (props) => {
   return (
     <Text component='a' {...props}>
       {props.children}
@@ -26,7 +26,7 @@ const HyperLink: FC<Props> = props => {
   );
 };
 
-const TextLink: FC<Props> = props => {
+const TextLink: FC<Props> = (props) => {
   const theme = useMantineTheme();
 
   const style: Sx = {

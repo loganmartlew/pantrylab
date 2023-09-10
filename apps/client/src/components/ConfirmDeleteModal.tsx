@@ -43,7 +43,7 @@ const ConfirmDeleteModal: FC<Props> = ({
           </Text>{' '}
           in the box below to continue
         </Text>
-        <TextInput value={phrase} onChange={e => setPhrase(e.target.value)} />
+        <TextInput value={phrase} onChange={(e) => setPhrase(e.target.value)} />
         <Group>
           <Button color='red' disabled={!isPhraseCorrect} onClick={onClick}>
             Confirm

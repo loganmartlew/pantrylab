@@ -1,6 +1,6 @@
-import { ExecutionContext } from '@nestjs/common';
 import { Policy } from '@pantrylab/auth/server';
 import { User } from '@pantrylab/users/interface';
+import { ExecutionContext } from '@nestjs/common';
 
 export class UserSelfPolicy implements Policy {
   async checkConditions(user: User, context: ExecutionContext) {

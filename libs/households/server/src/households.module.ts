@@ -1,9 +1,8 @@
-import { Module, forwardRef } from '@nestjs/common';
-import { HouseholdsService } from './households.service';
-import { HouseholdsController } from './households.controller';
-import { HouseholdUserPolicy } from './policies';
-import { HouseholdOwnerPolicy } from './policies';
 import { UsersModule } from '@pantrylab/users/server';
+import { forwardRef, Module } from '@nestjs/common';
+import { HouseholdsController } from './households.controller';
+import { HouseholdsService } from './households.service';
+import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
 
 @Module({
   controllers: [HouseholdsController],

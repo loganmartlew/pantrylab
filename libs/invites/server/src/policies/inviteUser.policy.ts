@@ -1,11 +1,11 @@
+import { Policy } from '@pantrylab/auth/server';
+import { User } from '@pantrylab/users/interface';
 import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth/server';
-import { User } from '@pantrylab/users/interface';
 import { InvitesService } from '../invites.service';
 
 @Injectable()

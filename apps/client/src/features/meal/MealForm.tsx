@@ -32,7 +32,7 @@ const mealSchema = z.object({
       name: z.string(),
       created_at: z.date(),
       household_id: z.string(),
-    })
+    }),
   ),
 });
 

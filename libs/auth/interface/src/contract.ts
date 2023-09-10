@@ -1,6 +1,6 @@
 import { authErrors, c, defaultResponses } from '@pantrylab/contract';
-import { credentialsSchema, loginSchema, signupSchema } from './schemas';
 import { z } from 'zod';
+import { credentialsSchema, loginSchema, signupSchema } from './schemas';
 
 export const authContract = c.router({
   login: {

@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Invite, User } from '../../types';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../features/auth/useAuth';
+import { useHousehold } from '../../features/household/useHousehold';
+import { useSupabase } from '../../lib/supabase';
+import { Invite, User } from '../../types';
 import {
   deletePendingUserFromHousehold,
   deleteUserFromHousehold,
@@ -10,8 +12,6 @@ import {
   openHouseholdUserInvitesChannel,
   openHouseholdUsersChannel,
 } from './userApi';
-import { useHousehold } from '../../features/household/useHousehold';
-import { useSupabase } from '../../lib/supabase';
 
 type HouseholdUsersPayload =
   | {
@@ -44,7 +44,7 @@ type HouseholdUserInvitesPayload =
 const sortUsers = (
   users: User[],
   pendingUsers: User[],
-  ownerId = ''
+  ownerId = '',
 ): { user: User; pending: boolean }[] => {
   const owner = users.find((user) => user.id === ownerId);
   const ownerWithStatus = owner && { user: owner, pending: false };
@@ -71,7 +71,7 @@ const sortUsers = (
         return 1;
       }
       return 0;
-    }
+    },
   );
 
   if (!owner) return sortedUsers;
@@ -89,13 +89,13 @@ export const useHouseholdUsers = (householdId: string) => {
   const { currentHousehold } = useHousehold();
 
   const [existingUsers, setExistingUsers] = useState<User[]>(
-    currentHousehold?.users || []
+    currentHousehold?.users || [],
   );
 
   const sortedUsers = sortUsers(
     existingUsers,
     pendingUsers,
-    currentHousehold?.owner_id
+    currentHousehold?.owner_id,
   );
   const isHouseholdOwner = currentHousehold?.owner_id === user?.id;
 
@@ -117,7 +117,7 @@ export const useHouseholdUsers = (householdId: string) => {
         if (payload.eventType === 'DELETE') {
           const deletedUserId = (payload.old as { user_id: string }).user_id;
           setExistingUsers((users) =>
-            users.filter((user) => user.id !== deletedUserId)
+            users.filter((user) => user.id !== deletedUserId),
           );
           return;
         }
@@ -131,11 +131,11 @@ export const useHouseholdUsers = (householdId: string) => {
 
           if (payload.eventType === 'UPDATE') {
             setExistingUsers((users) =>
-              users.map((u) => (u.id === user.id ? user : u))
+              users.map((u) => (u.id === user.id ? user : u)),
             );
           }
         });
-      }
+      },
     );
 
     const householdUserInvitesChannel = openHouseholdUserInvitesChannel(
@@ -147,7 +147,7 @@ export const useHouseholdUsers = (householdId: string) => {
         if (payload.eventType === 'DELETE') {
           const deletedUserId = (payload.old as { user_id: string }).user_id;
           setPendingUsers((users) =>
-            users.filter((u) => u.id !== deletedUserId)
+            users.filter((u) => u.id !== deletedUserId),
           );
           return;
         }
@@ -168,11 +168,11 @@ export const useHouseholdUsers = (householdId: string) => {
 
           if (payload.eventType === 'UPDATE') {
             setPendingUsers((users) =>
-              users.map((u) => (u.id === user.id ? user : u))
+              users.map((u) => (u.id === user.id ? user : u)),
             );
           }
         });
-      }
+      },
     );
 
     return () => {
@@ -189,14 +189,14 @@ export const useHouseholdUsers = (householdId: string) => {
       const error = await deleteUserFromHousehold(
         supabase,
         userId,
-        householdId
+        householdId,
       );
 
       if (error) {
         setExistingUsers(oldUsers);
       }
     },
-    [existingUsers, householdId, supabase]
+    [existingUsers, householdId, supabase],
   );
 
   const removePendingUser = useCallback(
@@ -207,14 +207,14 @@ export const useHouseholdUsers = (householdId: string) => {
       const error = await deletePendingUserFromHousehold(
         supabase,
         userId,
-        householdId
+        householdId,
       );
 
       if (error) {
         setPendingUsers(oldPendingUsers);
       }
     },
-    [pendingUsers, householdId, supabase]
+    [pendingUsers, householdId, supabase],
   );
 
   const inviteUsers = useCallback(
@@ -225,14 +225,14 @@ export const useHouseholdUsers = (householdId: string) => {
       const error = await inviteUsersToHousehold(
         supabase,
         newUsers,
-        householdId
+        householdId,
       );
 
       if (error) {
         setPendingUsers(oldPendingUsers);
       }
     },
-    [pendingUsers, householdId, supabase]
+    [pendingUsers, householdId, supabase],
   );
 
   const searchUsersToInvite = async (searchTerm: string) => {
@@ -254,7 +254,7 @@ export const useHouseholdUsers = (householdId: string) => {
     const filteredUsers = users.filter(
       (user) =>
         !existingUsers.find((u) => u.id === user.id) &&
-        !pendingUsers.find((u) => u.id === user.id)
+        !pendingUsers.find((u) => u.id === user.id),
     );
 
     return filteredUsers;

@@ -1,12 +1,12 @@
 'use client';
 
-import { FC, ReactNode } from 'react';
-import { Provider as JotaiProvider } from 'jotai';
-import RootStyleRegistry from './style-provider';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relative from 'dayjs/plugin/relativeTime';
+import { Provider as JotaiProvider } from 'jotai';
 import { SessionProvider } from 'next-auth/react';
+import { FC, ReactNode } from 'react';
+import RootStyleRegistry from './style-provider';
 
 interface Props {
   children: ReactNode;

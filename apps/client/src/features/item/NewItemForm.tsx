@@ -29,7 +29,7 @@ const NewItemForm: FC<Props> = ({ onSubmit, items }) => {
     const existingItem = items.find(
       (item) =>
         item.name.toLowerCase() === itemName.toLowerCase() ||
-        item.name.trim().toLowerCase() === itemName.toLowerCase()
+        item.name.trim().toLowerCase() === itemName.toLowerCase(),
     );
 
     if (existingItem) {

@@ -1,9 +1,9 @@
+import { UserEntity } from '@pantrylab/users/server';
 import {
+  createParamDecorator,
   ExecutionContext,
   ForbiddenException,
-  createParamDecorator,
 } from '@nestjs/common';
-import { UserEntity } from '@pantrylab/users/server';
 
 type UserKey = keyof UserEntity;
 
@@ -21,5 +21,5 @@ export const AuthUser = createParamDecorator(
     }
 
     return user;
-  }
+  },
 );

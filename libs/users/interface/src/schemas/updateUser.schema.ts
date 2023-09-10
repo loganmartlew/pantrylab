@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { User as UserPrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 type UserUpdatePrisma = Omit<
   UserPrisma,

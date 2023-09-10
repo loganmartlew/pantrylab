@@ -1,7 +1,7 @@
 import {
   BadRequestException,
-  ExecutionContext,
   createParamDecorator,
+  ExecutionContext,
 } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -17,5 +17,5 @@ export const Search = createParamDecorator(
     }
 
     return search;
-  }
+  },
 );

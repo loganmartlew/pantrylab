@@ -4,8 +4,8 @@ import {
   defaultResponses,
   notFoundErrors,
 } from '@pantrylab/contract';
-import { mealCreateSchema, mealSchema, mealUpdateSchema } from './schemas';
 import { z } from 'zod';
+import { mealCreateSchema, mealSchema, mealUpdateSchema } from './schemas';
 
 export const mealsContract = c.router({
   createMeal: {

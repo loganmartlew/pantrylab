@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { DbService } from '@pantrylab/db';
 import { PlannedMealCreate } from '@pantrylab/plannedMeals/interface';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PlannedMealsService {

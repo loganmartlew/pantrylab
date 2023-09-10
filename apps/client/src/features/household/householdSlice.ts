@@ -1,5 +1,5 @@
-import { Household } from '../../types';
 import { StoreCreator } from '../../features/store';
+import { Household } from '../../types';
 
 export interface HouseholdSlice {
   households: Household[];
@@ -15,7 +15,7 @@ export interface HouseholdSlice {
 
 export const createHouseholdSlice: StoreCreator<HouseholdSlice> = (
   set,
-  get
+  get,
 ) => ({
   households: [],
   currentHouseholdId: '',

@@ -1,9 +1,9 @@
 import { useDebouncedValue } from '@mantine/hooks';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const useDebouncedTextSearch = <T>(
   fetchData: (searchTerm: string) => Promise<T[]>,
-  debounce = 500
+  debounce = 500,
 ) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [debouncedSearchTerm] = useDebouncedValue(searchTerm.trim(), debounce);

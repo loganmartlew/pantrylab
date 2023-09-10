@@ -1,20 +1,20 @@
+import { Policy } from '@pantrylab/auth/server';
+import { HouseholdsService } from '@pantrylab/households/server';
+import { User } from '@pantrylab/users/interface';
 import {
   BadRequestException,
   ExecutionContext,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Policy } from '@pantrylab/auth/server';
-import { User } from '@pantrylab/users/interface';
-import { ItemsService } from '../items.service';
-import { HouseholdsService } from '@pantrylab/households/server';
 import { z } from 'zod';
+import { ItemsService } from '../items.service';
 
 @Injectable()
 export class ItemHouseholdPolicy implements Policy {
   constructor(
     private itemsService: ItemsService,
-    private householdsService: HouseholdsService
+    private householdsService: HouseholdsService,
   ) {}
 
   async checkConditions(user: User, context: ExecutionContext) {
@@ -43,7 +43,7 @@ export class ItemHouseholdPolicy implements Policy {
 
     if (!itemInHousehold) {
       throw new BadRequestException(
-        `Item with id: ${itemId} does not belong to household with id: ${householdId}`
+        `Item with id: ${itemId} does not belong to household with id: ${householdId}`,
       );
     }
 

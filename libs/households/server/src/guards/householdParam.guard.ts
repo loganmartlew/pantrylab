@@ -1,6 +1,6 @@
 import {
-  ExecutionContext,
   CanActivate,
+  ExecutionContext,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -16,9 +16,8 @@ export class HouseholdParamGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>();
     const householdId = request.params.householdId;
 
-    const householdExists = await this.householdsService.checkExists(
-      householdId
-    );
+    const householdExists =
+      await this.householdsService.checkExists(householdId);
 
     if (!householdExists) {
       throw new NotFoundException('Household does not exist');
@@ -27,7 +26,7 @@ export class HouseholdParamGuard implements CanActivate {
     Reflect.defineMetadata(
       householdIdMetadataKey,
       householdId,
-      context.getHandler()
+      context.getHandler(),
     );
 
     return true;

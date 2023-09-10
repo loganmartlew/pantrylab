@@ -8,13 +8,13 @@ import {
   Tooltip,
   useMantineTheme,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { MdAdd, MdAddShoppingCart, MdToday } from 'react-icons/md';
+import ConfirmationModal from '../../components/ConfirmationModal';
 import { PlannedMeal } from '../../types';
 import MealCard from '../meal/MealCard';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { useDisclosure } from '@mantine/hooks';
 
 interface Props {
   date: Date;

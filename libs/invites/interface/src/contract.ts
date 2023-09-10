@@ -4,8 +4,8 @@ import {
   defaultResponses,
   notFoundErrors,
 } from '@pantrylab/contract';
-import { inviteCreateSchema, inviteSchema } from './schemas';
 import { z } from 'zod';
+import { inviteCreateSchema, inviteSchema } from './schemas';
 
 export const invitesContract = c.router({
   //Invitee methods

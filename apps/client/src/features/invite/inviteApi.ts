@@ -4,7 +4,7 @@ import { Invite } from '../../types';
 
 export const getUserInvites = async (
   supabase: SupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   if (!userId) {
     return [];
@@ -38,7 +38,7 @@ export const getUserInvites = async (
 export const updateInviteStatus = async (
   supabase: SupabaseClient,
   inviteId: string,
-  status: 'pending' | 'accepted' | 'declined'
+  status: 'pending' | 'accepted' | 'declined',
 ) => {
   if (!inviteId) {
     return new Error('No invite id provided');
@@ -59,7 +59,7 @@ export const updateInviteStatus = async (
 export const openUserInvitesChannel = (
   supabase: SupabaseClient,
   userId: string,
-  callback: (payload: unknown) => void
+  callback: (payload: unknown) => void,
 ) => {
   return supabase
     .channel('public:household_user_invites:user')
@@ -71,7 +71,7 @@ export const openUserInvitesChannel = (
         table: 'household_user_invites',
         filter: `user_id=eq.${userId}`,
       },
-      callback
+      callback,
     )
     .subscribe();
 };

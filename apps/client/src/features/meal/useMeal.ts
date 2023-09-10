@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Meal, Item } from '../../types';
 import { useHousehold } from '../../features/household/useHousehold';
-import { createMeal, getHouseholdMeals } from './mealApi';
 import { useSupabase } from '../../lib/supabase';
+import { Item, Meal } from '../../types';
+import { createMeal, getHouseholdMeals } from './mealApi';
 
 const sortMeals = (items: Meal[]) => {
   return [...items].sort((a, b) => {
@@ -56,7 +56,7 @@ export const useMeal = () => {
       name,
       description,
       items,
-      currentHousehold.id || ''
+      currentHousehold.id || '',
     );
 
     if (!meal) {

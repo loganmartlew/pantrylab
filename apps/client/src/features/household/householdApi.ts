@@ -4,7 +4,7 @@ import { Household, User } from '../../types';
 
 export const getUserHouseholds = async (
   supabase: SupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   if (!userId) {
     return [];
@@ -36,7 +36,7 @@ export const getUserHouseholds = async (
 
 export const getHouseholdUsers = async (
   supabase: SupabaseClient,
-  householdId: string
+  householdId: string,
 ) => {
   if (!householdId) {
     return [];
@@ -70,7 +70,7 @@ export const getHouseholdUsers = async (
 export const openUserHouseholdsChannel = (
   supabase: SupabaseClient,
   userId: string,
-  callback: (payload: unknown) => void
+  callback: (payload: unknown) => void,
 ) => {
   return supabase
     .channel('public:household_users')
@@ -82,7 +82,7 @@ export const openUserHouseholdsChannel = (
         table: 'household_users',
         filter: `user_id=eq.${userId}`,
       },
-      callback
+      callback,
     )
     .subscribe();
 };

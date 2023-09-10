@@ -1,8 +1,8 @@
 import { Box, Button, TextInput } from '@mantine/core';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { useSupabase } from '../../lib/supabase';
 import { useAuth } from '../auth/useAuth';
 import { useHousehold } from './useHousehold';
-import { useSupabase } from '../../lib/supabase';
 
 interface Props {
   onClose?: () => void;
@@ -28,7 +28,7 @@ const NewHouseholdForm: FC<Props> = ({ onClose }) => {
     e.preventDefault();
 
     const householdExists = households.find(
-      (household) => household.name === householdName
+      (household) => household.name === householdName,
     );
 
     if (householdExists) {

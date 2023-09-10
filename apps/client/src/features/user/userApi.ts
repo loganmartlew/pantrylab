@@ -39,7 +39,7 @@ export const getUser = async (supabase: SupabaseClient, userId: string) => {
 
 export const getPendingUsers = async (
   supabase: SupabaseClient,
-  householdId: string
+  householdId: string,
 ) => {
   if (!householdId) {
     return [];
@@ -61,7 +61,7 @@ export const getPendingUsers = async (
 
   const pendingUsers = data.map(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (invite: any) => invite.users as User
+    (invite: any) => invite.users as User,
   ) as User[];
 
   return pendingUsers;
@@ -70,7 +70,7 @@ export const getPendingUsers = async (
 export const deleteUserFromHousehold = async (
   supabase: SupabaseClient,
   userId: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!userId) {
     return new Error('No user id provided');
@@ -92,7 +92,7 @@ export const deleteUserFromHousehold = async (
 export const deletePendingUserFromHousehold = async (
   supabase: SupabaseClient,
   userId: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!userId || !householdId) {
     return new Error('No user id or household id provided');
@@ -114,7 +114,7 @@ export const deletePendingUserFromHousehold = async (
 export const inviteUsersToHousehold = async (
   supabase: SupabaseClient,
   users: User[],
-  householdId: string
+  householdId: string,
 ) => {
   if (!users || !householdId) {
     return new Error('No users or household id provided');
@@ -124,7 +124,7 @@ export const inviteUsersToHousehold = async (
     users.map((user) => ({
       user_id: user.id,
       household_id: householdId,
-    }))
+    })),
   );
 
   if (error) {
@@ -137,7 +137,7 @@ export const inviteUsersToHousehold = async (
 export const openHouseholdUsersChannel = (
   supabase: SupabaseClient,
   householdId: string,
-  callback: (payload: unknown) => void
+  callback: (payload: unknown) => void,
 ) => {
   return supabase
     .channel('public:household_users')
@@ -149,7 +149,7 @@ export const openHouseholdUsersChannel = (
         table: 'household_users',
         filter: `household_id=eq.${householdId}`,
       },
-      callback
+      callback,
     )
     .subscribe();
 };
@@ -157,7 +157,7 @@ export const openHouseholdUsersChannel = (
 export const openHouseholdUserInvitesChannel = (
   supabase: SupabaseClient,
   householdId: string,
-  callback: (payload: unknown) => void
+  callback: (payload: unknown) => void,
 ) => {
   return supabase
     .channel('public:household_user_invites:household')
@@ -169,7 +169,7 @@ export const openHouseholdUserInvitesChannel = (
         table: 'household_user_invites',
         filter: `household_id=eq.${householdId}`,
       },
-      callback
+      callback,
     )
     .subscribe();
 };

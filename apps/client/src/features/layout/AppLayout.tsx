@@ -1,11 +1,11 @@
 'use client';
 
-import { FC, ReactNode, useEffect } from 'react';
+import { Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { usePathname } from 'next/navigation';
+import { FC, ReactNode, useEffect } from 'react';
 import Header from './Header';
 import NavMenu from './NavMenu';
-import { Stack } from '@mantine/core';
-import { usePathname } from 'next/navigation';
 
 interface Props {
   children: ReactNode;

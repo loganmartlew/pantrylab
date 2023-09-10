@@ -4,11 +4,11 @@ import {
   DebouncedTextSearch,
   useDebouncedTextSearch,
 } from '../../components/DebouncedTextSearch';
-import { Item } from '../../types';
-import { getHouseholdItems } from '../../features/item/itemApi';
-import ListItemDisplayCard from './ListItemDisplayCard';
 import { useHousehold } from '../../features/household/useHousehold';
+import { getHouseholdItems } from '../../features/item/itemApi';
 import { useSupabase } from '../../lib/supabase';
+import { Item } from '../../types';
+import ListItemDisplayCard from './ListItemDisplayCard';
 
 interface Props {
   searchFn: (searchTerm: string) => Promise<Item[]>;
@@ -49,13 +49,13 @@ const AddToListForm: FC<Props> = ({
 
     const householdItems = await getHouseholdItems(
       supabase,
-      currentHousehold?.id ?? ''
+      currentHousehold?.id ?? '',
     );
 
     const existingItem = householdItems.find(
       (item) =>
         item.name.toLowerCase() === searchTerm.toLowerCase() ||
-        item.name.trim().toLowerCase() === searchTerm.toLowerCase()
+        item.name.trim().toLowerCase() === searchTerm.toLowerCase(),
     );
 
     if (existingItem) {

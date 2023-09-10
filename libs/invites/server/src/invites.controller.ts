@@ -1,19 +1,19 @@
-import { Controller } from '@nestjs/common';
-import { InvitesService } from './invites.service';
+import { Auth, AuthUser } from '@pantrylab/auth/server';
 import {
+  HouseholdBodyMatchParamGuard,
   HouseholdOwnerPolicy,
-  HouseholdUserPolicy,
   HouseholdParamGuard,
   HouseholdsService,
-  HouseholdBodyMatchParamGuard,
+  HouseholdUserPolicy,
 } from '@pantrylab/households/server';
-import { Auth, AuthUser } from '@pantrylab/auth/server';
-import { InviteUserPolicy } from './policies';
-import { Invite, invitesContract as c } from '@pantrylab/invites/interface';
-import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { InviteParamGuard } from './guards';
+import { invitesContract as c, Invite } from '@pantrylab/invites/interface';
 import { createTsRestErrorResponse } from '@pantrylab/shared/util';
 import { UsersService } from '@pantrylab/users/server';
+import { Controller } from '@nestjs/common';
+import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
+import { InviteParamGuard } from './guards';
+import { InvitesService } from './invites.service';
+import { InviteUserPolicy } from './policies';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -21,16 +21,15 @@ export class InvitesController {
   constructor(
     private readonly invitesService: InvitesService,
     private readonly usersService: UsersService,
-    private readonly householdsService: HouseholdsService
+    private readonly householdsService: HouseholdsService,
   ) {}
 
   @TsRestHandler(c.findUserInvites)
   @Auth()
   findUserInvites(@AuthUser('id') userId: string) {
     return tsRestHandler(c.findUserInvites, async () => {
-      const invites: Invite[] = await this.invitesService.findAllForUser(
-        userId
-      );
+      const invites: Invite[] =
+        await this.invitesService.findAllForUser(userId);
       return { status: 200 as const, body: invites };
     });
   }
@@ -56,7 +55,7 @@ export class InvitesController {
   @TsRestHandler(c.createInvite)
   @Auth(
     [HouseholdParamGuard, HouseholdBodyMatchParamGuard],
-    HouseholdOwnerPolicy
+    HouseholdOwnerPolicy,
   )
   createInvite() {
     return tsRestHandler(
@@ -66,25 +65,25 @@ export class InvitesController {
         if (!userExists) {
           return createTsRestErrorResponse<404>(
             404,
-            `User with id: ${body.userId} not found`
+            `User with id: ${body.userId} not found`,
           );
         }
 
         const userInHousehold =
           await this.householdsService.checkUserInHousehold(
             body.userId,
-            householdId
+            householdId,
           );
         if (userInHousehold) {
           return createTsRestErrorResponse<400>(
             400,
-            `User is already in household`
+            `User is already in household`,
           );
         }
 
         const invite: Invite = await this.invitesService.create(body);
         return { status: 201 as const, body: invite };
-      }
+      },
     );
   }
 
@@ -94,11 +93,10 @@ export class InvitesController {
     return tsRestHandler(
       c.findHouseholdInvites,
       async ({ params: { householdId } }) => {
-        const invites: Invite[] = await this.invitesService.findAllInHousehold(
-          householdId
-        );
+        const invites: Invite[] =
+          await this.invitesService.findAllInHousehold(householdId);
         return { status: 200 as const, body: invites };
-      }
+      },
     );
   }
 

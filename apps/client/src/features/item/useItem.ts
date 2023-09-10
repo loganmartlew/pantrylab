@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo, ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Item } from '../../types';
 import { useHousehold } from '../../features/household/useHousehold';
-import { createItem, deleteItem, getHouseholdItems } from './itemApi';
 import { useSupabase } from '../../lib/supabase';
+import { Item } from '../../types';
+import { createItem, deleteItem, getHouseholdItems } from './itemApi';
 
 const sortItems = (items: Item[]) => {
   return [...items].sort((a, b) => {
@@ -31,7 +31,7 @@ export const useItem = () => {
     }
 
     return sortedItems.filter((item) =>
-      item.name.toLowerCase().includes(itemSearchTerm.toLowerCase())
+      item.name.toLowerCase().includes(itemSearchTerm.toLowerCase()),
     );
   }, [sortedItems, itemSearchTerm]);
 

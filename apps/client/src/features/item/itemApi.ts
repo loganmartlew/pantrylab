@@ -4,7 +4,7 @@ import { Item } from '../../types';
 
 export const getHouseholdItems = async (
   supabase: SupabaseClient,
-  householdId: string
+  householdId: string,
 ) => {
   if (!householdId) {
     return [];
@@ -36,7 +36,7 @@ export const getHouseholdItems = async (
 export const searchItems = async (
   supabase: SupabaseClient,
   searchTerm: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!searchTerm || !householdId) {
     return [];
@@ -70,7 +70,7 @@ export const searchItems = async (
 export const createItem = async (
   supabase: SupabaseClient,
   name: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!name || !householdId) {
     return null;

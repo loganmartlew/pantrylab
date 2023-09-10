@@ -21,7 +21,7 @@ export class HouseholdBodyMatchParamGuard implements CanActivate {
 
     if (!bodyResults.success) {
       throw new BadRequestException(
-        'Valid household ID required in request body'
+        'Valid household ID required in request body',
       );
     }
 

@@ -1,10 +1,10 @@
 'use client';
 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, ReactNode, useEffect } from 'react';
 import LoadingScreen from '../../components/LoadingScreen';
-import { useAuth } from './useAuth';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { getUrlWithRedirected } from '../../util/getUrlWithRedirected';
+import { useAuth } from './useAuth';
 
 interface Props {
   children: ReactNode;
@@ -24,7 +24,7 @@ const AuthRequired: FC<Props> = ({ children }) => {
 
     if (!isVerified && !isLoading) {
       router.push(
-        getUrlWithRedirected('/confirmemail', true, params, pathname)
+        getUrlWithRedirected('/confirmemail', true, params, pathname),
       );
       return;
     }

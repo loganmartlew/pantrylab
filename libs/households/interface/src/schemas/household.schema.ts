@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { toZod } from 'tozod';
 import { Household as HouseholdPrisma } from '@prisma/client';
+import { toZod } from 'tozod';
+import { z } from 'zod';
 
 export const householdSchema: toZod<HouseholdPrisma> = z.object({
   id: z.string().uuid(),

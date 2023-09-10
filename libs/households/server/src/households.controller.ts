@@ -1,15 +1,15 @@
-import { Controller } from '@nestjs/common';
-import { HouseholdsService } from './households.service';
-import { createTsRestErrorResponse } from '@pantrylab/shared/util';
 import { Auth, AuthUser } from '@pantrylab/auth/server';
-import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
 import {
-  Household,
   householdsContract as c,
+  Household,
 } from '@pantrylab/households/interface';
+import { createTsRestErrorResponse } from '@pantrylab/shared/util';
+import { UserParamGuard } from '@pantrylab/users/server';
+import { Controller } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { HouseholdParamGuard } from './guards';
-import { UserParamGuard } from '@pantrylab/users/server';
+import { HouseholdsService } from './households.service';
+import { HouseholdOwnerPolicy, HouseholdUserPolicy } from './policies';
 
 @Controller()
 @TsRest({ validateResponses: true })
@@ -46,12 +46,12 @@ export class HouseholdsController {
         if (!household) {
           return createTsRestErrorResponse<404>(
             404,
-            `Household with id: ${householdId} not found`
+            `Household with id: ${householdId} not found`,
           );
         }
 
         return { status: 200 as const, body: household };
-      }
+      },
     );
   }
 
@@ -63,11 +63,11 @@ export class HouseholdsController {
       async ({ params: { householdId }, body }) => {
         const household = await this.householdsService.update(
           householdId,
-          body
+          body,
         );
 
         return { status: 200 as const, body: household };
-      }
+      },
     );
   }
 
@@ -80,7 +80,7 @@ export class HouseholdsController {
         const household = await this.householdsService.remove(householdId);
 
         return { status: 200 as const, body: household };
-      }
+      },
     );
   }
 
@@ -93,7 +93,7 @@ export class HouseholdsController {
         await this.householdsService.removeUser(userId, householdId);
 
         return { status: 200 as const, body: null };
-      }
+      },
     );
   }
 }

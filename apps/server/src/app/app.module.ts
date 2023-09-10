@@ -1,17 +1,16 @@
-import { Module } from '@nestjs/common';
-
+import { AuthModule } from '@pantrylab/auth/server';
+import { DbModule } from '@pantrylab/db';
 import { HouseholdsModule } from '@pantrylab/households/server';
-import { APP_FILTER, APP_PIPE } from '@nestjs/core';
-import { ZodValidationPipe } from 'nestjs-zod';
-import { UsersModule } from '@pantrylab/users/server';
+import { InvitesModule } from '@pantrylab/invites/server';
 import { ItemsModule } from '@pantrylab/items/server';
 import { ListItemsModule } from '@pantrylab/listItems/server';
-import { InvitesModule } from '@pantrylab/invites/server';
 import { MealsModule } from '@pantrylab/meals/server';
 import { PlannedMealsModule } from '@pantrylab/plannedMeals/server';
-import { DbModule } from '@pantrylab/db';
-import { AuthModule } from '@pantrylab/auth/server';
 import { RequestValidationErrorFilter } from '@pantrylab/shared/filters';
+import { UsersModule } from '@pantrylab/users/server';
+import { Module } from '@nestjs/common';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
   imports: [

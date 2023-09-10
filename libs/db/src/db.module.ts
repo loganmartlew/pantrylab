@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { DbService } from './db.service';
 import { APP_FILTER } from '@nestjs/core';
+import { DbService } from './db.service';
 import { DbClientExceptionFilter } from './filters';
 
 @Global()

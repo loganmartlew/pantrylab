@@ -1,6 +1,5 @@
+import { readProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nx/devkit';
-
 import { apiResourceGenerator } from './generator';
 import { ApiResourceGeneratorSchema } from './schema';
 

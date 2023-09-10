@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useHousehold } from '../../features/household/useHousehold';
-import { Item, ListItem } from '../../types';
 import { createItem, searchItems } from '../../features/item/itemApi';
+import { useSupabase } from '../../lib/supabase';
+import { Item, ListItem } from '../../types';
 import getHistoricItems from './getHistoricItems';
 import {
   addItemToHouseholdList,
@@ -11,7 +12,6 @@ import {
   openHouseholdListChannel,
   updateItem,
 } from './listApi';
-import { useSupabase } from '../../lib/supabase';
 
 export const useList = () => {
   const { supabase } = useSupabase();
@@ -37,7 +37,7 @@ export const useList = () => {
   });
 
   const completedItems = list.filter(
-    (item) => item.complete && item.completed_at
+    (item) => item.complete && item.completed_at,
   );
 
   const historicItems = getHistoricItems(completedItems);
@@ -59,7 +59,7 @@ export const useList = () => {
         getHouseholdList(supabase, currentHousehold.id).then((items) => {
           setList(items);
         });
-      }
+      },
     );
 
     return () => {
@@ -88,7 +88,7 @@ export const useList = () => {
     const error = await addItemToHouseholdList(
       supabase,
       item.id,
-      currentHousehold.id
+      currentHousehold.id,
     );
 
     if (error) {
@@ -119,7 +119,7 @@ export const useList = () => {
         }
 
         return item;
-      })
+      }),
     );
 
     const error = await updateItem(supabase, itemId, newItem);
@@ -189,7 +189,7 @@ export const useList = () => {
     const error = await addItemToHouseholdList(
       supabase,
       item.id,
-      currentHousehold.id
+      currentHousehold.id,
     );
     if (error) {
       setList(oldItems);

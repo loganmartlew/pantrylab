@@ -1,9 +1,9 @@
 'use client';
 
+import { LoginEntity } from '@pantrylab/auth/server';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { httpAuthClient } from '../httpClient';
-import { LoginEntity } from '@pantrylab/auth/server';
 
 export const useHttp = () => {
   const { data: session } = useSession();
@@ -17,7 +17,7 @@ export const useHttp = () => {
 
         return config;
       },
-      (err) => Promise.reject(err)
+      (err) => Promise.reject(err),
     );
 
     const resIntercept = httpAuthClient.interceptors.response.use(
@@ -40,7 +40,7 @@ export const useHttp = () => {
         }
 
         return Promise.reject(err);
-      }
+      },
     );
 
     return () => {

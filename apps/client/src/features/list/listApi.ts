@@ -4,7 +4,7 @@ import { ListItem } from '../../types';
 
 export const getHouseholdList = async (
   supabase: SupabaseClient,
-  householdId: string
+  householdId: string,
 ) => {
   if (!householdId) {
     return [];
@@ -45,7 +45,7 @@ export const getHouseholdList = async (
 export const addItemToHouseholdList = async (
   supabase: SupabaseClient,
   itemId: string,
-  householdId: string
+  householdId: string,
 ) => {
   if (!itemId || !householdId) {
     return new Error('No item id or household id provided');
@@ -65,7 +65,7 @@ export const addItemToHouseholdList = async (
 export const updateItem = async (
   supabase: SupabaseClient,
   itemId: string,
-  newItem: Partial<ListItem>
+  newItem: Partial<ListItem>,
 ) => {
   if (!itemId) {
     return new Error('No item id provided');
@@ -104,7 +104,7 @@ export const deleteItem = async (supabase: SupabaseClient, itemId: string) => {
 export const openHouseholdListChannel = (
   supabase: SupabaseClient,
   householdId: string,
-  callback: (payload: unknown) => void
+  callback: (payload: unknown) => void,
 ) => {
   return supabase
     .channel('public:household_list_items')
@@ -116,7 +116,7 @@ export const openHouseholdListChannel = (
         table: 'household_list_items',
         filter: `household_id=eq.${householdId}`,
       },
-      callback
+      callback,
     )
     .subscribe();
 };
