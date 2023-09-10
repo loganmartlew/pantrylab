@@ -1,5 +1,5 @@
 {
-  "name": "users/server-server",
+  "name": "users-server",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/users/server/src",
   "projectType": "library",
