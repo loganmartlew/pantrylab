@@ -16,6 +16,7 @@
     "test:client": "nx run client:test",
     "test:server": "nx run server:test",
     "format": "prettier --write \"**/*.{json,md,html,yml,scss,ts,tsx,js,jsx}\"",
+    "format:nologs": "prettier --write \"**/*.{json,md,html,yml,scss,ts,tsx,js,jsx}\" --log-level=warn",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
