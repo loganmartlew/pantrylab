@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { HouseholdsModule } from '@pantrylab/households/server';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
-import { UsersModule } from '@pantrylab/users';
+import { UsersModule } from '@pantrylab/users/server';
 import { ItemsModule } from '@pantrylab/items/server';
 import { ListItemsModule } from '@pantrylab/listItems/server';
 import { InvitesModule } from '@pantrylab/invites/server';

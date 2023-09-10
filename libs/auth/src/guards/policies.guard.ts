@@ -8,7 +8,7 @@ import {
 import { ModuleRef, Reflector } from '@nestjs/core';
 import { Policy } from '../types';
 import { CHECK_POLICIES_KEY } from '../decorators';
-import { UserEntity } from '@pantrylab/users';
+import { UserEntity } from '@pantrylab/users/server';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {

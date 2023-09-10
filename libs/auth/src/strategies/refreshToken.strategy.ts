@@ -1,7 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
-import { UserEntity } from '@pantrylab/users';
+import { UserEntity } from '@pantrylab/users/server';
 import { Injectable } from '@nestjs/common';
 import { serverConfig as config } from '@pantrylab/config';
 

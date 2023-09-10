@@ -13,7 +13,7 @@ import { Invite, invitesContract as c } from '@pantrylab/invites/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { InviteParamGuard } from './guards';
 import { createTsRestErrorResponse } from '@pantrylab/shared/util';
-import { UsersService } from '@pantrylab/users';
+import { UsersService } from '@pantrylab/users/server';
 
 @Controller()
 @TsRest({ validateResponses: true })

@@ -5,6 +5,7 @@ import { itemsContract } from '@pantrylab/items/interface';
 import { listItemsContract } from '@pantrylab/listItems/interface';
 import { mealsContract } from '@pantrylab/meals/interface';
 import { plannedMealsContract } from '@pantrylab/plannedMeals/interface';
+import { usersContract } from '@pantrylab/users/interface';
 
 export const contract = c.router({
   ['Households']: householdsContract,
@@ -13,4 +14,5 @@ export const contract = c.router({
   ['ListItems']: listItemsContract,
   ['Meals']: mealsContract,
   ['PlannedMeals']: plannedMealsContract,
+  ['Users']: usersContract,
 });

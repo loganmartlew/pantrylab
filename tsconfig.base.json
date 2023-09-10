@@ -44,7 +44,8 @@
       "@pantrylab/shared/filters": ["libs/shared/src/filters/index.ts"],
       "@pantrylab/shared/types": ["libs/shared/src/types/index.ts"],
       "@pantrylab/shared/util": ["libs/shared/src/util/index.ts"],
-      "@pantrylab/users": ["libs/users/src/index.ts"],
+      "@pantrylab/users/interface": ["libs/users/interface/src/index.ts"],
+      "@pantrylab/users/server": ["libs/users/server/src/index.ts"],
       "@pantrylab/workspace": ["libs/workspace/src/index.ts"]
     }
   },

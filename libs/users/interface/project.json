@@ -1,21 +1,21 @@
 {
-  "name": "users",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/users/src",
+  "name": "meals-interface",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/meals/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/users/**/*.ts"]
+        "lintFilePatterns": ["libs/meals/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/users/jest.config.ts",
+        "jestConfig": "libs/meals/interface/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

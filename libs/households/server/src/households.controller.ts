@@ -10,7 +10,7 @@ import {
 } from '@pantrylab/households/interface';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { HouseholdParamGuard } from './guards';
-import { UserParamGuard } from '@pantrylab/users';
+import { UserParamGuard } from '@pantrylab/users/server';
 
 @Controller()
 @TsRest({ validateResponses: true })

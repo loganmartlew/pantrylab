@@ -3,7 +3,7 @@ import { HouseholdsService } from './households.service';
 import { HouseholdsController } from './households.controller';
 import { HouseholdUserPolicy } from './policies';
 import { HouseholdOwnerPolicy } from './policies';
-import { UsersModule } from '@pantrylab/users';
+import { UsersModule } from '@pantrylab/users/server';
 
 @Module({
   controllers: [HouseholdsController],

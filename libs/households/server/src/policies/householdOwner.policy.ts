@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Policy } from '@pantrylab/auth';
-import { UserEntity } from '@pantrylab/users';
+import { UserEntity } from '@pantrylab/users/server';
 import { HouseholdsService } from '../households.service';
 import { Request } from 'express';
 

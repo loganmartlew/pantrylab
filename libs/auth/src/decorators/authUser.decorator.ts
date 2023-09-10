@@ -3,7 +3,7 @@ import {
   ForbiddenException,
   createParamDecorator,
 } from '@nestjs/common';
-import { UserEntity } from '@pantrylab/users';
+import { UserEntity } from '@pantrylab/users/server';
 
 type UserKey = keyof UserEntity;
 
