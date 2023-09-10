@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { MealUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
-import { MealCreate } from '@pantrylab/meals/interface';
+import { MealCreate, MealUpdate } from '@pantrylab/meals/interface';
 
 @Injectable()
 export class MealsService {
@@ -48,7 +47,7 @@ export class MealsService {
     return meal;
   }
 
-  async update(id: string, updateMealDto: MealUpdateDto) {
+  async update(id: string, updateMealDto: MealUpdate) {
     const { itemIds, ...omittedDto } = updateMealDto;
 
     const meal = await this.db.meal.update({

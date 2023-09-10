@@ -1,9 +1,9 @@
 import { ExecutionContext } from '@nestjs/common';
 import { Policy } from '@pantrylab/auth/server';
-import { UserEntity } from '../entities';
+import { User } from '@pantrylab/users/interface';
 
 export class UserSelfPolicy implements Policy {
-  async checkConditions(user: UserEntity, context: ExecutionContext) {
+  async checkConditions(user: User, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const userId = req.params.id;
 

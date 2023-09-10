@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PlannedMealDto, PlannedMealUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
+import { PlannedMealCreate } from '@pantrylab/plannedMeals/interface';
 
 @Injectable()
 export class PlannedMealsService {
@@ -13,7 +13,7 @@ export class PlannedMealsService {
     return !!plannedMeal;
   }
 
-  async create(plannedMealDto: PlannedMealDto) {
+  async create(plannedMealDto: PlannedMealCreate) {
     const plannedMeal = await this.db.plannedMeal.create({
       data: plannedMealDto,
     });
@@ -37,14 +37,6 @@ export class PlannedMealsService {
     const plannedMeal = await this.db.plannedMeal.findUnique({
       where: { id },
       include: { meal: true },
-    });
-    return plannedMeal;
-  }
-
-  async update(id: string, updatePlannedMealDto: PlannedMealUpdateDto) {
-    const plannedMeal = await this.db.plannedMeal.update({
-      where: { id },
-      data: updatePlannedMealDto,
     });
     return plannedMeal;
   }

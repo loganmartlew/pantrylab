@@ -5,14 +5,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Policy } from '@pantrylab/auth/server';
-import { UserEntity } from '@pantrylab/users/server';
+import { User } from '@pantrylab/users/interface';
 import { InvitesService } from '../invites.service';
 
 @Injectable()
 export class InviteUserPolicy implements Policy {
   constructor(private invitesService: InvitesService) {}
 
-  async checkConditions(user: UserEntity, context: ExecutionContext) {
+  async checkConditions(user: User, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const inviteId = req.params.inviteId;
 

@@ -4,13 +4,13 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { DbService } from '@pantrylab/db';
-import { SignupDto } from './dto';
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from '@pantrylab/users/server';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'crypto';
-import { LoginDto } from './dto';
 import { serverConfig as config } from '@pantrylab/config';
+import { Signup } from '@pantrylab/auth/interface';
+import { LoginDto } from './dto';
+import { User } from '@pantrylab/users/interface';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
     return !!user;
   }
 
-  async signup(signupDto: SignupDto, refreshToken: string) {
+  async signup(signupDto: Signup, refreshToken: string) {
     if (await this.checkEmailExists(signupDto.email))
       throw new ConflictException(
         `User with email: ${signupDto.email} already exists`
@@ -151,7 +151,7 @@ export class AuthService {
     return createHash('sha256').update(token).digest('hex');
   }
 
-  async getTokens(user: UserEntity) {
+  async getTokens(user: User) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(user, {
         expiresIn: 60 * 60, // 1 hour

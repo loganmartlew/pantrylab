@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ItemDto, ItemUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
+import { ItemCreate, ItemUpdate } from '@pantrylab/items/interface';
 
 @Injectable()
 export class ItemsService {
@@ -13,7 +13,7 @@ export class ItemsService {
     return !!item;
   }
 
-  async create(itemDto: ItemDto) {
+  async create(itemDto: ItemCreate) {
     const item = await this.db.item.create({
       data: itemDto,
     });
@@ -39,7 +39,7 @@ export class ItemsService {
     return item;
   }
 
-  async update(id: string, updateItemDto: ItemUpdateDto) {
+  async update(id: string, updateItemDto: ItemUpdate) {
     const item = await this.db.item.update({
       where: { id },
       data: updateItemDto,

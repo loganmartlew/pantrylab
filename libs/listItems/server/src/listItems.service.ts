@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ListItemDto, ListItemUpdateDto } from './dto';
 import { DbService } from '@pantrylab/db';
 import { HouseholdsService } from '@pantrylab/households/server';
 import { ItemsService } from '@pantrylab/items/server';
+import { ListItemCreate, ListItemUpdate } from '@pantrylab/listItems/interface';
 
 @Injectable()
 export class ListItemsService {
@@ -19,7 +19,7 @@ export class ListItemsService {
     return !!listItem;
   }
 
-  async create(listItemDto: ListItemDto) {
+  async create(listItemDto: ListItemCreate) {
     if (!(await this.householdsService.checkExists(listItemDto.householdId))) {
       throw new NotFoundException(
         `Household with id: ${listItemDto.householdId} not found`
@@ -67,7 +67,7 @@ export class ListItemsService {
     return listItem;
   }
 
-  async update(id: string, updateListItemDto: ListItemUpdateDto) {
+  async update(id: string, updateListItemDto: ListItemUpdate) {
     const listItem = await this.db.listItem.update({
       where: { id },
       data: updateListItemDto,

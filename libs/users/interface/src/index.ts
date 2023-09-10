@@ -1,2 +1,9 @@
 export { usersContract } from './contract';
-export { User, UserUpdate, userSchema, userUpdateSchema } from './schemas';
+export {
+  User,
+  UserCreate,
+  UserUpdate,
+  userSchema,
+  userCreateSchema,
+  userUpdateSchema,
+} from './schemas';

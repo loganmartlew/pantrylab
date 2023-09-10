@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Policy } from '@pantrylab/auth/server';
-import { UserEntity } from '@pantrylab/users/server';
+import { User } from '@pantrylab/users/interface';
 import { ListItemsService } from '../listItems.service';
 import { HouseholdsService } from '@pantrylab/households/server';
 
@@ -16,7 +16,7 @@ export class ListItemHouseholdUserPolicy implements Policy {
     private householdsService: HouseholdsService
   ) {}
 
-  async checkConditions(user: UserEntity, context: ExecutionContext) {
+  async checkConditions(user: User, context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const { listItemId, householdId } = req.params;
 

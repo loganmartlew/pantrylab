@@ -8,7 +8,7 @@ import {
 import { ModuleRef, Reflector } from '@nestjs/core';
 import { Policy } from '../types';
 import { CHECK_POLICIES_KEY } from '../decorators';
-import { UserEntity } from '@pantrylab/users/server';
+import { User } from '@pantrylab/users/interface';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
@@ -27,7 +27,7 @@ export class PoliciesGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    const user: UserEntity = reqUser;
+    const user: User = reqUser;
 
     const policies = policyTypes.map((policyType) =>
       this.moduleRef.get(policyType, { strict: false })

@@ -1,9 +1,6 @@
 import { ExecutionContext } from '@nestjs/common';
-import { UserEntity } from '@pantrylab/users/server';
+import { User } from '@pantrylab/users/interface';
 
 export interface Policy {
-  checkConditions(
-    user: UserEntity,
-    context: ExecutionContext
-  ): Promise<boolean>;
+  checkConditions(user: User, context: ExecutionContext): Promise<boolean>;
 }
