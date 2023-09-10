@@ -1,5 +1,5 @@
 import { httpClient } from '@pantrylab/api';
-import { loginSchema, Credentials } from '@pantrylab/auth/interface';
+import { Credentials, loginSchema } from '@pantrylab/auth/interface';
 import { User } from '@pantrylab/users/interface';
 import jwtDecode from 'jwt-decode';
 import NextAuth from 'next-auth/next';
