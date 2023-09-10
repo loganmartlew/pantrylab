@@ -70,7 +70,6 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
     "jsonc-eslint-parser": "^2.1.0",
-    "lint-staged": "^14.0.1",
     "nx": "16.3.2",
     "nx-cloud": "latest",
     "prettier": "^3.0.3",
