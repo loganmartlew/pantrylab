@@ -1,3 +1,4 @@
+import { authContract } from '@pantrylab/auth/interface';
 import { c } from '@pantrylab/contract';
 import { householdsContract } from '@pantrylab/households/interface';
 import { invitesContract } from '@pantrylab/invites/interface';
@@ -8,6 +9,7 @@ import { plannedMealsContract } from '@pantrylab/plannedMeals/interface';
 import { usersContract } from '@pantrylab/users/interface';
 
 export const contract = c.router({
+  ['Auth']: authContract,
   ['Households']: householdsContract,
   ['Invites']: invitesContract,
   ['Items']: itemsContract,

@@ -12,11 +12,11 @@ export const useAuth = () => {
   const user = session?.user;
 
   const loginWithEmail = async ({ email, password }: LoginCredentials) => {
-    signIn('credentials', { email, password, callbackUrl: '/dashboard' });
+    signIn('credentials', { email, password, callbackUrl: '/app' });
   };
 
   const logout = async () => {
-    await httpClient.post('/auth/logout');
+    // await httpClient.post('/auth/logout');
     signOut();
   };
 
