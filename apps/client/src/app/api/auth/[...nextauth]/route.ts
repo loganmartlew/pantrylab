@@ -13,7 +13,7 @@ const handler = NextAuth({
       async authorize(cred: unknown) {
         const credentials = loginSchema.parse(cred);
 
-        const res = await apiClient.Auth.login({body: credentials});
+        const res = await apiClient.Auth.login({ body: credentials });
 
         if (res.status !== 200) {
           return null;
@@ -56,7 +56,7 @@ const handler = NextAuth({
     signOut: '/auth/logout',
     error: '/auth/error',
     verifyRequest: '/auth/verify-request',
-  }
+  },
 });
 
 export { handler as GET, handler as POST };
