@@ -16,6 +16,11 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   app.use(cookieParser());
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   patchNestJsSwagger();
 

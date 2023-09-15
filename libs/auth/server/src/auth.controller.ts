@@ -1,7 +1,7 @@
 import { authContract as c } from '@pantrylab/auth/interface';
-import { Controller, Res, UseGuards } from '@nestjs/common';
+import { Controller, Req, Res, UseGuards } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthUser, Cookies } from './decorators';
 import { AccessTokenGuard, RefreshTokenGuard } from './guards';
@@ -19,11 +19,13 @@ export class AuthController {
     return tsRestHandler(c.login, async ({ body }) => {
       const tokens = await this.authService.login(body, refreshToken);
 
-      res.cookie('refreshToken', tokens.refreshToken, {});
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+      });
 
       return {
         status: 200 as const,
-        body: { accessToken: tokens.accessToken },
+        body: tokens,
       };
     });
   }
@@ -36,25 +38,29 @@ export class AuthController {
     return tsRestHandler(c.signup, async ({ body }) => {
       const tokens = await this.authService.signup(body, refreshToken);
 
-      res.cookie('refreshToken', tokens.refreshToken, {});
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+      });
 
       return {
         status: 201 as const,
-        body: { accessToken: tokens.accessToken },
+        body: tokens,
       };
     });
   }
 
   @TsRestHandler(c.logout)
-  @UseGuards(AccessTokenGuard)
+  // @UseGuards(AccessTokenGuard)
   async logout(
     @Cookies('refreshToken') refreshToken: string,
-    @AuthUser('id') userId: string,
+    // @AuthUser('id') userId: string,
     @Res({ passthrough: true }) res: Response,
+    @Req() req: Request,
   ) {
     return tsRestHandler(c.logout, async () => {
-      res.clearCookie('refreshToken');
-      await this.authService.logout(userId, refreshToken);
+      console.log(req.cookies);
+      // res.clearCookie('refreshToken');
+      // await this.authService.logout(userId, refreshToken);
 
       return { status: 200 as const, body: null };
     });
@@ -70,11 +76,13 @@ export class AuthController {
     return tsRestHandler(c.refresh, async () => {
       const tokens = await this.authService.refresh(userId, refreshToken);
 
-      res.cookie('refreshToken', tokens.refreshToken, {});
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+      });
 
       return {
         status: 200 as const,
-        body: { accessToken: tokens.accessToken },
+        body: tokens,
       };
     });
   }

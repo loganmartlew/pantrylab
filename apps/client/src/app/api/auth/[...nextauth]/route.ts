@@ -1,9 +1,10 @@
-import { apiClient } from '@pantrylab/api';
+import { apiBasicClient } from '@pantrylab/api';
 import { loginSchema } from '@pantrylab/auth/interface';
 import { User } from '@pantrylab/users/interface';
 import jwtDecode from 'jwt-decode';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 
 const handler = NextAuth({
   providers: [
@@ -13,26 +14,30 @@ const handler = NextAuth({
       async authorize(cred: unknown) {
         const credentials = loginSchema.parse(cred);
 
-        const res = await apiClient.Auth.login({ body: credentials });
+        const { status, body: data } = await apiBasicClient.Auth.login({
+          body: credentials,
+        });
 
-        if (res.status !== 200) {
+        if (status !== 200) {
           return null;
         }
 
-        const user = jwtDecode<User>(res.body.accessToken);
+        const user = jwtDecode<User>(data.accessToken);
 
         if (!user) {
           return null;
         }
 
-        return { ...user, accessToken: res.body.accessToken };
+        cookies().set('refreshToken', data.refreshToken, {
+          httpOnly: true,
+        });
+
+        return { ...user, accessToken: data.accessToken };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user: authUser, account }) {
-      console.log('jwt callback', { token, authUser, account });
-
       if (!authUser && !account) {
         return token;
       }
@@ -43,8 +48,6 @@ const handler = NextAuth({
       return { user, accessToken };
     },
     async session({ session, token, user }) {
-      console.log('session callback', { session, token, user });
-
       session.user = token.user as User;
       session.accessToken = token.accessToken as string;
 

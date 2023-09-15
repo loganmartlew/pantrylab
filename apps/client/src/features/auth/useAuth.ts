@@ -1,10 +1,9 @@
-import { useHttp } from '@pantrylab/api';
+import { apiBasicClient } from '@pantrylab/api';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { LoginCredentials, SignupCredentials } from '../../types';
 
 export const useAuth = () => {
   const { data: session } = useSession();
-  const httpClient = useHttp();
 
   const isAuth = !!session;
   const isVerified = true;
@@ -16,8 +15,8 @@ export const useAuth = () => {
   };
 
   const logout = async () => {
-    // await httpClient.post('/auth/logout');
-    signOut();
+    apiBasicClient.Auth.logout();
+    // signOut();
   };
 
   const signup = async ({
