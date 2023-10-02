@@ -1,5 +1,5 @@
-import { contract } from '@pantrylab/api';
-import { serverConfig as config } from '@pantrylab/config';
+import { contract } from '@pantrylab/api/interface';
+import { serverConfig as config } from '@pantrylab/config/server';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';

@@ -1,4 +1,4 @@
-import { apiBasicClient } from '@pantrylab/api';
+import { apiBasicClient } from '@pantrylab/api/client';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { LoginCredentials, SignupCredentials } from '../../types';
 

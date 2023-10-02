@@ -1,10 +1,8 @@
-import { serverConfig } from '@pantrylab/config';
+import { contract, formatHeaders, httpClient } from '@pantrylab/api/interface';
+import { serverConfig } from '@pantrylab/config/server';
 import { initClient } from '@ts-rest/core';
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { getServerSession } from 'next-auth';
-import { contract } from '../contract';
-import { httpClient } from '../httpClient';
-import { formatHeaders } from '../util';
 
 export const getServerApiClient = async () => {
   const session = await getServerSession();

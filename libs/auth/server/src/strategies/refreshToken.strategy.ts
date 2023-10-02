@@ -1,4 +1,4 @@
-import { serverConfig as config } from '@pantrylab/config';
+import { serverConfig as config } from '@pantrylab/config/server';
 import { User } from '@pantrylab/users/interface';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';

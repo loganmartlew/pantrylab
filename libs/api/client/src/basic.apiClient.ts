@@ -1,9 +1,9 @@
-import { serverConfig } from '@pantrylab/config';
+import { contract } from '@pantrylab/api/interface';
+import { clientConfig } from '@pantrylab/config/client';
 import { initClient } from '@ts-rest/core';
-import { contract } from '../contract';
 
 export const apiBasicClient = initClient(contract, {
-  baseUrl: serverConfig.apiUrl,
+  baseUrl: clientConfig.apiUrl,
   baseHeaders: {
     'Content-Type': 'application/json',
   },

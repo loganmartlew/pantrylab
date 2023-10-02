@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const serverEnvSchema = z.object({
-  PORT: z.number().int().positive().optional(),
+  PORT: z.coerce.number().int().positive().optional(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
   DATABASE_URL: z.string().min(1),
   ACCESS_TOKEN_SECRET: z.string().min(1),
@@ -9,7 +9,7 @@ const serverEnvSchema = z.object({
   API_URL: z.string().min(1),
 });
 
-export const config = (() => {
+export const serverConfig = (() => {
   const env = serverEnvSchema.parse(process.env);
 
   return {

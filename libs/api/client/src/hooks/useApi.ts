@@ -1,7 +1,6 @@
-import { clientConfig } from '@pantrylab/config';
+import { contract, formatHeaders } from '@pantrylab/api/interface';
+import { clientConfig } from '@pantrylab/config/client';
 import { initQueryClient } from '@ts-rest/react-query';
-import { contract } from '../contract';
-import { formatHeaders } from '../util';
 import { useHttp } from './useHttp';
 
 export const useApi = () => {
@@ -12,6 +11,7 @@ export const useApi = () => {
     baseHeaders: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     api: async ({ path, method, headers, body }) => {
       const result = await httpClient.request({
         method: method,

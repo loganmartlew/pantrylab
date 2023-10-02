@@ -1,9 +1,9 @@
 'use client';
 
+import { httpClient } from '@pantrylab/api/interface';
 import { Credentials } from '@pantrylab/auth/interface';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { httpClient } from '../httpClient';
 
 export const useHttp = () => {
   const { data: session } = useSession();

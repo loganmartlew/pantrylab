@@ -1,5 +1,5 @@
 import { Login, Signup } from '@pantrylab/auth/interface';
-import { serverConfig as config } from '@pantrylab/config';
+import { serverConfig as config } from '@pantrylab/config/server';
 import { DbService } from '@pantrylab/db';
 import { User } from '@pantrylab/users/interface';
 import {

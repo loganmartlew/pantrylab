@@ -1,4 +1,4 @@
-import { apiBasicClient } from '@pantrylab/api';
+import { apiBasicClient } from '@pantrylab/api/client';
 import { loginSchema } from '@pantrylab/auth/interface';
 import { User } from '@pantrylab/users/interface';
 import jwtDecode from 'jwt-decode';

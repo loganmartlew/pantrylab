@@ -15,10 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pantrylab/api": ["libs/api/src/index.ts"],
+      "@pantrylab/api/client": ["libs/api/client/src/index.ts"],
+      "@pantrylab/api/interface": ["libs/api/interface/src/index.ts"],
+      "@pantrylab/api/server": ["libs/api/server/src/index.ts"],
       "@pantrylab/auth/interface": ["libs/auth/interface/src/index.ts"],
       "@pantrylab/auth/server": ["libs/auth/server/src/index.ts"],
-      "@pantrylab/config": ["libs/config/src/index.ts"],
+      "@pantrylab/config/client": ["libs/config/src/config.client.ts"],
+      "@pantrylab/config/server": ["libs/config/src/config.server.ts"],
       "@pantrylab/contract": ["libs/contract/src/index.ts"],
       "@pantrylab/db": ["libs/db/src/index.ts"],
       "@pantrylab/households/interface": [
