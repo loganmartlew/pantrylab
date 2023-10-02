@@ -3,13 +3,13 @@
 import { Credentials } from '@pantrylab/auth/interface';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { httpAuthClient } from '../httpClient';
+import { httpClient } from '../httpClient';
 
 export const useHttp = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    const reqIntercept = httpAuthClient.interceptors.request.use(
+    const reqIntercept = httpClient.interceptors.request.use(
       (config) => {
         if (!config.headers.Authorization && session?.accessToken) {
           config.headers.Authorization = `Bearer ${session.accessToken}`;
@@ -20,7 +20,7 @@ export const useHttp = () => {
       (err) => Promise.reject(err),
     );
 
-    const resIntercept = httpAuthClient.interceptors.response.use(
+    const resIntercept = httpClient.interceptors.response.use(
       (res) => res,
       async (err) => {
         const prevReq = err.config;
@@ -28,7 +28,7 @@ export const useHttp = () => {
         if (err.response?.status === 401 && !prevReq.sent) {
           prevReq.sent = true;
 
-          const res = await httpAuthClient.get<Credentials>('/auth/refresh');
+          const res = await httpClient.get<Credentials>('/auth/refresh');
 
           if (session) {
             session.accessToken = res.data.accessToken;
@@ -36,7 +36,7 @@ export const useHttp = () => {
 
           prevReq.headers.Authorization = `Bearer ${res.data.accessToken}`;
 
-          return httpAuthClient(prevReq);
+          return httpClient(prevReq);
         }
 
         return Promise.reject(err);
@@ -44,10 +44,10 @@ export const useHttp = () => {
     );
 
     return () => {
-      httpAuthClient.interceptors.request.eject(reqIntercept);
-      httpAuthClient.interceptors.response.eject(resIntercept);
+      httpClient.interceptors.request.eject(reqIntercept);
+      httpClient.interceptors.response.eject(resIntercept);
     };
   }, []);
 
-  return httpAuthClient;
+  return httpClient;
 };

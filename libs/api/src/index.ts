@@ -1,4 +1,3 @@
-export { httpClient } from './httpClient';
-export { apiBasicClient, baseUrl } from './apiClient';
+export { apiBasicClient, getServerApiClient } from './apiClients';
 export { useHttp } from './hooks';
 export { contract } from './contract';

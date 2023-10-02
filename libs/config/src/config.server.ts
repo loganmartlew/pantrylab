@@ -6,6 +6,7 @@ const serverEnvSchema = z.object({
   DATABASE_URL: z.string().min(1),
   ACCESS_TOKEN_SECRET: z.string().min(1),
   REFRESH_TOKEN_SECRET: z.string().min(1),
+  API_URL: z.string().min(1),
 });
 
 export const config = (() => {
@@ -17,5 +18,6 @@ export const config = (() => {
     databaseUrl: env.DATABASE_URL,
     accessTokenSecret: env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: env.REFRESH_TOKEN_SECRET,
+    apiUrl: env.API_URL,
   };
 })();

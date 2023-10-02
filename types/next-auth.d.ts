@@ -5,10 +5,12 @@ declare module 'next-auth' {
   export interface Session {
     user: UserEntity;
     accessToken: string;
+    refreshToken: string;
     expires: never;
   }
 
   export interface User extends UserEntity {
     accessToken: string;
+    refreshToken: string;
   }
 }

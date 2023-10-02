@@ -1,19 +1,10 @@
+import { serverConfig } from '@pantrylab/config';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/api';
-
-const httpClient = axios.create({
-  baseURL: baseUrl,
+export const httpClient = axios.create({
+  baseURL: serverConfig.apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
-
-const httpAuthClient = axios.create({
-  baseURL: baseUrl,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-export { httpClient, httpAuthClient };

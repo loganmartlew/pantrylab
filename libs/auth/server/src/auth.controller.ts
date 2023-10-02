@@ -1,7 +1,7 @@
 import { authContract as c } from '@pantrylab/auth/interface';
-import { Controller, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Res, UseGuards } from '@nestjs/common';
 import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthUser, Cookies } from './decorators';
 import { AccessTokenGuard, RefreshTokenGuard } from './guards';
@@ -50,17 +50,15 @@ export class AuthController {
   }
 
   @TsRestHandler(c.logout)
-  // @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard)
   async logout(
     @Cookies('refreshToken') refreshToken: string,
-    // @AuthUser('id') userId: string,
+    @AuthUser('id') userId: string,
     @Res({ passthrough: true }) res: Response,
-    @Req() req: Request,
   ) {
     return tsRestHandler(c.logout, async () => {
-      console.log(req.cookies);
-      // res.clearCookie('refreshToken');
-      // await this.authService.logout(userId, refreshToken);
+      res.clearCookie('refreshToken');
+      await this.authService.logout(userId, refreshToken);
 
       return { status: 200 as const, body: null };
     });

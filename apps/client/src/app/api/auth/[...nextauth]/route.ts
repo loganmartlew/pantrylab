@@ -32,7 +32,11 @@ const handler = NextAuth({
           httpOnly: true,
         });
 
-        return { ...user, accessToken: data.accessToken };
+        return {
+          ...user,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+        };
       },
     }),
   ],
@@ -42,14 +46,14 @@ const handler = NextAuth({
         return token;
       }
 
-      const accessToken = authUser.accessToken;
-      const { accessToken: _, ...user } = authUser;
+      const { accessToken, refreshToken, ...user } = authUser;
 
       return { user, accessToken };
     },
     async session({ session, token, user }) {
       session.user = token.user as User;
       session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string;
 
       return session;
     },

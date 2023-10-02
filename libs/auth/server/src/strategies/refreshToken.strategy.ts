@@ -14,14 +14,16 @@ export class RefreshTokenStrategy extends PassportStrategy(
 ) {
   constructor() {
     super({
-      jwtFromRequest: (req: Request) => req.cookies?.refreshToken || null,
+      jwtFromRequest: (req: Request) =>
+        req.cookies?.refreshToken || req.query?.refreshToken || null,
       secretOrKey: config.refreshTokenSecret,
       passReqToCallback: true,
     });
   }
 
   async validate(req: Request, payload: User) {
-    const refreshToken = req.cookies?.refreshToken || null;
+    const refreshToken =
+      req.cookies?.refreshToken || req.query?.refreshToken || null;
     return {
       ...payload,
       refreshToken,

@@ -37,6 +37,9 @@ export const authContract = c.router({
   refresh: {
     method: 'GET',
     path: '/auth/refresh',
+    query: z.object({
+      refreshToken: z.string().optional(),
+    }),
     responses: {
       200: credentialsSchema,
       ...authErrors,
